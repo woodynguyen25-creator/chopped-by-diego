@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "project": {
+    "name": "chopped-by-diego",
+    "productType": "one-page local-service site (solo barber, Northwest Houston) — phone-first, Booksy inline booking",
+    "stack": ["vite", "react", "typescript", "tailwind-v4", "gsap", "lenis"]
+  },
+  "sources": {
+    "tokens": ["../DESIGN.md"],
+    "components": [],
+    "assets": ["../originals", "../grid"],
+    "instructions": ["../DESIGN.md", "../ASSETS.md", "../REFERENCE-SWEEP-2026-09-11.md"]
+  },
+  "design": {
+    "colorMode": "dark",
+    "colors": {
+      "canvas": "#100B08",
+      "carbon": "#0A0705",
+      "hairline": "#3A2E24",
+      "smoke": "#8E8073",
+      "cream": "#EFE6D8",
+      "signal": "#D28E3A",
+      "rules": "cream is the ink of the page; signal is punctuation only — NEVER a button fill (Oryzo rule); warm walnut canvas, never pure black; hairlines carve layout (Hyperstudio)"
+    },
+    "typography": {
+      "display": "Bricolage Grotesque (variable: opsz 12..96, wdth 75..100, wght 300..600) — weight 300–500, negative tracking, oversized; the name WHISPERS",
+      "quote": "Newsreader italic 300 (opsz axis) — one italic line per screen max, his words only",
+      "mono": "Azeret Mono 400/500 — every label, duration, price, caption, mast (the third voice)",
+      "body": "Bricolage Grotesque 400 at 16–17px on phone",
+      "scale": "Minor Third 1.2 from 16px",
+      "banned": ["Anton", "Bebas Neue", "Oswald", "Instrument Serif", "Inter-only", "Space Grotesk", "Geist"]
+    },
+    "spacing": { "rhythm": "off-grid (14/22/34), generous void above the fold ≥40%" },
+    "radius": { "policy": "committed sharp for surfaces; pills only for buttons" },
+    "shadows": { "policy": "none — depth by hairline, grain, vignette" },
+    "motion": {
+      "clock": "ONE — Lenis + GSAP ticker",
+      "ease": "expo.out site-wide",
+      "signature": "variable-font weight/width breathing on the name; hairlines draw on; mask reveals; contextual cursor label; freehand-line SVG preloader",
+      "banned": ["pin/scroll-hijack", "before/after slider", "fade-from-black", "generic fade-up", "parallax blobs", "glassmorphism", "count-ups", "magnetic buttons", "auto-rotating carousels"],
+      "reducedMotion": "stills, no preloader"
+    },
+    "density": "editorial — one idea per screen on phone"
+  },
+  "components": {
+    "installed": [],
+    "preferredPrimitives": ["outlined cream pill button with corner-bracket draw-on (21st Motion Button / Dot Border Button mechanics)", "ghost pill secondary", "hairline rate rows with mono numerals", "void-mode photo plate with mono caption"],
+    "patterns": ["object-stays/content-passes", "line-mask text reveals", "scroll-scrubbed section counter", "Booksy inline widget (mode=inline, id 1668896) as the silent last section"]
+  },
+  "constraints": {
+    "must": [
+      "phone-first (demo on a phone 2026-09-12 11:30)",
+      "all copy in Diego's own voice",
+      "real photos only — 22 assets in hand, no stock, no AI imagery, no Higgsfield",
+      "prices shown WITH durations",
+      "ONE conversion verb wired to Booksy",
+      "prefers-reduced-motion shipped",
+      "divergence contact-sheet run vs AJR/Sleek/Rigos before any render is shown",
+      "every component sourced from 21st.dev first (mechanism), rebuilt on our clock + tokens"
+    ],
+    "avoid": ["barber pole", "crossed clippers", "mustache mark", "subway tile", "vintage-shop pastiche", "900-weight condensed caps", "filled slab CTA", "tracked 11px uppercase eyebrows below readable size", "money-cape as palette driver", "hero 3D object"]
+  },
+  "decisions": [
+    { "date": "2026-09-11", "id": "Q1", "decision": "first screen sells MASTERY (prodigy; 'make you look better, become better')" },
+    { "date": "2026-09-11", "id": "Q2", "decision": "NO before/after scrub — vetoed as AI slop" },
+    { "date": "2026-09-11", "id": "Q3", "decision": "NO singular hero object; smooth subtle motion distributed through the site" },
+    { "date": "2026-09-11", "id": "Q4", "decision": "DARK site; warm walnut recipe" },
+    { "date": "2026-09-11", "id": "Q5", "decision": "frame one = him working (photo 02) + 'DIEGO SANDOVAL' lockup; 07 = second island" },
+    { "date": "2026-09-11", "id": "Q6", "decision": "sub-line = 'Being a barber isn't just cutting hair.' Tagline closes the page; 'I get paid to make people look good' opens the gallery" },
+    { "date": "2026-09-11", "id": "Q7", "decision": "v2 darkroom register LOCKED — Bricolage Grotesque · Newsreader · Azeret Mono; outlined bracket pills; accent as punctuation. v1 rejected: clustered with AJR/Sleek on the divergence sheet" },
+    { "date": "2026-09-11", "id": "Q8", "decision": "scroll order LOCKED: preloader → name (02) → the work (10·06·04·08·03 editorial track) → the chair (07 + 3 named Booksy quotes) → rate card → book (tagline + Booksy inline). Work before price." },
+    { "date": "2026-09-11", "id": "Q9", "decision": "gallery = 'the darkroom': sticky print stack (21st 18979) + scrubbed mask bloom (21st 10905) + plate→print develop; 4:5 crops with one grade; void by vignette, NO hair knockout; rail numeral + hairline progress. Passed divergence sheet." },
+    { "date": "2026-09-11", "id": "Q10", "decision": "preloader = ornamental nape (10) traced as ONE continuous cream line, simple; gates on fonts + hero decode" },
+    { "date": "2026-09-11", "id": "Q11", "decision": "the chair = 07 island + 3 Booksy quotes, scroll-band focus (21st 26548) + one long review lit word-by-word (21st 9386)" },
+    { "date": "2026-09-11", "id": "Q12", "decision": "rate card = blade-guard ladder: mono guard numerals, rows light in sequence, digits roll; current Booksy prices; no SaaS pricing card" },
+    { "date": "2026-09-11", "id": "Q14", "decision": "EN/ES segmented toggle in the sticky mast (21st 23552 masked-thumb mechanic); quotes untranslated; ?lang=es deep-link" }
+  ],
+  "evidence": [
+    { "fact": "register + tokens", "source": "../DESIGN.md" },
+    { "fact": "divergence measurement", "source": "../divergence-sheet.png" },
+    { "fact": "reference systems", "source": "styles.refero.design — Oryzo, Hyperstudio, Origin Financial" },
+    { "fact": "component mechanics", "source": "21st.dev — Motion Button (26738), Dot Border Button (25637), Variable Font Hover Hero (18647), Text Reveal Mask (19257), Horizontal Feature Reveal (26062)" }
+  ],
+  "generatedAt": "2026-09-11T23:15:00.000Z"
+}

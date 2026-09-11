@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Chopped by Diego</title>
+<meta name="description" content="Diego Sandoval — fades, tapers and freehand designs in Northwest Houston. 4.9 on Booksy across 54 confirmed clients. See open times and book a chair.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..600&family=Newsreader:ital,opsz,wght@1,6..72,300..400&family=Azeret+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============ the darkroom — one committed dark world, every colour explicit ============ */
+:root{
+  --canvas:#100B08; --carbon:#0A0705; --hair:#3A2E24; --hair-2:#2A2119; --smoke:#8E8073; --cream:#EFE6D8; --signal:#D28E3A;
+  --vh:8px; --vh-px:800px;                   /* overwritten by JS from the first non-zero pane height; never a viewport unit */
+  --mono:'Azeret Mono',ui-monospace,Menlo,monospace;
+  --sans:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --serif:Newsreader,Georgia,'Times New Roman',serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:var(--vh-px);overflow:hidden;background:var(--canvas)}
+body{color:var(--cream);font-family:var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+#scroll{position:relative;height:var(--vh-px);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+#root{position:relative;max-width:520px;margin:0 auto}
+.grain{position:absolute;inset:0;pointer-events:none;z-index:5;opacity:.07;background-image:radial-gradient(rgba(255,255,255,.9) .6px,transparent .7px);background-size:3px 3px;mix-blend-mode:overlay}
+img{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:1px solid var(--signal);outline-offset:4px}
+.mono{font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--smoke)}
+.mono i{font-style:normal;color:var(--signal)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ============ preloader — one continuous line, gates on fonts + hero decode ============ */
+#pre{position:absolute;inset:0;height:var(--vh-px);z-index:60;background:var(--canvas);display:grid;place-items:center;transition:opacity .6s var(--ease)}
+#pre svg{width:220px;height:auto;overflow:visible}
+#pre path{fill:none;stroke:var(--cream);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+#pre.off{opacity:0;pointer-events:none}
+
+/* ============ mast — sticky inside the scroller; wordmark + EN/ES ============ */
+.mast{position:sticky;top:0;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:14px 22px;
+  background:linear-gradient(180deg,rgba(16,11,8,.96) 0%,rgba(16,11,8,.78) 70%,rgba(16,11,8,0) 100%)}
+.mast b{font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cream)}
+.seg{position:relative;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--hair);border-radius:999px;padding:3px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;user-select:none}
+.seg button{appearance:none;background:none;border:0;padding:7px 12px;color:var(--smoke);position:relative;z-index:1;cursor:pointer;font:inherit;letter-spacing:inherit;text-transform:inherit;border-radius:999px}
+.seg .thumb{position:absolute;top:3px;bottom:3px;left:3px;width:calc(50% - 3px);border-radius:999px;background:var(--cream);overflow:hidden;transition:transform .42s var(--ease)}
+.seg .thumb .inv{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;width:200%;transition:transform .42s var(--ease)}
+.seg .thumb .inv span{padding:7px 12px;text-align:center;color:var(--canvas)}
+.seg.es .thumb{transform:translateX(100%)} .seg.es .thumb .inv{transform:translateX(-50%)}
+
+/* ============ 1 · the name ============ */
+.hero{padding:22px 22px 0}
+.hero .k{display:flex;justify-content:space-between;padding-bottom:16px;border-bottom:1px solid var(--hair)}
+.name{margin-top:22px;font-weight:300;font-size:clamp(48px,14.5vw,66px);line-height:.98;letter-spacing:-.035em;font-variation-settings:"opsz" 96,"wdth" 90;text-wrap:balance}
+.name span{display:block}
+.name span+span{font-weight:500;font-variation-settings:"opsz" 96,"wdth" 100}
+.quote{margin-top:14px;font-family:var(--serif);font-style:italic;font-weight:300;font-variation-settings:"opsz" 40;font-size:22px;line-height:1.3;max-width:22ch;text-wrap:balance}
+.plate{margin:18px 0 0;position:relative;aspect-ratio:4/5;border:1px solid var(--hair);overflow:hidden;background:var(--carbon);
+  box-shadow:0 18px 48px -18px rgba(0,0,0,.8)}
+.plate img{width:100%;height:100%;object-fit:cover;filter:contrast(1.06) saturate(.9) brightness(.94)}
+.plate:after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 95% at 50% 45%,transparent 55%,rgba(16,11,8,.85) 100%)}
+.plate .cap{position:absolute;left:12px;right:12px;bottom:12px;z-index:2;display:flex;justify-content:space-between}
+.stats{display:grid;grid-template-columns:repeat(3,auto);gap:0 28px;margin-top:24px;padding-top:18px;border-top:1px solid var(--hair)}
+.stat b{display:block;font-family:var(--mono);font-weight:500;font-size:20px;letter-spacing:-.01em;color:var(--cream);font-variant-numeric:tabular-nums}
+.stat i{display:block;margin-top:6px;font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--smoke)}
+.actions{display:flex;gap:12px;align-items:center;padding:26px 0 8px}
+.btn{position:relative;display:inline-flex;align-items:center;gap:12px;padding:15px 22px;border:1px solid var(--cream);border-radius:999px;color:var(--cream);text-decoration:none;font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.12em;text-transform:uppercase;transition:background .3s var(--ease),color .3s var(--ease)}
+.btn:hover{background:var(--cream);color:var(--canvas)}
+.btn.ghost{border-color:var(--hair);color:var(--smoke)} .btn.ghost:hover{background:transparent;color:var(--cream);border-color:var(--cream)}
+.btn .dot{width:6px;height:6px;border-radius:50%;background:var(--signal)}
+.btn .br{position:absolute;width:10px;height:10px;border-color:var(--signal);border-style:solid;border-width:0;opacity:0;transition:opacity .3s var(--ease),transform .5s var(--ease)}
+.btn .tl{top:-5px;left:14px;border-top-width:1px;border-left-width:1px;transform:translate(-4px,-4px)}
+.btn .br2{bottom:-5px;right:14px;border-bottom-width:1px;border-right-width:1px;transform:translate(4px,4px)}
+.btn:hover .br,.btn:focus-visible .br,.btn.armed .br{opacity:1;transform:none}
+
+/* ============ 2 · the work — the darkroom ============ */
+.work{padding:64px 22px 0}
+.sec{display:flex;justify-content:space-between;padding-bottom:14px;border-bottom:1px solid var(--hair)}
+.work h2,.chair h2,.rate h2,.book h2{margin-top:26px;font-weight:300;font-size:38px;line-height:1.02;letter-spacing:-.03em;font-variation-settings:"opsz" 96,"wdth" 92;text-wrap:balance}
+h2 em{font-style:normal;font-weight:500}
+.work .lede{margin-top:14px;font-family:var(--serif);font-style:italic;font-weight:300;font-variation-settings:"opsz" 40;font-size:21px;line-height:1.3;max-width:24ch}
+.stack{position:relative;margin-top:10px}
+.print{position:sticky;height:var(--vh-px);display:flex;align-items:center;justify-content:center;padding:0 0 0 0}
+.frame{position:relative;width:100%;aspect-ratio:4/5;max-height:calc(var(--vh) * 74);border:1px solid var(--hair);overflow:hidden;background:var(--carbon);box-shadow:0 -18px 40px rgba(10,7,5,.85)}
+.frame:after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 95% at 50% 45%,transparent 55%,rgba(16,11,8,.85) 100%)}
+.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.frame .dev{opacity:0}
+.frame .lines{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(90deg,transparent 0 46px,rgba(239,230,216,.045) 46px 47px)}
+.frame .cap{position:absolute;left:12px;right:12px;bottom:12px;z-index:2;display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:baseline}
+.frame .cap .n{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--signal)}
+.frame .cap .t{font-size:13px;color:var(--cream);opacity:.55;transform:translateY(4px)}
+.frame .cap .w{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--smoke);white-space:nowrap}
+.rail{position:absolute;right:0;top:0;bottom:0;width:22px;pointer-events:none}
+.rail .in{position:sticky;top:calc(var(--vh) * 50);transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:6px}
+.rail .num{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--smoke);height:12px;line-height:12px;overflow:hidden}
+.rail .num b{display:block;font-weight:500;color:var(--cream)}
+.rail .bar{width:1px;height:56px;background:var(--hair);position:relative}
+.rail .bar i{position:absolute;left:0;top:0;width:1px;height:0;background:var(--signal)}
+
+/* ============ 3 · the chair ============ */
+.chair{padding:56px 22px 0}
+.island{position:relative;margin:26px -22px 0;aspect-ratio:4/5;overflow:hidden;background:var(--carbon)}
+.island img{width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:contrast(1.05) saturate(.85) brightness(.9)}
+.island:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,11,8,.15),rgba(16,11,8,0) 30%,rgba(16,11,8,.92) 100%)}
+.island .cap{position:absolute;left:22px;right:22px;bottom:18px;z-index:2;display:flex;justify-content:space-between}
+.quotes{padding:26px 0 6px;font-family:var(--serif);font-style:italic;font-weight:300;font-variation-settings:"opsz" 40;font-size:24px;line-height:1.36;text-wrap:balance}
+.q{display:block;padding:14px 0;border-top:1px solid var(--hair);transition:filter .35s ease,opacity .35s ease;filter:blur(2.5px);opacity:.45}
+.q.on{filter:blur(0);opacity:1}
+.q .who{display:block;margin-top:8px;font-family:var(--mono);font-style:normal;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--smoke)}
+.q .who i{font-style:normal;color:var(--signal)}
+.read{padding:26px 0 8px;border-top:1px solid var(--hair);font-weight:300;font-size:22px;line-height:1.35;letter-spacing:-.015em;font-variation-settings:"opsz" 48,"wdth" 94;max-width:28ch}
+.read span{color:rgba(239,230,216,.3);transition:color .25s ease}
+.read span.lit{color:var(--cream)}
+.read .who{display:block;margin-top:14px;color:var(--smoke)}
+
+/* ============ 4 · the rate card — the blade-guard ladder ============ */
+.rate{padding:56px 22px 8px}
+.rate .head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:22px}
+.row{display:grid;grid-template-columns:40px 1fr auto;column-gap:14px;align-items:baseline;padding:16px 0;border-top:1px solid var(--hair);position:relative;opacity:.4;transition:opacity .4s ease}
+.row.lit{opacity:1}
+.row:before{content:'';position:absolute;left:0;top:-1px;height:1px;width:40px;background:var(--signal);transform:scaleX(0);transform-origin:left center;transition:transform .6s var(--ease)}
+.row.lit:before{transform:scaleX(1)}
+.row .g{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--signal);overflow:hidden;height:14px;line-height:14px}
+.row .g b{display:block;font-weight:500}
+.row .svc{font-weight:400;font-size:18px;letter-spacing:-.01em}
+.row .svc small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--smoke);margin-top:5px}
+.row .p{font-family:var(--mono);font-size:14px;color:var(--cream);text-align:right;font-variant-numeric:tabular-nums}
+.row .p .d{display:inline-block;overflow:hidden;height:16px;line-height:16px;vertical-align:bottom}
+.row .p .d b{display:block;font-weight:500}
+.rate .foot{margin-top:22px;padding-top:16px;border-top:1px solid var(--cream);display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.rate .foot .mono{line-height:1.9}
+
+/* ============ 5 · book ============ */
+.book{padding:64px 22px 40px}
+.book .tag{font-weight:300;font-size:34px;line-height:1.04;letter-spacing:-.03em;font-variation-settings:"opsz" 96,"wdth" 92;text-wrap:balance}
+.book .tag em{font-style:normal;font-weight:500}
+.book .cta{margin-top:26px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.widget{margin-top:26px;border:1px solid var(--hair);background:var(--carbon);min-height:120px;position:relative}
+.widget:empty{display:none}
+.book .note{margin-top:16px;line-height:1.9}
+footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+
+@media (prefers-reduced-motion:reduce){
+  #pre{display:none} .frame .dev{opacity:1} .frame .cap .t{opacity:1;transform:none} .q{filter:none;opacity:1} .read span{color:var(--cream)} .row{opacity:1} .row.lit:before{width:40px}
+}
+</style>
+</head>
+<body>
+<div id="scroll">
+<div class="grain"></div>
+<div id="pre" aria-hidden="true">
+  <svg viewBox="0 0 220 120"><path id="line" d="M8 78 C 30 40, 52 40, 62 62 S 40 96, 26 84 S 46 48, 76 58 S 96 92, 118 70 S 150 40, 168 62 S 150 92, 138 80 S 160 50, 190 62 S 214 86, 212 96"/></svg>
+</div>
+<div id="root">
+
+<header class="mast">
+  <b>Chopped by Diego</b>
+  <div class="seg" id="seg" role="radiogroup" aria-label="Language / Idioma">
+    <button type="button" role="radio" aria-checked="true" data-l="en" id="lang-en">EN</button>
+    <button type="button" role="radio" aria-checked="false" data-l="es" id="lang-es">ES</button>
+    <div class="thumb" aria-hidden="true"><div class="inv"><span>EN</span><span>ES</span></div></div>
+  </div>
+</header>
+
+<!-- 1 · the name -->
+<section class="hero" id="top">
+  <div class="k mono"><span data-en="Barber · Houston, Texas" data-es="Barbero · Houston, Texas">Barber · Houston, Texas</span><span>4.9 <i>·</i> 54</span></div>
+  <h1 class="name" id="name"><span>Diego</span><span>Sandoval</span></h1>
+  <p class="quote">“Being a barber isn’t just cutting hair.”</p>
+  <figure class="plate">
+    <img src="assets/hero-02.jpg" width="1080" height="1440" alt="Diego Sandoval finishing a cut in the shop, client in the chair" fetchpriority="high" decoding="async" id="heroimg">
+    <figcaption class="cap mono"><span><i>01</i>&nbsp; <span data-en="In the chair" data-es="En la silla">In the chair</span></span><span>Houston, TX</span></figcaption>
+  </figure>
+  <div class="stats">
+    <div class="stat"><b>4.9</b><i data-en="on Booksy" data-es="en Booksy">on Booksy</i></div>
+    <div class="stat"><b>54</b><i data-en="confirmed clients" data-es="clientes confirmados">confirmed clients</i></div>
+    <div class="stat"><b>NW</b><i>Houston</i></div>
+  </div>
+  <div class="actions">
+    <a class="btn" href="#book"><span class="br tl"></span><span class="dot"></span><span data-en="See open times" data-es="Ver horarios">See open times</span><span class="br br2"></span></a>
+    <a class="btn ghost" href="#work" data-en="The work" data-es="El trabajo">The work</a>
+  </div>
+</section>
+
+<!-- 2 · the work -->
+<section class="work" id="work">
+  <div class="sec mono"><span><span data-en="The work" data-es="El trabajo">The work</span></span><span data-en="Fades · tapers · freehand" data-es="Fades · tapers · a mano alzada">Fades · tapers · freehand</span></div>
+  <h2 data-en="Fades, tapers, <em>freehand.</em>" data-es="Fades, tapers, <em>a mano.</em>">Fades, tapers, <em>freehand.</em></h2>
+  <p class="lede">“I get paid to make people look good.”</p>
+  <div class="stack" id="stack">
+    <figure class="print" style="top:64px"><div class="frame">
+      <img class="pl" src="assets/g-10-ornamental-nape-design-plate.jpg" width="600" height="750" alt="" loading="eager" decoding="async">
+      <img class="dev" src="assets/g-10-ornamental-nape-design.jpg" width="900" height="1125" alt="Ornamental freehand design carved into the nape" loading="lazy" decoding="async">
+      <div class="lines"></div><figcaption class="cap"><span class="n">01</span><span class="t" data-en="Ornamental nape, freehand" data-es="Nuca ornamental, a mano">Ornamental nape, freehand</span><span class="w">60 min</span></figcaption></div></figure>
+    <figure class="print" style="top:76px"><div class="frame">
+      <img class="pl" src="assets/g-06-freehand-design-white-plate.jpg" width="600" height="750" alt="" loading="eager" decoding="async">
+      <img class="dev" src="assets/g-06-freehand-design-white.jpg" width="900" height="1125" alt="White line-work design drawn to the head" loading="lazy" decoding="async">
+      <div class="lines"></div><figcaption class="cap"><span class="n">02</span><span class="t" data-en="Line work, drawn to the head" data-es="Líneas dibujadas a la cabeza">Line work, drawn to the head</span><span class="w">60 min</span></figcaption></div></figure>
+    <figure class="print" style="top:88px"><div class="frame">
+      <img class="pl" src="assets/g-04-skinfade-beige-wall-plate.jpg" width="600" height="750" alt="" loading="lazy" decoding="async">
+      <img class="dev" src="assets/g-04-skinfade-beige-wall.jpg" width="900" height="1125" alt="Skin fade with a hard line-up" loading="lazy" decoding="async">
+      <div class="lines"></div><figcaption class="cap"><span class="n">03</span><span class="t" data-en="Skin fade, hard line" data-es="Skin fade, línea marcada">Skin fade, hard line</span><span class="w">45 min</span></figcaption></div></figure>
+    <figure class="print" style="top:100px"><div class="frame">
+      <img class="pl" src="assets/g-08-curly-hightop-staircase-plate.jpg" width="600" height="750" alt="" loading="lazy" decoding="async">
+      <img class="dev" src="assets/g-08-curly-hightop-staircase.jpg" width="900" height="1125" alt="Curly high top with a clean taper" loading="lazy" decoding="async">
+      <div class="lines"></div><figcaption class="cap"><span class="n">04</span><span class="t" data-en="Curly top, clean taper" data-es="Rizado arriba, taper limpio">Curly top, clean taper</span><span class="w">45 min</span></figcaption></div></figure>
+    <figure class="print" style="top:112px"><div class="frame">
+      <img class="pl" src="assets/g-03-barber-event-crowd-plate.jpg" width="600" height="750" alt="" loading="lazy" decoding="async">
+      <img class="dev" src="assets/g-03-barber-event-crowd.jpg" width="900" height="1125" alt="Diego cutting on the floor at a Houston barber event" loading="lazy" decoding="async">
+      <div class="lines"></div><figcaption class="cap"><span class="n">05</span><span class="t" data-en="On the floor, Houston" data-es="En el evento, Houston">On the floor, Houston</span><span class="w" data-en="Event" data-es="Evento">Event</span></figcaption></div></figure>
+    <aside class="rail" aria-hidden="true"><div class="in"><div class="num"><b id="railNum">01</b></div><div class="bar"><i id="railBar"></i></div><div class="num">05</div></div></aside>
+  </div>
+</section>
+
+<!-- 3 · the chair -->
+<section class="chair" id="chair">
+  <div class="sec mono"><span data-en="The chair" data-es="La silla">The chair</span><span>4.9 <i>·</i> 54</span></div>
+  <h2 data-en="What people <em>say.</em>" data-es="Lo que <em>dicen.</em>">What people <em>say.</em></h2>
+  <figure class="island"><img src="assets/island-07.jpg" width="1080" height="1440" alt="Diego working over the shoulder in the room" loading="lazy" decoding="async"><figcaption class="cap mono"><span><i>02</i>&nbsp; <span data-en="In the room" data-es="En la sala">In the room</span></span><span>Houston, TX</span></figcaption></figure>
+  <div class="quotes" id="quotes">
+    <span class="q">“The LeBron of cutting hair.”<span class="who">Jaspur <i>·</i> <span data-en="confirmed client" data-es="cliente confirmado">confirmed client</span></span></span>
+    <span class="q">“Best cuts in the Nawfwest.”<span class="who">Andrew <i>·</i> <span data-en="confirmed client" data-es="cliente confirmado">confirmed client</span></span></span>
+    <span class="q">“Bro, made me look younger.”<span class="who">Cesar <i>·</i> <span data-en="haircut &amp; beard" data-es="corte y barba">haircut &amp; beard</span></span></span>
+  </div>
+  <p class="read" id="read">I booked my appointment for 6:00pm and got a 10 guard, mid fade. Diego did a really good job and he takes his time.<span class="who mono">German <i>·</i> <span data-en="confirmed client" data-es="cliente confirmado">confirmed client</span></span></p>
+</section>
+
+<!-- 4 · the rate card -->
+<section class="rate" id="rate">
+  <div class="sec mono"><span data-en="The rate card" data-es="Precios">The rate card</span><span data-en="chair time shown" data-es="tiempo en la silla">chair time shown</span></div>
+  <div class="head"><h2 data-en="Rate <em>card.</em>" data-es="Precios <em>y tiempos.</em>">Rate <em>card.</em></h2></div>
+  <div class="row" id="r0"><div class="g"><b>#0</b></div><div class="svc"><span data-en="Line up" data-es="Perfilado">Line up</span><small>30 min</small></div><div class="p"><span class="d"><b>$20</b></span></div></div>
+  <div class="row" id="r1"><div class="g"><b>#1</b></div><div class="svc"><span data-en="Haircut" data-es="Corte">Haircut</span><small>45 min</small></div><div class="p"><span class="d"><b>$30</b></span></div></div>
+  <div class="row" id="r2"><div class="g"><b>#2</b></div><div class="svc"><span data-en="Haircut + design" data-es="Corte + diseño">Haircut + design</span><small>60 min · <span data-en="freehand" data-es="a mano alzada">freehand</span></small></div><div class="p"><span class="d"><b>$30</b></span></div></div>
+  <div class="row" id="r3"><div class="g"><b>#3</b></div><div class="svc"><span data-en="Haircut &amp; beard" data-es="Corte y barba">Haircut &amp; beard</span><small>60 min</small></div><div class="p"><span class="d"><b>$35</b></span></div></div>
+  <div class="row" id="r4"><div class="g"><b>K</b></div><div class="svc"><span data-en="Kids, 8 &amp; under" data-es="Niños, 8 o menos">Kids, 8 &amp; under</span><small>45 min</small></div><div class="p"><span class="d"><b>$25</b></span></div></div>
+  <div class="row" id="r5"><div class="g"><b>H</b></div><div class="svc"><span data-en="House call" data-es="A domicilio">House call</span><small>2 <span data-en="hrs" data-es="hrs">hrs</span> · NW Houston</small></div><div class="p"><span class="d"><b>$60</b></span></div></div>
+  <div class="foot">
+    <span class="mono"><span data-en="Mon–Fri 4–9 pm · Sat 10–6" data-es="Lun–Vie 4–9 pm · Sáb 10–6">Mon–Fri 4–9 pm · Sat 10–6</span><br><span data-en="Sun closed" data-es="Dom cerrado">Sun closed</span></span>
+    <a class="btn" href="#book"><span class="br tl"></span><span class="dot"></span><span data-en="See open times" data-es="Ver horarios">See open times</span><span class="br br2"></span></a>
+  </div>
+</section>
+
+<!-- 5 · book -->
+<section class="book" id="book">
+  <p class="tag">“If it ain’t choppedbydiego <em>then it ain’t right.</em>”</p>
+  <div class="cta">
+    <a class="btn armed" href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener"><span class="br tl"></span><span class="dot"></span><span data-en="Book on Booksy" data-es="Reservar en Booksy">Book on Booksy</span><span class="br br2"></span></a>
+    <a class="btn ghost" href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener">Instagram</a>
+  </div>
+  <div class="widget" id="booksy"></div>
+  <p class="note mono"><span data-en="Northwest Houston · appointments only" data-es="Northwest Houston · solo con cita">Northwest Houston · appointments only</span><br><span data-en="Se habla español" data-es="English spoken">Se habla español</span></p>
+</section>
+
+<footer class="mono"><span>© 2026 Chopped by Diego</span><span><i>·</i> <span data-en="Booking via Booksy" data-es="Reservas por Booksy">Booking via Booksy</span></span></footer>
+
+</div><!-- /#root -->
+</div><!-- /#scroll -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script>
+(() => {
+  const root = document.documentElement, scroller = document.getElementById('scroll'), content = document.getElementById('root')
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+  const framed = (() => { try { return window.self !== window.top } catch { return true } })()
+
+  /* ---- pane height → --vh (no viewport units anywhere; the artifact host grows its iframe to content) ---- */
+  let lastW = 0
+  const setVh = () => {
+    const h = window.innerHeight; if (!h) return false
+    root.style.setProperty('--vh', (h / 100) + 'px'); root.style.setProperty('--vh-px', h + 'px'); return true
+  }
+  const waitVh = () => { if (setVh()) { lastW = window.innerWidth; boot() } else requestAnimationFrame(waitVh) }
+  window.addEventListener('resize', () => { if (!framed || window.innerWidth !== lastW) { lastW = window.innerWidth; setVh(); if (window.ScrollTrigger) ScrollTrigger.refresh() } })
+
+  function boot () {
+    gsap.registerPlugin(ScrollTrigger)
+    ScrollTrigger.defaults({ scroller })                       // the ELEMENT, never a selector string
+
+    /* ---- ONE CLOCK: Lenis inside the scroller drives GSAP ---- */
+    const lenis = new Lenis({ wrapper: scroller, content, lerp: 0.09, smoothWheel: true, anchors: true })
+    lenis.on('scroll', ScrollTrigger.update)
+    gsap.ticker.add((t) => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0)
+
+    /* ---- EN / ES ---- */
+    const seg = document.getElementById('seg')
+    const setLang = (l) => {
+      seg.classList.toggle('es', l === 'es'); root.lang = l
+      seg.querySelectorAll('button').forEach(b => b.setAttribute('aria-checked', String(b.dataset.l === l)))
+      document.querySelectorAll('[data-en]').forEach(n => { n.innerHTML = n.dataset[l] })
+      try { localStorage.setItem('cbd-lang', l) } catch {}
+    }
+    seg.querySelectorAll('button').forEach(b => b.addEventListener('click', () => setLang(b.dataset.l)))
+    let saved = null; try { saved = localStorage.getItem('cbd-lang') } catch {}
+    const qs = new URLSearchParams(location.search).get('lang')
+    if (qs === 'es' || (!qs && saved === 'es')) setLang('es')
+
+    /* ---- preloader: one line draws, gated on fonts + hero decode ---- */
+    const pre = document.getElementById('pre'), line = document.getElementById('line')
+    const hero = document.getElementById('heroimg')
+    const gate = Promise.all([document.fonts ? document.fonts.ready : Promise.resolve(), hero.decode ? hero.decode().catch(() => {}) : Promise.resolve()])
+    if (reduce) { pre.remove() } else {
+      const L = line.getTotalLength(); line.style.strokeDasharray = L; line.style.strokeDashoffset = L
+      const draw = gsap.to(line, { strokeDashoffset: 0, duration: 1.5, ease: 'expo.inOut' })
+      gate.then(() => { draw.eventCallback('onComplete', () => { pre.classList.add('off'); setTimeout(() => pre.remove(), 700); reveal() }); if (draw.progress() === 1) { pre.classList.add('off'); setTimeout(() => pre.remove(), 700); reveal() } })
+      setTimeout(() => { if (document.body.contains(pre)) { pre.classList.add('off'); setTimeout(() => pre.remove(), 700); reveal() } }, 4000)   // never trap the visitor
+    }
+
+    /* ---- hero: the name breathes on its weight axis with hero progress; quote + plate settle in ---- */
+    const name = document.getElementById('name')
+    function reveal () {
+      if (reduce) return
+      // visible at rest — the reveal only settles position, never hides content
+      gsap.from('.hero .quote, .hero .plate, .hero .stats, .hero .actions', { y: 16, duration: 1.1, ease: 'expo.out', stagger: .08, clearProps: 'transform' })
+    }
+    if (!reduce) {
+      const w = { v: 300 }
+      ScrollTrigger.create({ trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .8,
+        onUpdate: st => { const first = name.children[0]; const v = 300 + Math.sin(st.progress * Math.PI) * 180; first.style.fontVariationSettings = `"opsz" 96, "wdth" ${90 + st.progress * 6}, "wght" ${v.toFixed(0)}` } })
+    }
+
+    /* ---- the darkroom: each print develops on enter; prints pile (sticky) ---- */
+    const prints = gsap.utils.toArray('.print')
+    if (!reduce) prints.forEach((p) => {
+      const frame = p.querySelector('.frame'), dev = p.querySelector('.dev'), t = p.querySelector('.cap .t')
+      gsap.set(frame, { clipPath: 'inset(12% 7% 12% 7%)', scale: 1.03 })
+      gsap.timeline({ scrollTrigger: { trigger: p, start: 'top 88%', end: 'top 42%', scrub: .5 } })
+        .to(frame, { clipPath: 'inset(0% 0% 0% 0%)', scale: 1, ease: 'none' }, 0)
+        .to(dev, { opacity: 1, ease: 'none' }, .1)
+        .to(t, { opacity: 1, y: 0, ease: 'none' }, .45)
+    })
+    const num = document.getElementById('railNum'), bar = document.getElementById('railBar')
+    ScrollTrigger.create({ trigger: '#stack', start: 'top 60%', end: 'bottom 60%',
+      onUpdate (self) { const idx = Math.min(prints.length, Math.max(1, Math.ceil(self.progress * prints.length + 1e-4))); const label = String(idx).padStart(2, '0')
+        if (num.textContent !== label) { if (!reduce) gsap.fromTo(num, { yPercent: 100 }, { yPercent: 0, duration: .35, ease: 'expo.out' }); num.textContent = label }
+        bar.style.height = (self.progress * 100) + '%' } })
+
+    /* ---- the chair: quote in the eye band is sharp; the long review lights word by word ---- */
+    gsap.utils.toArray('.q').forEach(q => ScrollTrigger.create({ trigger: q, start: 'top 65%', end: 'bottom 35%', onToggle: s => q.classList.toggle('on', s.isActive) }))
+    const read = document.getElementById('read'), who = read.querySelector('.who')
+    const words = read.firstChild.textContent.trim().split(' '); read.firstChild.remove()
+    const spans = words.map(w => { const s = document.createElement('span'); s.textContent = w + ' '; read.insertBefore(s, who); return s })
+    ScrollTrigger.create({ trigger: read, start: 'top 78%', end: 'bottom 45%', scrub: .4, onUpdate: st => { const n = Math.round(st.progress * spans.length); spans.forEach((s, i) => s.classList.toggle('lit', i < n)) } })
+
+    /* ---- the ladder: rows light in sequence; guard + price roll up ---- */
+    gsap.utils.toArray('.row').forEach((r, i) => ScrollTrigger.create({ trigger: r, start: 'top 88%', once: true,
+      onEnter: () => { r.classList.add('lit'); if (!reduce) gsap.fromTo(r.querySelectorAll('.g b, .p .d b'), { yPercent: 100 }, { yPercent: 0, duration: .5, ease: 'expo.out', stagger: .06, delay: i * .03 }) } }))
+
+    /* ---- the book beat: Booksy inline widget top-level only (the artifact host CSP blocks third-party scripts); the link always works ---- */
+    if (!framed && !new URLSearchParams(location.search).has('nowidget')) {
+      const w = document.getElementById('booksy'); const s = document.createElement('script')
+      s.src = 'https://booksy.com/widget/code.js?id=1668896&country=us&lang=en&mode=inline'; s.async = true
+      w.appendChild(s)
+    }
+
+    /* ---- anchor buttons scroll inside the scroller ---- */
+    document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => { const el = document.querySelector(a.getAttribute('href')); if (el) { e.preventDefault(); lenis.scrollTo(el, { offset: -56 }) } }))
+
+    ScrollTrigger.refresh()
+  }
+  waitVh()
+})()
+</script>
+</body>
+</html>
