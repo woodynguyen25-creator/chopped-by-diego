@@ -51,19 +51,17 @@ a{color:inherit}
 /* ============ 1 · the name ============ */
 .hero{padding:22px 22px 0}
 .hero .k{display:flex;justify-content:space-between;padding-bottom:16px;border-bottom:1px solid var(--hair)}
-.name{margin-top:22px;font-weight:300;font-size:clamp(48px,14.5vw,66px);line-height:.98;letter-spacing:-.035em;font-variation-settings:"opsz" 96,"wdth" 90;text-wrap:balance}
+/* the cover — Study A's skeleton in the v2 register: the name sits ON the photo, light weight, cream */
+.cover{margin:14px -22px 0;position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--carbon)}
+.cover img{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;object-position:60% 30%;filter:contrast(1.06) saturate(.88) brightness(.9)}
+.cover:before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(16,11,8,.28) 0%,rgba(16,11,8,0) 30%,rgba(16,11,8,.55) 62%,rgba(16,11,8,.96) 100%)}
+.lockup{position:absolute;left:22px;right:22px;bottom:44px;z-index:2}
+.name{font-weight:300;font-size:clamp(50px,15vw,68px);line-height:.96;letter-spacing:-.035em;font-variation-settings:"opsz" 96,"wdth" 90;text-wrap:balance;text-shadow:0 2px 24px rgba(10,7,5,.6)}
 .name span{display:block}
 .name span+span{font-weight:500;font-variation-settings:"opsz" 96,"wdth" 100}
-.quote{margin-top:14px;font-family:var(--serif);font-style:italic;font-weight:300;font-variation-settings:"opsz" 40;font-size:22px;line-height:1.3;max-width:22ch;text-wrap:balance}
-.plate{margin:18px 0 0;position:relative;aspect-ratio:4/5;border:1px solid var(--hair);overflow:hidden;background:var(--carbon);
-  box-shadow:0 18px 48px -18px rgba(0,0,0,.8)}
-.plate img{width:100%;height:100%;object-fit:cover;filter:contrast(1.06) saturate(.9) brightness(.94)}
-.plate:after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 95% at 50% 45%,transparent 55%,rgba(16,11,8,.85) 100%)}
-.plate .cap{position:absolute;left:12px;right:12px;bottom:12px;z-index:2;display:flex;justify-content:space-between}
-.stats{display:grid;grid-template-columns:repeat(3,auto);gap:0 28px;margin-top:24px;padding-top:18px;border-top:1px solid var(--hair)}
-.stat b{display:block;font-family:var(--mono);font-weight:500;font-size:20px;letter-spacing:-.01em;color:var(--cream);font-variant-numeric:tabular-nums}
-.stat i{display:block;margin-top:6px;font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--smoke)}
-.actions{display:flex;gap:12px;align-items:center;padding:26px 0 8px}
+.quote{margin-top:12px;font-family:var(--serif);font-style:italic;font-weight:300;font-variation-settings:"opsz" 40;font-size:21px;line-height:1.3;max-width:20ch;text-wrap:balance;color:var(--cream)}
+.cover .cap{position:absolute;left:22px;right:22px;bottom:14px;z-index:2;display:flex;justify-content:space-between}
+.actions{display:flex;gap:12px;align-items:center;padding:18px 0 8px}
 .btn{position:relative;display:inline-flex;align-items:center;gap:12px;padding:15px 22px;border:1px solid var(--cream);border-radius:999px;color:var(--cream);text-decoration:none;font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.12em;text-transform:uppercase;transition:background .3s var(--ease),color .3s var(--ease)}
 .btn:hover{background:var(--cream);color:var(--canvas)}
 .btn.ghost{border-color:var(--hair);color:var(--smoke)} .btn.ghost:hover{background:transparent;color:var(--cream);border-color:var(--cream)}
@@ -96,6 +94,16 @@ h2 em{font-style:normal;font-weight:500}
 .rail .num b{display:block;font-weight:500;color:var(--cream)}
 .rail .bar{width:1px;height:56px;background:var(--hair);position:relative}
 .rail .bar i{position:absolute;left:0;top:0;width:1px;height:0;background:var(--signal)}
+
+/* ============ 2b · the tools ============ */
+.tools{padding:56px 22px 0}
+.island.tall{aspect-ratio:3/4}
+.island.tall img{object-position:50% 40%}
+.spec{margin-top:22px;border-top:1px solid var(--hair)}
+.spec div{display:grid;grid-template-columns:96px 1fr;gap:14px;padding:13px 0;border-bottom:1px solid var(--hair);align-items:baseline}
+.spec dt{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--smoke)}
+.spec dd{font-size:15px;letter-spacing:-.005em;color:var(--cream)}
+.spec dd i{font-style:normal;color:var(--signal)}
 
 /* ============ 3 · the chair ============ */
 .chair{padding:56px 22px 0}
@@ -164,18 +172,15 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
 
 <!-- 1 · the name -->
 <section class="hero" id="top">
-  <div class="k mono"><span data-en="Barber · Houston, Texas" data-es="Barbero · Houston, Texas">Barber · Houston, Texas</span><span>4.9 <i>·</i> 54</span></div>
-  <h1 class="name" id="name"><span>Diego</span><span>Sandoval</span></h1>
-  <p class="quote">“Being a barber isn’t just cutting hair.”</p>
-  <figure class="plate">
+  <div class="k mono"><span data-en="Barber · Houston, TX" data-es="Barbero · Houston, TX">Barber · Houston, TX</span><span data-en="By appointment" data-es="Con cita">By appointment</span></div>
+  <figure class="cover">
     <img src="assets/hero-02.jpg" width="1080" height="1440" alt="Diego Sandoval finishing a cut in the shop, client in the chair" fetchpriority="high" decoding="async" id="heroimg">
+    <div class="lockup">
+      <h1 class="name" id="name"><span>Diego</span><span>Sandoval</span></h1>
+      <p class="quote">“Being a barber isn’t just cutting hair.”</p>
+    </div>
     <figcaption class="cap mono"><span><i>01</i>&nbsp; <span data-en="In the chair" data-es="En la silla">In the chair</span></span><span>Houston, TX</span></figcaption>
   </figure>
-  <div class="stats">
-    <div class="stat"><b>4.9</b><i data-en="on Booksy" data-es="en Booksy">on Booksy</i></div>
-    <div class="stat"><b>54</b><i data-en="confirmed clients" data-es="clientes confirmados">confirmed clients</i></div>
-    <div class="stat"><b>NW</b><i>Houston</i></div>
-  </div>
   <div class="actions">
     <a class="btn" href="#book"><span class="br tl"></span><span class="dot"></span><span data-en="See open times" data-es="Ver horarios">See open times</span><span class="br br2"></span></a>
     <a class="btn ghost" href="#work" data-en="The work" data-es="El trabajo">The work</a>
@@ -208,21 +213,33 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
       <img class="pl" src="assets/g-03-barber-event-crowd-plate.jpg" width="600" height="750" alt="" loading="lazy" decoding="async">
       <img class="dev" src="assets/g-03-barber-event-crowd.jpg" width="900" height="1125" alt="Diego cutting on the floor at a Houston barber event" loading="lazy" decoding="async">
       <div class="lines"></div><figcaption class="cap"><span class="n">05</span><span class="t" data-en="On the floor, Houston" data-es="En el evento, Houston">On the floor, Houston</span><span class="w" data-en="Event" data-es="Evento">Event</span></figcaption></div></figure>
-    <aside class="rail" aria-hidden="true"><div class="in"><div class="num"><b id="railNum">01</b></div><div class="bar"><i id="railBar"></i></div><div class="num">05</div></div></aside>
   </div>
+</section>
+
+<!-- 2b · the tools — Study C's skeleton in the v2 register -->
+<section class="tools" id="tools">
+  <div class="sec mono"><span data-en="The tools" data-es="Las herramientas">The tools</span><span data-en="Black Ice FX · gold" data-es="Black Ice FX · dorado">Black Ice FX · gold</span></div>
+  <h2 data-en="The tools don’t make <em>the fade.</em>" data-es="Las herramientas no hacen <em>el fade.</em>">The tools don’t make <em>the fade.</em></h2>
+  <figure class="island tall"><img src="assets/tools-05.jpg" width="1080" height="1440" alt="Diego holding his gold Black Ice clipper toward the camera" loading="lazy" decoding="async"><figcaption class="cap mono"><span><i>Fig. 01</i>&nbsp; <span data-en="Black Ice FX, gold" data-es="Black Ice FX, dorado">Black Ice FX, gold</span></span><span data-en="Shot in shop" data-es="En el shop">Shot in shop</span></figcaption></figure>
+  <dl class="spec">
+    <div><dt data-en="Clipper" data-es="Máquina">Clipper</dt><dd>BaBylissPRO Black Ice FX</dd></div>
+    <div><dt data-en="Guards" data-es="Peines">Guards</dt><dd>#0 <i>·</i> #1 <i>·</i> #2 <i>·</i> #3 <i>·</i> <span data-en="freehand above" data-es="a mano arriba">freehand above</span></dd></div>
+    <div><dt data-en="Chair time" data-es="Tiempo">Chair time</dt><dd>45 min <span data-en="haircut" data-es="corte">haircut</span> <i>·</i> 60 min <span data-en="with design" data-es="con diseño">with design</span></dd></div>
+    <div><dt data-en="Specialty" data-es="Especialidad">Specialty</dt><dd data-en="Burst fades · tapers · freehand line work" data-es="Burst fades · tapers · líneas a mano">Burst fades · tapers · freehand line work</dd></div>
+  </dl>
 </section>
 
 <!-- 3 · the chair -->
 <section class="chair" id="chair">
-  <div class="sec mono"><span data-en="The chair" data-es="La silla">The chair</span><span>4.9 <i>·</i> 54</span></div>
+  <div class="sec mono"><span data-en="The chair" data-es="La silla">The chair</span><span data-en="From Booksy" data-es="De Booksy">From Booksy</span></div>
   <h2 data-en="What people <em>say.</em>" data-es="Lo que <em>dicen.</em>">What people <em>say.</em></h2>
   <figure class="island"><img src="assets/island-07.jpg" width="1080" height="1440" alt="Diego working over the shoulder in the room" loading="lazy" decoding="async"><figcaption class="cap mono"><span><i>02</i>&nbsp; <span data-en="In the room" data-es="En la sala">In the room</span></span><span>Houston, TX</span></figcaption></figure>
   <div class="quotes" id="quotes">
-    <span class="q">“The LeBron of cutting hair.”<span class="who">Jaspur <i>·</i> <span data-en="confirmed client" data-es="cliente confirmado">confirmed client</span></span></span>
-    <span class="q">“Best cuts in the Nawfwest.”<span class="who">Andrew <i>·</i> <span data-en="confirmed client" data-es="cliente confirmado">confirmed client</span></span></span>
-    <span class="q">“Bro, made me look younger.”<span class="who">Cesar <i>·</i> <span data-en="haircut &amp; beard" data-es="corte y barba">haircut &amp; beard</span></span></span>
+    <span class="q">“The LeBron of cutting hair.”<span class="who"><i>—</i> Jaspur</span></span>
+    <span class="q">“Best cuts in the Nawfwest.”<span class="who"><i>—</i> Andrew</span></span>
+    <span class="q">“Bro, made me look younger.”<span class="who"><i>—</i> Cesar</span></span>
   </div>
-  <p class="read" id="read">I booked my appointment for 6:00pm and got a 10 guard, mid fade. Diego did a really good job and he takes his time.<span class="who mono">German <i>·</i> <span data-en="confirmed client" data-es="cliente confirmado">confirmed client</span></span></p>
+  <p class="read" id="read">I booked my appointment for 6:00pm and got a 10 guard, mid fade. Diego did a really good job and he takes his time.<span class="who mono"><i>—</i> German</span></p>
 </section>
 
 <!-- 4 · the rate card -->
@@ -313,7 +330,7 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
     function reveal () {
       if (reduce) return
       // visible at rest — the reveal only settles position, never hides content
-      gsap.from('.hero .quote, .hero .plate, .hero .stats, .hero .actions', { y: 16, duration: 1.1, ease: 'expo.out', stagger: .08, clearProps: 'transform' })
+      gsap.from('.hero .quote, .hero .plate, .hero .actions', { y: 16, duration: 1.1, ease: 'expo.out', stagger: .08, clearProps: 'transform' })
     }
     if (!reduce) {
       const w = { v: 300 }
@@ -331,11 +348,6 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
         .to(dev, { opacity: 1, ease: 'none' }, .1)
         .to(t, { opacity: 1, y: 0, ease: 'none' }, .45)
     })
-    const num = document.getElementById('railNum'), bar = document.getElementById('railBar')
-    ScrollTrigger.create({ trigger: '#stack', start: 'top 60%', end: 'bottom 60%',
-      onUpdate (self) { const idx = Math.min(prints.length, Math.max(1, Math.ceil(self.progress * prints.length + 1e-4))); const label = String(idx).padStart(2, '0')
-        if (num.textContent !== label) { if (!reduce) gsap.fromTo(num, { yPercent: 100 }, { yPercent: 0, duration: .35, ease: 'expo.out' }); num.textContent = label }
-        bar.style.height = (self.progress * 100) + '%' } })
 
     /* ---- the chair: quote in the eye band is sharp; the long review lights word by word ---- */
     gsap.utils.toArray('.q').forEach(q => ScrollTrigger.create({ trigger: q, start: 'top 65%', end: 'bottom 35%', onToggle: s => q.classList.toggle('on', s.isActive) }))
