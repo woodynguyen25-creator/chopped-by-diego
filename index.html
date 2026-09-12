@@ -416,13 +416,19 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
       gsap.to('#plate', { y: 32, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .6 } })
       gsap.to('#lockup', { y: -12, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .6 } })
     }
-    /* the sticky chair: after the fold; hides on the rate card, the booking beat, and whenever a headline crosses the bottom 120px */
-    const fab = document.getElementById('fab'); let pastFold = false, atBook = 0, onType = 0
-    const fabSync = () => fab.classList.toggle('on', pastFold && atBook === 0 && onType === 0)
-    ScrollTrigger.create({ trigger: '.hero', start: 'bottom 70%', end: 'bottom 70%', onEnter: () => { pastFold = true; fabSync() }, onLeaveBack: () => { pastFold = false; fabSync() } })
-    document.querySelectorAll('h2.d, .book .tagline, .card').forEach(h => ScrollTrigger.create({ trigger: h, start: 'top bottom', end: 'bottom bottom-=120px', onToggle: s => { onType += s.isActive ? 1 : -1; fabSync() } }))
-    ScrollTrigger.create({ trigger: '.rate', start: 'top 80%', end: 'bottom bottom', onToggle: s => { atBook += s.isActive ? 1 : -1; fabSync() } })
-    ScrollTrigger.create({ trigger: '.book', start: 'top 85%', end: 'bottom top', onToggle: s => { atBook += s.isActive ? 1 : -1; fabSync() } })
+    /* the sticky chair: shown after the fold, hidden while the rate card or the booking beat is on screen, or while any
+       headline / card crosses the bottom 132px — decided from live rects on every scroll tick, never from counters */
+    const fab = document.getElementById('fab'), hero = document.querySelector('.hero')
+    const avoidBeats = [document.querySelector('.rate'), document.querySelector('.book')]
+    const avoidEdges = Array.from(document.querySelectorAll('h2.d, .book .tagline, .card'))
+    const fabSync = () => {
+      const H = scroller.clientHeight, zone = H - 132
+      const past = hero.getBoundingClientRect().bottom < H * .7
+      const onBeat = avoidBeats.some(el => { const r = el.getBoundingClientRect(); return r.top < H * .85 && r.bottom > 0 })
+      const onEdge = avoidEdges.some(el => { const r = el.getBoundingClientRect(); return r.top < H && r.bottom > zone })
+      fab.classList.toggle('on', past && !onBeat && !onEdge)
+    }
+    lenis.on('scroll', fabSync); fabSync()
 
     /* ---- the crossings: the shear travels the cut line with the scroll, three snips on the way (25/50/75%), the line appears in its wake ---- */
     if (!reduce) document.querySelectorAll('.cross').forEach((c, i) => {
