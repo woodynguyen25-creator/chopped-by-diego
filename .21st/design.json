@@ -256,6 +256,26 @@
       "date": "2026-09-12",
       "id": "Q28",
       "decision": "Rendered gold clipper REMOVED at the owner's request (looked wrong); scissors crossings stay (2). Photos take over the motion: prints tilt in (rotateX 9->0) with the cut-wipe; tapping a print flies the print itself into the lightbox and back (shared element, 21st 11979 mechanism, GSAP FLIP by hand)"
+    },
+    {
+      "date": "2026-09-12",
+      "id": "Q29",
+      "decision": "Owner overrules the council on glass: 'more liquid glass, an integrated website in the Apple ecosystem'. Astra spec adopted: 3-level glass (bar rgba(32,22,16,.72)/blur20/sat140 · card rgba(43,29,20,.78)/blur16/sat125 · pill rgba(28,19,13,.68)/blur12/sat150), shared hairline .16 + top highlight + inner/outer shadow; primary pill stays solid cream 52px"
+    },
+    {
+      "date": "2026-09-12",
+      "id": "Q30",
+      "decision": "Gallery = full-page prints (fr height 88.5vh, 12px inset, radius 24, glass caption pill), each settling scale 1.045->1 / y 20->0 / clip 3%->0; the Houston event photo opens the gallery full-bleed 390x844 (the biggest image on the page); the cutting-action shot becomes the biography inset"
+    },
+    {
+      "date": "2026-09-12",
+      "id": "Q31",
+      "decision": "Testimonials: 4.9 at 76px + glass source pill; one glass card with the three quotes (band-focus kept), a second with the word-lit long review (floor .62); cards enter y 20 / scale .985"
+    },
+    {
+      "date": "2026-09-12",
+      "id": "Q32",
+      "decision": "Two detailed line-drawn shears (Opus subagent, 5 render passes): plain Japanese shear on a solid cut line (hero->bio), thinning shear with 14 teeth on a dashed cut line (gallery->chair); halves pivot at the origin, three snips per crossing; assets/shear.svg + thinning.svg"
     }
   ],
   "evidence": [
