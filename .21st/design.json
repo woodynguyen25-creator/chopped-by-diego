@@ -241,6 +241,21 @@
       "date": "2026-09-12",
       "id": "Q25",
       "decision": "Reviews lead with 4.9 (Bodoni 72px) + '54 reviews · Booksy' link; quote blur 1.2px / floor .62 so proof stays readable; sticky 'Book' pill after the fold, hidden on the booking beat; rendered gold clipper (SVG, gradients) replaces the line drawing in the crossings"
+    },
+    {
+      "date": "2026-09-12",
+      "id": "Q26",
+      "decision": "Client (Diego) loves v3; owner directs an Apple idiom for controls on top of the locked darkroom register: --apple cubic-bezier(.32,.72,0,1) for controls, radius tokens (--r-print 18, --r-chip 22, pills 999), sentence-case Bricolage on buttons, corner brackets + gold dot removed"
+    },
+    {
+      "date": "2026-09-12",
+      "id": "Q27",
+      "decision": "Materials: primary = filled cream pill; secondary/sticky/lightbox close = liquid glass (translucent fill + backdrop blur + mask-composite hairline brighter at the top edge, 21st 12460 idea without the displacement map); rate rows = glass chips, plus centred on its own positioned box (the off-centre bug was pseudo-elements positioned against the row)"
+    },
+    {
+      "date": "2026-09-12",
+      "id": "Q28",
+      "decision": "Rendered gold clipper REMOVED at the owner's request (looked wrong); scissors crossings stay (2). Photos take over the motion: prints tilt in (rotateX 9->0) with the cut-wipe; tapping a print flies the print itself into the lightbox and back (shared element, 21st 11979 mechanism, GSAP FLIP by hand)"
     }
   ],
   "evidence": [

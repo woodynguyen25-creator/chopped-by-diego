@@ -16,9 +16,14 @@
   --mono:'Azeret Mono',ui-monospace,Menlo,monospace;
   --sans:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif;
   --disp:'Bodoni Moda','Bodoni 72','Didot',Georgia,serif;
-  --ease:cubic-bezier(.16,1,.3,1);
+  --ease:cubic-bezier(.16,1,.3,1);           /* reveals: exponential out */
+  --apple:cubic-bezier(.32,.72,0,1);         /* controls: the iOS curve — quick in, long settle */
+  --r-print:18px; --r-chip:22px;             /* one radius for photographs, one for controls; pills are 999 */
   --beat:104px;                              /* space between beats — the number that answers "compressed" */
 }
+/* glass — a real material, not a blur reflex: translucent fill, backdrop blur, a hairline that is brighter at the top edge (mask-composite ring) */
+.glass{position:relative;background:rgba(239,230,216,.07);backdrop-filter:blur(22px) saturate(1.25);-webkit-backdrop-filter:blur(22px) saturate(1.25);box-shadow:0 10px 30px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.08)}
+.glass:before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.34) 0%,rgba(255,255,255,.1) 30%,rgba(255,255,255,.04) 70%,rgba(255,255,255,.16) 100%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{height:var(--vh-px);overflow:hidden;background:var(--canvas)}
 body{color:var(--cream);font-family:var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
@@ -77,18 +82,17 @@ section{padding:var(--beat) 22px 0}
 .name span+span{font-weight:650;font-variation-settings:"opsz" 96}
 .quote{margin-top:18px;font-family:var(--disp);font-style:italic;font-weight:400;font-variation-settings:"opsz" 48;font-size:23px;line-height:1.28;max-width:20ch;text-wrap:balance}
 .cover .cta{margin-top:26px}
-.btn{position:relative;display:inline-flex;align-items:center;gap:12px;padding:15px 22px;border:1px solid var(--cream);border-radius:999px;color:var(--cream);text-decoration:none;font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.12em;text-transform:uppercase;transition:background .3s var(--ease),color .3s var(--ease)}
-.btn:hover{background:var(--cream);color:var(--canvas)}
-.btn.ghost{border-color:var(--hair);color:var(--smoke)} .btn.ghost:hover{background:transparent;color:var(--cream);border-color:var(--cream)}
-.btn .dot{width:6px;height:6px;border-radius:50%;background:var(--signal)}
-.btn .br{position:absolute;width:10px;height:10px;border-color:var(--signal);border-style:solid;border-width:0;opacity:0;transition:opacity .3s var(--ease),transform .5s var(--ease)}
-.btn .tl{top:-5px;left:14px;border-top-width:1px;border-left-width:1px;transform:translate(-4px,-4px)}
-.btn .br2{bottom:-5px;right:14px;border-bottom-width:1px;border-right-width:1px;transform:translate(4px,4px)}
-.btn:hover .br,.btn:focus-visible .br,.btn.armed .br{opacity:1;transform:none}
+/* buttons — the iOS pill: filled cream primary, glass secondary, sentence case, presses down and settles back */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:14px 24px;border-radius:999px;background:var(--cream);color:var(--canvas);text-decoration:none;font-family:var(--sans);font-weight:500;font-size:16px;letter-spacing:-.01em;font-variation-settings:"opsz" 18,"wdth" 100;transition:transform .35s var(--apple),background .35s var(--apple),color .35s var(--apple),box-shadow .35s var(--apple);box-shadow:0 10px 26px rgba(0,0,0,.28)}
+.btn:hover{background:#fff8ec}
+.btn:active{transform:scale(.965)}
+.btn.ghost{background:transparent;color:var(--cream);box-shadow:inset 0 0 0 1px rgba(239,230,216,.32)}   /* secondary: an outline, not glass — nothing to blur on flat walnut */
+.btn.ghost:hover{background:rgba(239,230,216,.08)}
 .cover .cap{position:absolute;left:22px;right:22px;bottom:14px;z-index:2;padding:0}
 /* the sticky chair — one booking verb that follows after the fold */
-.fab{position:fixed;right:16px;bottom:16px;z-index:45;background:var(--canvas);box-shadow:0 12px 34px rgba(0,0,0,.45);transform:translateY(140%);transition:transform .6s var(--ease)}
+.fab{position:fixed;right:16px;bottom:16px;z-index:45;min-height:48px;padding:13px 22px;transform:translateY(140%);transition:transform .6s var(--apple);box-shadow:0 14px 34px rgba(0,0,0,.45)}
 .fab.on{transform:none}
+.fab.on:active{transform:scale(.965)}
 
 /* ============ crossings — scissors / the clipper glide between beats and leave a cut line ============ */
 .cross{position:relative;margin:calc(var(--beat) * .15) -22px 0;pointer-events:none}
@@ -108,7 +112,7 @@ section{padding:var(--beat) 22px 0}
 .shutter .cap{position:absolute;left:22px;right:22px;bottom:14px;z-index:2;padding:0}
 /* the pair, composed like a magazine spread: one lead print, one inset riding its lower-left corner */
 .fan{position:relative;margin:64px 0 0;padding-bottom:40px}
-.fan figure{position:relative;overflow:hidden;background:var(--carbon)}
+.fan figure{position:relative;overflow:hidden;background:var(--carbon);border-radius:var(--r-print)}
 .fan figure img{width:100%;height:100%;object-fit:cover;will-change:transform}
 .fan .p1{width:100%;aspect-ratio:4/5}
 .fan .p2{position:absolute;left:-22px;bottom:0;width:46%;aspect-ratio:4/5;box-shadow:0 22px 44px rgba(0,0,0,.55),0 0 0 6px var(--canvas);will-change:transform;z-index:2}
@@ -131,29 +135,30 @@ section{padding:var(--beat) 22px 0}
 .pr:first-child{margin-top:0}
 .pr:nth-child(2n){margin-left:8%}
 .pr.wide{width:100%;margin-left:0}
-.pr .fr{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--carbon);clip-path:inset(0 0 0 0);will-change:clip-path}
+.prints{perspective:1200px}
+.pr .fr{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--carbon);border-radius:var(--r-print);clip-path:inset(0 0 0 0 round var(--r-print));will-change:clip-path;transform-origin:50% 100%}
 .pr.wide .fr{aspect-ratio:3/2}
 .pr .fr img{width:100%;height:100%;object-fit:cover;will-change:transform}
 .pr .line{position:absolute;left:0;right:0;top:-12px;height:1px;background:repeating-linear-gradient(90deg,var(--smoke) 0 3px,transparent 3px 9px);transform:scaleX(0);transform-origin:left;opacity:.9}
 .pr .blade{position:absolute;top:-24px;left:0;width:26px;height:26px;will-change:transform}
 .pr .blade path,.pr .blade circle{fill:none;stroke:var(--cream);stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
-.pr .vf{position:absolute;width:12px;height:12px;border:1px solid var(--signal);opacity:0;transition:opacity .5s var(--ease)}
-.pr .vf.a{top:8px;left:8px;border-right:0;border-bottom:0} .pr .vf.b{top:8px;right:8px;border-left:0;border-bottom:0}
-.pr .vf.c{bottom:8px;left:8px;border-right:0;border-top:0} .pr .vf.d{bottom:8px;right:8px;border-left:0;border-top:0}
-.pr.on .vf{opacity:1}
 .pr .cap{align-items:baseline}
 .pr .cap .n{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--signal)}
 .pr .cap .t{flex:1;font-size:14px;color:var(--cream);opacity:.85}
 .pr .cap .m{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--smoke);white-space:nowrap}
 /* the lightbox — tap a print, it comes to you */
-.lb{position:fixed;top:0;left:0;width:100%;height:var(--vh-px);z-index:70;background:rgba(8,6,5,.96);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:grid;place-items:center;padding:22px;opacity:0;pointer-events:none;transition:opacity .4s var(--ease)}
+.lb{position:fixed;top:0;left:0;width:100%;height:var(--vh-px);z-index:70;background:rgba(10,7,5,.84);backdrop-filter:blur(26px) saturate(1.2);-webkit-backdrop-filter:blur(26px) saturate(1.2);display:grid;place-items:center;padding:12px;opacity:0;pointer-events:none;transition:opacity .45s var(--apple)}
 .lb-open .fab{transform:translateY(140%)}
-.lb .x{position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;background:var(--canvas);box-shadow:inset 0 0 0 1px var(--hair);display:grid;place-items:center}
-.lb .x i{position:absolute;width:16px;height:1px;background:var(--cream);transform:rotate(45deg)} .lb .x i+i{transform:rotate(-45deg)}
+.lb .x{position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center}
+.lb .x i{position:absolute;width:16px;height:1.5px;border-radius:1px;background:var(--cream);transform:rotate(45deg)} .lb .x i+i{transform:rotate(-45deg)}
+.lb figure{opacity:0;transition:opacity .2s}
+.lb.on figure{opacity:1}
+/* the shared-element flight: a clone of the tapped print flies to the lightbox frame and back (21st 11979 mechanism, GSAP FLIP by hand) */
+.fly{position:fixed;z-index:72;object-fit:cover;border-radius:var(--r-print);pointer-events:none;will-change:transform,width,height}
 .lb.on{opacity:1;pointer-events:auto}
-.lb figure{width:100%;max-width:480px}
-.lb .fr{overflow:hidden;background:var(--carbon);aspect-ratio:4/5}
-.lb .fr.wide{aspect-ratio:3/2}
+.lb figure{width:100%;max-width:520px}
+.lb .fr{overflow:hidden;background:var(--carbon);height:calc(var(--vh) * 74);border-radius:var(--r-print)}   /* the print gets bigger than it was on the page — the flight pays off */
+.lb .fr.wide{height:calc(var(--vh) * 46)}
 .lb img{width:100%;height:100%;object-fit:cover}
 
 /* ============ 4 · the chair ============ */
@@ -167,31 +172,37 @@ section{padding:var(--beat) 22px 0}
 .q .who{display:block;margin-top:8px;font-family:var(--mono);font-style:normal;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--smoke)}
 .q .who i{font-style:normal;color:var(--signal)}
 .read{padding:30px 0 8px;border-top:1px solid var(--hair);font-weight:300;font-size:22px;line-height:1.4;letter-spacing:-.01em;font-variation-settings:"opsz" 48,"wdth" 94;max-width:28ch}
-.read span{color:rgba(239,230,216,.32);transition:color .25s ease}
+.read span{color:rgba(239,230,216,.46);transition:color .25s ease}
 .read span.lit{color:var(--cream)}
 .read .who{display:block;margin-top:14px;color:var(--smoke)}
 
 /* ============ 5 · the rate card — soft chips, tap to open ============ */
 .rate .hint{margin-top:14px}
-.rows{margin-top:30px}
-.rw{position:relative;margin-top:12px;border-radius:20px;background:linear-gradient(180deg,rgba(42,33,25,.55),rgba(16,11,8,.4));box-shadow:inset 0 0 0 1px rgba(239,230,216,.09),0 10px 30px rgba(0,0,0,.25);will-change:transform;transition:box-shadow .4s var(--ease)}
-.rw.open{box-shadow:inset 0 0 0 1px rgba(210,142,58,.55),0 14px 36px rgba(0,0,0,.3)}
-.rw button{display:grid;grid-template-columns:1fr auto auto;column-gap:14px;align-items:center;width:100%;padding:19px 18px 19px 20px;text-align:left;border-radius:20px}
+/* the rate card is ONE grouped list (iOS inset grouping), opaque walnut lift, hairline dividers; the open row gets a gold rule and a gold price */
+.rows{margin-top:30px;border-radius:var(--r-chip);overflow:hidden;background:rgba(239,230,216,.045);box-shadow:inset 0 0 0 1px rgba(239,230,216,.1),0 12px 32px rgba(0,0,0,.28)}
+.rw{position:relative;transition:background .45s var(--apple)}
+.rw+.rw{box-shadow:inset 0 1px 0 rgba(239,230,216,.1)}
+.rw.open{background:rgba(239,230,216,.06)}
+.rw:after{content:'';position:absolute;left:0;top:16px;bottom:16px;width:2px;border-radius:2px;background:var(--signal);transform:scaleY(0);transform-origin:50% 0;transition:transform .45s var(--apple)}
+.rw.open:after{transform:scaleY(1)}
+.rw.open .p{color:var(--signal)}
+.rw button{display:grid;grid-template-columns:1fr auto auto;column-gap:14px;align-items:center;width:100%;padding:17px 12px 17px 22px;text-align:left;-webkit-tap-highlight-color:transparent}
 .rw .svc{font-weight:400;font-size:17px;letter-spacing:-.01em}
 .rw .svc small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--smoke);margin-top:6px}
 .rw .p{font-family:var(--disp);font-variation-settings:"opsz" 48;font-size:27px;letter-spacing:-.01em;color:var(--cream);font-variant-numeric:tabular-nums}
 .rw .p .dd{display:inline-block;overflow:hidden;height:30px;line-height:30px;vertical-align:bottom}
 .rw .p .dd b{display:block;font-weight:500}
-.rw .pl{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;box-shadow:inset 0 0 0 1px var(--hair);transition:transform .5s var(--ease),background .3s var(--ease)}
-.rw .pl:before,.rw .pl:after{content:'';position:absolute;width:11px;height:1px;background:var(--cream)}
-.rw .pl:after{transform:rotate(90deg)}
-.rw.open .pl{transform:rotate(45deg);background:rgba(210,142,58,.14)}
-.rw .more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s var(--ease)}
+/* the plus: its own positioned box, both strokes centred on it, then the whole thing turns 45° into a close */
+.rw .pl{position:relative;width:44px;height:44px;transition:transform .45s var(--apple)}   /* 44px target, 14px glyph, gold stroke */
+.rw .pl:before,.rw .pl:after{content:'';position:absolute;left:50%;top:50%;width:14px;height:1.5px;border-radius:1px;background:var(--signal);transform:translate(-50%,-50%)}
+.rw .pl:after{transform:translate(-50%,-50%) rotate(90deg)}
+.rw.open .pl{transform:rotate(45deg)}
+.rw .more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--apple)}
 .rw.open .more{grid-template-rows:1fr}
 .rw .more>div{overflow:hidden}
 .rw .more p{padding:0 20px 18px;font-weight:300;font-size:15px;line-height:1.5;color:var(--cream);opacity:.85;max-width:32ch}
-.rw .more a{display:inline-flex;align-items:center;gap:8px;margin:2px 20px 18px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--signal);text-decoration:none}
-.rw .more a:before{content:'';width:14px;height:1px;background:var(--signal)}
+.rw .more a{display:inline-flex;align-items:center;gap:8px;margin:0 20px 18px;font-weight:500;font-size:15px;letter-spacing:-.01em;color:var(--signal);text-decoration:none}
+.rw .more a:after{content:'';width:7px;height:7px;border-top:1.5px solid var(--signal);border-right:1.5px solid var(--signal);transform:rotate(45deg);margin-left:2px}
 .hours{margin-top:30px;padding-top:18px;border-top:1px solid var(--hair);line-height:1.9}
 
 /* ============ 6 · book ============ */
@@ -215,135 +226,6 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
 <div id="pre" aria-hidden="true">
   <svg viewBox="0 0 220 120"><path id="line" d="M8 78 C 30 40, 52 40, 62 62 S 40 96, 26 84 S 46 48, 76 58 S 96 92, 118 70 S 150 40, 168 62 S 150 92, 138 80 S 160 50, 190 62 S 214 86, 212 96"/></svg>
 </div>
-<!-- the clipper, drawn once: every crossing <use>s it -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs id="clipdefs">
-  <g id="clp-root">
-<defs>
-<linearGradient id="clp-gold" gradientUnits="userSpaceOnUse" x1="0" y1="21" x2="0" y2="87">
-<stop offset="0" stop-color="#3a2707"/><stop offset=".035" stop-color="#8d6a1f"/>
-<stop offset=".09" stop-color="#e3c56d"/><stop offset=".13" stop-color="#fdf3cd"/>
-<stop offset=".175" stop-color="#dcb24a"/><stop offset=".30" stop-color="#b0801f"/>
-<stop offset=".43" stop-color="#7c5a14"/><stop offset=".52" stop-color="#63470f"/>
-<stop offset=".62" stop-color="#a07519"/><stop offset=".72" stop-color="#d8ab3e"/>
-<stop offset=".80" stop-color="#9c7420"/><stop offset=".91" stop-color="#513708"/>
-<stop offset="1" stop-color="#1e1503"/>
-</linearGradient>
-<linearGradient id="clp-panel" gradientUnits="userSpaceOnUse" x1="0" y1="35" x2="0" y2="74">
-<stop offset="0" stop-color="#2b1e06"/><stop offset=".1" stop-color="#8a6720"/>
-<stop offset=".2" stop-color="#e0bb60"/><stop offset=".32" stop-color="#ab7f26"/>
-<stop offset=".56" stop-color="#72530f"/><stop offset=".76" stop-color="#bb8e2e"/>
-<stop offset=".9" stop-color="#644811"/><stop offset="1" stop-color="#201603"/>
-</linearGradient>
-<linearGradient id="clp-head" gradientUnits="userSpaceOnUse" x1="0" y1="25" x2="0" y2="83">
-<stop offset="0" stop-color="#37373c"/><stop offset=".07" stop-color="#62626b"/>
-<stop offset=".18" stop-color="#1e1e22"/><stop offset=".46" stop-color="#0f0f11"/>
-<stop offset=".7" stop-color="#0a0a0c"/><stop offset=".89" stop-color="#1c1c21"/>
-<stop offset="1" stop-color="#000"/>
-</linearGradient>
-<linearGradient id="clp-rub" gradientUnits="userSpaceOnUse" x1="0" y1="21" x2="0" y2="87">
-<stop offset="0" stop-color="#141416"/><stop offset=".08" stop-color="#4d4d55"/>
-<stop offset=".2" stop-color="#191a1d"/><stop offset=".52" stop-color="#09090b"/>
-<stop offset=".78" stop-color="#050506"/><stop offset=".92" stop-color="#1f1f24"/>
-<stop offset="1" stop-color="#000"/>
-</linearGradient>
-<linearGradient id="clp-steel" gradientUnits="userSpaceOnUse" x1="0" y1="29" x2="0" y2="80">
-<stop offset="0" stop-color="#7d828a"/><stop offset=".09" stop-color="#eef1f5"/>
-<stop offset=".25" stop-color="#9ea4ad"/><stop offset=".5" stop-color="#5f646b"/>
-<stop offset=".72" stop-color="#878d95"/><stop offset=".88" stop-color="#34383e"/>
-<stop offset="1" stop-color="#17191d"/>
-</linearGradient>
-<linearGradient id="clp-spec" gradientUnits="userSpaceOnUse" x1="112" y1="0" x2="146" y2="0">
-<stop offset="0" stop-color="#fff" stop-opacity="0"/>
-<stop offset=".5" stop-color="#fff8e4" stop-opacity=".9"/>
-<stop offset="1" stop-color="#fff" stop-opacity="0"/>
-</linearGradient>
-<linearGradient id="clp-rim" gradientUnits="userSpaceOnUse" x1="0" y1="21" x2="0" y2="87">
-<stop offset="0" stop-color="#ffeeb4"/><stop offset=".07" stop-color="#fff8e4"/>
-<stop offset=".2" stop-color="#d2a949"/><stop offset=".45" stop-color="#6b4e14"/>
-<stop offset=".72" stop-color="#3a2707"/><stop offset="1" stop-color="#0e0901"/>
-</linearGradient>
-<radialGradient id="clp-sh"><stop offset="0" stop-color="#000" stop-opacity=".8"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
-<filter id="clp-blur" x="-30%" y="-140%" width="160%" height="380%"><feGaussianBlur stdDeviation="3"/></filter>
-<pattern id="clp-tooth" patternUnits="userSpaceOnUse" x="43" y="30" width="13" height="2.6">
-<path d="M13 .18 L4.6 .7 L1.8 1.2 L4.6 1.7 L13 2.22 Z" fill="url(#clp-steel)"/>
-<path d="M13 .18 L4.6 .7 L1.8 1.2" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width=".22"/>
-</pattern>
-<pattern id="clp-tread" patternUnits="userSpaceOnUse" x="0" y="21" width="46" height="4.4">
-<rect width="46" height="2.9" y=".45" rx="1.1" fill="#242229"/>
-<rect width="46" height=".65" y=".45" rx=".32" fill="#57545f"/>
-</pattern>
-<path id="clp-bodypath" d="M94 24.9 L120 23.2 L162 25.4 L204 29.6 L234 33 L246 34.6 A20 20 0 0 1 246 73.4 L234 75 L204 78.4 L162 82.6 L120 84.8 L94 83.1 Z"/>
-<clipPath id="clp-clip"><use href="#clp-bodypath"/></clipPath>
-<clipPath id="clp-hclip"><path d="M58 28.8 L94 24.8 L94 83.2 L58 79.2 Z"/></clipPath>
-</defs>
-
-<ellipse cx="152" cy="94" rx="104" ry="5.5" fill="url(#clp-sh)" filter="url(#clp-blur)"/>
-
-<rect x="43" y="30" width="13" height="48" fill="url(#clp-tooth)"/>
-<path d="M53 29.6 L62 28.6 L62 79.4 L53 78.4 Z" fill="url(#clp-steel)"/>
-<path d="M53 29.6 L62 28.6" fill="none" stroke="#fff" stroke-opacity=".65" stroke-width=".6"/>
-
-<path d="M58 28.8 L94 24.8 L94 83.2 L58 79.2 Z" fill="url(#clp-head)"/>
-<g clip-path="url(#clp-hclip)">
-<path d="M57 29.3 L96 25.1" fill="none" stroke="#8e8e99" stroke-width="1.1" opacity=".85"/>
-<path d="M57 78.7 L96 82.9" fill="none" stroke="#4a4a53" stroke-width=".9" opacity=".6"/>
-<rect x="66" y="33" width="25" height="42" rx="4" fill="#1d1d22" opacity=".7"/>
-<path d="M67 33.5 L90 31" fill="none" stroke="#70707b" stroke-width=".55" opacity=".45"/>
-<path d="M67 74.6 L90 77" fill="none" stroke="#2b2b31" stroke-width=".5" opacity=".5"/>
-</g>
-<g fill="#b0801f" stroke="#1f1503" stroke-width=".45">
-<circle cx="86" cy="31.8" r="1.9"/><circle cx="86" cy="76.2" r="1.9"/>
-</g>
-<g stroke="#4a3510" stroke-width=".55"><path d="M85 31.8h2"/><path d="M85 76.2h2"/></g>
-
-<rect x="98" y="15.5" width="17" height="8.6" rx="4" fill="url(#clp-gold)" stroke="#2e2005" stroke-width=".5"/>
-<g stroke="#7a5714" stroke-width=".5" opacity=".75"><path d="M102 17.2v5.2"/><path d="M105.5 17.2v5.2"/><path d="M109 17.2v5.2"/></g>
-<rect x="98.6" y="16.3" width="15.8" height="1.3" rx=".65" fill="#f7e4a6" opacity=".8"/>
-
-<use href="#clp-bodypath" fill="url(#clp-gold)"/>
-
-<g clip-path="url(#clp-clip)">
-<rect x="168" y="36" width="72" height="37" rx="11" fill="url(#clp-panel)"/>
-<path d="M179 36.7 H230" stroke="#fbeab5" stroke-width=".9" opacity=".6"/>
-<path d="M179 72.4 H230" stroke="#181002" stroke-width="1" opacity=".7"/>
-<rect x="174" y="41" width="60" height="27" rx="8" fill="none" stroke="#2c1e04" stroke-width=".45" opacity=".4"/>
-
-<g fill="#0d0901">
-<circle cx="198" cy="65.5" r="1.75"/><circle cx="210" cy="66" r="1.75"/><circle cx="222" cy="66.4" r="1.75"/>
-</g>
-<g fill="none" stroke="#f3d98e" stroke-width=".5" opacity=".6">
-<path d="M196.45 64.3a1.75 1.75 0 0 1 3.1 0"/><path d="M208.45 64.8a1.75 1.75 0 0 1 3.1 0"/><path d="M220.45 65.2a1.75 1.75 0 0 1 3.1 0"/>
-</g>
-
-<g opacity=".3" stroke="#6b4a14" stroke-width=".4">
-<path d="M94 44 H264"/><path d="M94 48 H264"/><path d="M94 60 H264"/><path d="M94 64 H264"/>
-</g>
-
-<rect x="112" y="21" width="7" height="66" fill="#000" opacity=".3"/>
-<rect x="154" y="21" width="11" height="66" fill="#000" opacity=".3"/>
-
-<use href="#clp-bodypath" fill="none" stroke="url(#clp-rim)" stroke-width="2.6"/>
-<path d="M99 32.2 L162 32.8 L226 39.2" fill="none" stroke="#ffefc0" stroke-width=".7" opacity=".2"/>
-<path d="M99 79 L162 78.4 L226 71.6" fill="none" stroke="#dcae44" stroke-width=".9" opacity=".32"/>
-
-<g id="clp-spec-band">
-<path d="M133 8 L146 8 L125 102 L112 102 Z" fill="url(#clp-spec)" opacity=".32"/>
-</g>
-</g>
-
-<g>
-<rect x="118" y="21" width="38" height="66" rx="5" fill="url(#clp-rub)"/>
-<rect x="119" y="22" width="36" height="64" fill="url(#clp-tread)"/>
-<rect x="118" y="21" width="38" height="66" rx="5" fill="url(#clp-rub)" opacity=".4"/>
-<rect x="118" y="21" width="38" height="1.9" rx=".95" fill="#7d7d8a" opacity=".65"/>
-<rect x="118" y="84.8" width="38" height="1.6" rx=".8" fill="#34343c" opacity=".55"/>
-<rect x="118" y="21" width="3.4" height="66" rx="1.6" fill="#000" opacity=".5"/>
-<rect x="152.6" y="21" width="3.4" height="66" rx="1.6" fill="#000" opacity=".5"/>
-<rect x="118.7" y="21.4" width=".9" height="65" rx=".45" fill="#66666f" opacity=".5"/>
-<rect x="154.4" y="21.4" width=".9" height="65" rx=".45" fill="#66666f" opacity=".5"/>
-</g>
-</g>
-</defs></svg>
 <div id="root">
 
 <header class="mast">
@@ -363,7 +245,7 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
       <div class="k mono"><i></i><span data-en="Barber · Northwest Houston" data-es="Barbero · Noroeste de Houston">Barber · Northwest Houston</span></div>
       <h1 class="name d" id="name"><span class="rv">Diego</span><span class="rv">Sandoval</span></h1>
       <p class="quote rv">“Being a barber isn’t just cutting hair.”</p>
-      <div class="cta"><a class="btn" href="#book"><span class="br tl"></span><span class="dot"></span><span data-en="See open times" data-es="Ver horarios">See open times</span><span class="br br2"></span></a></div>
+      <div class="cta"><a class="btn" href="#book"><span data-en="Book a chair" data-es="Reservar silla">Book a chair</span></a></div>
     </div>
     <figcaption class="cap mono"><span><i>01</i>&nbsp; <span data-en="In the chair" data-es="En la silla">In the chair</span></span><span data-en="By appointment" data-es="Con cita">By appointment</span></figcaption>
   </figure>
@@ -387,13 +269,11 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
   </div>
 </section>
 
-<div class="cross" data-tool="clipper" data-dir="rtl" aria-hidden="true"></div>
 
 <!-- 2b · the tools -->
 <section class="tools" id="tools">
   <h2 class="d rv" data-en="The tools don’t make <em>the fade.</em>" data-es="Las herramientas no hacen <em>el fade.</em>">The tools don’t make <em>the fade.</em></h2>
   <figure class="island" id="island"><img src="assets/tools-05.jpg" width="1080" height="1440" alt="Diego holding his gold Black Ice clipper toward the camera" loading="lazy" decoding="async"><figcaption class="cap mono"><span><i>05</i>&nbsp; <span data-en="Black Ice FX, gold" data-es="Black Ice FX, dorado">Black Ice FX, gold</span></span><span data-en="Shot in shop" data-es="En el shop">Shot in shop</span></figcaption></figure>
-  <p class="spec1 mono"><span>BaBylissPRO Black Ice FX</span><span>#0 <i>·</i> #1 <i>·</i> #2 <i>·</i> #3 <i>·</i> <span data-en="freehand above" data-es="a mano arriba">freehand above</span></span></p>
 </section>
 
 <!-- 3 · the work -->
@@ -401,14 +281,14 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
   <h2 class="d rv" data-en="Fades, tapers, <em>freehand.</em>" data-es="Fades, tapers, <em>a mano.</em>">Fades, tapers, <em>freehand.</em></h2>
   <p class="lede rv">“I get paid to make people look good.”</p>
   <div class="prints" id="prints">
-    <button class="pr" type="button" data-src="assets/g-10-ornamental-nape-design.jpg"><span class="line"></span><svg class="blade" viewBox="0 0 26 26"><path d="M13 13 L24 9 L25 11 L14 15 Z"/><path d="M13 13 L24 17 L25 15 L14 11 Z"/><circle cx="6" cy="9" r="3.2"/><circle cx="6" cy="17" r="3.2"/></svg><div class="fr"><img src="assets/g-10-ornamental-nape-design.jpg" width="900" height="1125" alt="Ornamental freehand design carved into the nape" loading="lazy" decoding="async"><i class="vf a"></i><i class="vf b"></i><i class="vf c"></i><i class="vf d"></i></div><div class="cap"><span class="n">01</span><span class="t" data-en="Ornamental nape, freehand" data-es="Nuca ornamental, a mano">Ornamental nape, freehand</span><span class="m">60 min</span></div></button>
-    <button class="pr" type="button" data-src="assets/g-06-freehand-design-white.jpg"><span class="line"></span><svg class="blade" viewBox="0 0 26 26"><path d="M13 13 L24 9 L25 11 L14 15 Z"/><path d="M13 13 L24 17 L25 15 L14 11 Z"/><circle cx="6" cy="9" r="3.2"/><circle cx="6" cy="17" r="3.2"/></svg><div class="fr"><img src="assets/g-06-freehand-design-white.jpg" width="900" height="1125" alt="White line-work design drawn to the head" loading="lazy" decoding="async"><i class="vf a"></i><i class="vf b"></i><i class="vf c"></i><i class="vf d"></i></div><div class="cap"><span class="n">02</span><span class="t" data-en="Line work, drawn to the head" data-es="Líneas dibujadas a la cabeza">Line work, drawn to the head</span><span class="m">60 min</span></div></button>
-    <button class="pr" type="button" data-src="assets/g-04-skinfade-beige-wall.jpg"><span class="line"></span><svg class="blade" viewBox="0 0 26 26"><path d="M13 13 L24 9 L25 11 L14 15 Z"/><path d="M13 13 L24 17 L25 15 L14 11 Z"/><circle cx="6" cy="9" r="3.2"/><circle cx="6" cy="17" r="3.2"/></svg><div class="fr"><img src="assets/g-04-skinfade-beige-wall.jpg" width="900" height="1125" alt="Skin fade with a hard line-up" loading="lazy" decoding="async"><i class="vf a"></i><i class="vf b"></i><i class="vf c"></i><i class="vf d"></i></div><div class="cap"><span class="n">03</span><span class="t" data-en="Skin fade, hard line" data-es="Skin fade, línea marcada">Skin fade, hard line</span><span class="m">45 min</span></div></button>
-    <button class="pr" type="button" data-src="assets/g-08-curly-hightop-staircase.jpg"><span class="line"></span><svg class="blade" viewBox="0 0 26 26"><path d="M13 13 L24 9 L25 11 L14 15 Z"/><path d="M13 13 L24 17 L25 15 L14 11 Z"/><circle cx="6" cy="9" r="3.2"/><circle cx="6" cy="17" r="3.2"/></svg><div class="fr"><img src="assets/g-08-curly-hightop-staircase.jpg" width="900" height="1125" alt="Curly high top with a clean taper" loading="lazy" decoding="async"><i class="vf a"></i><i class="vf b"></i><i class="vf c"></i><i class="vf d"></i></div><div class="cap"><span class="n">04</span><span class="t" data-en="Curly top, clean taper" data-es="Rizado arriba, taper limpio">Curly top, clean taper</span><span class="m">45 min</span></div></button>
-    <button class="pr wide" type="button" data-src="assets/g-09-cutting-wide.jpg" data-wide="1"><span class="line"></span><svg class="blade" viewBox="0 0 26 26"><path d="M13 13 L24 9 L25 11 L14 15 Z"/><path d="M13 13 L24 17 L25 15 L14 11 Z"/><circle cx="6" cy="9" r="3.2"/><circle cx="6" cy="17" r="3.2"/></svg><div class="fr"><img src="assets/g-09-cutting-wide.jpg" width="1200" height="800" alt="Diego edging a line-up under the staircase" loading="lazy" decoding="async"><i class="vf a"></i><i class="vf b"></i><i class="vf c"></i><i class="vf d"></i></div><div class="cap"><span class="n">05</span><span class="t" data-en="Edge work, in progress" data-es="Perfilado, en proceso">Edge work, in progress</span><span class="m" data-en="On the clock" data-es="En turno">On the clock</span></div></button>
+    <button class="pr" type="button" data-src="assets/g-10-ornamental-nape-design.jpg"><span class="line"></span><svg class="blade" viewBox="0 0 26 26"><path d="M13 13 L24 9 L25 11 L14 15 Z"/><path d="M13 13 L24 17 L25 15 L14 11 Z"/><circle cx="6" cy="9" r="3.2"/><circle cx="6" cy="17" r="3.2"/></svg><div class="fr"><img src="assets/g-10-ornamental-nape-design.jpg" width="900" height="1125" alt="Ornamental freehand design carved into the nape" loading="lazy" decoding="async"></div><div class="cap"><span class="n">01</span><span class="t" data-en="Ornamental nape, freehand" data-es="Nuca ornamental, a mano">Ornamental nape, freehand</span><span class="m">60 min</span></div></button>
+    <button class="pr" type="button" data-src="assets/g-06-freehand-design-white.jpg"><span class="line"></span><svg class="blade" viewBox="0 0 26 26"><path d="M13 13 L24 9 L25 11 L14 15 Z"/><path d="M13 13 L24 17 L25 15 L14 11 Z"/><circle cx="6" cy="9" r="3.2"/><circle cx="6" cy="17" r="3.2"/></svg><div class="fr"><img src="assets/g-06-freehand-design-white.jpg" width="900" height="1125" alt="White line-work design drawn to the head" loading="lazy" decoding="async"></div><div class="cap"><span class="n">02</span><span class="t" data-en="Line work, drawn to the head" data-es="Líneas dibujadas a la cabeza">Line work, drawn to the head</span><span class="m">60 min</span></div></button>
+    <button class="pr" type="button" data-src="assets/g-04-skinfade-beige-wall.jpg"><span class="line"></span><svg class="blade" viewBox="0 0 26 26"><path d="M13 13 L24 9 L25 11 L14 15 Z"/><path d="M13 13 L24 17 L25 15 L14 11 Z"/><circle cx="6" cy="9" r="3.2"/><circle cx="6" cy="17" r="3.2"/></svg><div class="fr"><img src="assets/g-04-skinfade-beige-wall.jpg" width="900" height="1125" alt="Skin fade with a hard line-up" loading="lazy" decoding="async"></div><div class="cap"><span class="n">03</span><span class="t" data-en="Skin fade, hard line" data-es="Skin fade, línea marcada">Skin fade, hard line</span><span class="m">45 min</span></div></button>
+    <button class="pr" type="button" data-src="assets/g-08-curly-hightop-staircase.jpg"><span class="line"></span><svg class="blade" viewBox="0 0 26 26"><path d="M13 13 L24 9 L25 11 L14 15 Z"/><path d="M13 13 L24 17 L25 15 L14 11 Z"/><circle cx="6" cy="9" r="3.2"/><circle cx="6" cy="17" r="3.2"/></svg><div class="fr"><img src="assets/g-08-curly-hightop-staircase.jpg" width="900" height="1125" alt="Curly high top with a clean taper" loading="lazy" decoding="async"></div><div class="cap"><span class="n">04</span><span class="t" data-en="Curly top, clean taper" data-es="Rizado arriba, taper limpio">Curly top, clean taper</span><span class="m">45 min</span></div></button>
+    <button class="pr wide" type="button" data-src="assets/g-09-cutting-wide.jpg" data-wide="1"><span class="line"></span><svg class="blade" viewBox="0 0 26 26"><path d="M13 13 L24 9 L25 11 L14 15 Z"/><path d="M13 13 L24 17 L25 15 L14 11 Z"/><circle cx="6" cy="9" r="3.2"/><circle cx="6" cy="17" r="3.2"/></svg><div class="fr"><img src="assets/g-09-cutting-wide.jpg" width="1200" height="800" alt="Diego edging a line-up under the staircase" loading="lazy" decoding="async"></div><div class="cap"><span class="n">05</span><span class="t" data-en="Edge work, in progress" data-es="Perfilado, en proceso">Edge work, in progress</span><span class="m" data-en="On the clock" data-es="En turno">On the clock</span></div></button>
   </div>
 </section>
-<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo"><button class="x" type="button" aria-label="Close"><i></i><i></i></button><figure><div class="fr" id="lbfr"><img id="lbimg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></div><figcaption class="cap mono"><span id="lbcap"></span><span data-en="Tap to close" data-es="Toca para cerrar">Tap to close</span></figcaption></figure></div>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo"><button class="x glass" type="button" aria-label="Close"><i></i><i></i></button><figure><div class="fr" id="lbfr"><img id="lbimg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></div><figcaption class="cap mono"><span id="lbcap"></span><span data-en="Tap to close" data-es="Toca para cerrar">Tap to close</span></figcaption></figure></div>
 
 <div class="cross" data-tool="scissors" data-dir="ltr" aria-hidden="true"></div>
 
@@ -439,13 +319,12 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
   <p class="hours mono"><span data-en="Mon–Fri 4–9 pm · Sat 10–6" data-es="Lun–Vie 4–9 pm · Sáb 10–6">Mon–Fri 4–9 pm · Sat 10–6</span><br><span data-en="Sun closed" data-es="Dom cerrado">Sun closed</span></p>
 </section>
 
-<div class="cross" data-tool="clipper" data-dir="ltr" aria-hidden="true"></div>
 
 <!-- 6 · book -->
 <section class="book" id="book">
   <p class="tag d rv">“If it ain’t choppedbydiego <em>then it ain’t right.</em>”</p>
   <div class="cta">
-    <a class="btn armed" href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener"><span class="br tl"></span><span class="dot"></span><span data-en="Book on Booksy" data-es="Reservar en Booksy">Book on Booksy</span><span class="br br2"></span></a>
+    <a class="btn" href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener"><span data-en="Book on Booksy" data-es="Reservar en Booksy">Book on Booksy</span></a>
     <a class="btn ghost" href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener">Instagram</a>
   </div>
   <div class="widget" id="booksy"></div>
@@ -456,7 +335,7 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
 
 </div><!-- /#root -->
 </div><!-- /#scroll -->
-<a class="btn fab" id="fab" href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener"><span class="dot"></span><span data-en="Book" data-es="Reservar">Book</span></a>
+<a class="btn fab" id="fab" href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener"><span data-en="Book" data-es="Reservar">Book</span></a>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -476,12 +355,11 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
 
   /* ---- the tools in the crossings: scissors are two halves pivoting at their own origin; the clipper is the drawn one, <use>d ---- */
   const scissors = () => `<g class="tool sc"><g class="ha"><path d="M0 0 L46 -9 L48 -4 L2 4 Z"/><path d="M0 0 L-16 9"/><circle cx="-26" cy="14" r="8"/></g><g class="hb"><path d="M0 0 L46 9 L48 4 L2 -4 Z"/><path d="M0 0 L-16 -9"/><circle cx="-26" cy="-14" r="8"/></g><circle class="au" cx="0" cy="0" r="1.6"/></g>`
-  const clipper = (rtl) => `<g class="tool"><g class="hb"><use href="#clp-root" transform="${rtl ? 'translate(-66,-24) scale(.44)' : 'translate(66,-24) scale(-.44 .44)'}"/></g></g>`
   function buildCross (c, i) {
     const rtl = c.dataset.dir === 'rtl'
     // the path stays inside the frame so the tool never parks half off-screen at rest
     const d = rtl ? 'M352 48 C 300 22, 260 74, 200 48 S 100 24, 48 48' : 'M48 48 C 100 22, 140 74, 200 48 S 300 24, 352 48'
-    c.innerHTML = `<svg viewBox="0 0 400 96"><defs><clipPath id="cp${i}"><rect class="cr" x="${rtl ? 440 : -20}" y="-10" width="0" height="116"/></clipPath></defs><path class="p" d="${d}" fill="none" stroke="none"/><path class="cut" d="${d}" clip-path="url(#cp${i})"/>${c.dataset.tool === 'clipper' ? clipper(rtl) : scissors()}</svg>`
+    c.innerHTML = `<svg viewBox="0 0 400 96"><defs><clipPath id="cp${i}"><rect class="cr" x="${rtl ? 440 : -20}" y="-10" width="0" height="116"/></clipPath></defs><path class="p" d="${d}" fill="none" stroke="none"/><path class="cut" d="${d}" clip-path="url(#cp${i})"/>${scissors()}</svg>`
     return { path: c.querySelector('.p'), tool: c.querySelector('.tool'), rect: c.querySelector('.cr'), ha: c.querySelector('.ha'), hb: c.querySelector('.hb'), rtl, kind: c.dataset.tool }
   }
 
@@ -556,24 +434,21 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
       gsap.to('.cover .cap', { opacity: 0, ease: 'none', scrollTrigger: { trigger: '.hero', start: '60% top', end: 'bottom top', scrub: .6 } })
     }
     /* the sticky chair: appears once the fold is gone, hides when the booking beat is on screen */
-    const fab = document.getElementById('fab'); let pastFold = false, atBook = false
-    const fabSync = () => fab.classList.toggle('on', pastFold && !atBook)
+    const fab = document.getElementById('fab'); let pastFold = false, atBook = false, onType = 0
+    const fabSync = () => fab.classList.toggle('on', pastFold && !atBook && onType === 0)
+    // the pill steps aside while a headline crosses the bottom 120px — it never sits on display type
+    document.querySelectorAll('h2.d, .book .tag').forEach(h => ScrollTrigger.create({ trigger: h, start: 'top bottom', end: 'bottom bottom-=120px', onToggle: s => { onType += s.isActive ? 1 : -1; fabSync() } }))
     ScrollTrigger.create({ trigger: '.hero', start: 'bottom 70%', end: 'bottom 70%', onEnter: () => { pastFold = true; fabSync() }, onLeaveBack: () => { pastFold = false; fabSync() } })
+    ScrollTrigger.create({ trigger: '.rate', start: 'top 80%', end: 'bottom bottom', onToggle: s => { atBook = s.isActive; fabSync() } })   // the rows carry their own Booksy links; the pill steps aside there and on the booking beat
     ScrollTrigger.create({ trigger: '.book', start: 'top 85%', end: 'bottom top', onToggle: s => { atBook = s.isActive; fabSync() } })
 
-    /* ---- the clipper's specular: one highlight band sweeps the gold every few seconds (the band and its gradient travel together) ---- */
-    if (!reduce && document.getElementById('clp-spec-band')) {
-      const sweep = gsap.timeline({ repeat: -1, repeatDelay: 2.6 })
-      sweep.fromTo('#clp-spec-band', { attr: { transform: 'translate(-60 0)' } }, { attr: { transform: 'translate(190 0)' }, duration: 2.2, ease: 'sine.inOut' }, 0)
-        .fromTo('#clp-spec', { attr: { gradientTransform: 'translate(-60 0)' } }, { attr: { gradientTransform: 'translate(190 0)' }, duration: 2.2, ease: 'sine.inOut' }, 0)
-    }
     /* ---- the crossings: the tool travels the path with the scroll and leaves a dotted cut line behind it ---- */
     if (!reduce) document.querySelectorAll('.cross').forEach((c, i) => {
       const x = buildCross(c, i)
       const tl = gsap.timeline({ scrollTrigger: { trigger: c, start: 'top 98%', end: 'bottom 12%', scrub: .7,
         onUpdate: st => { const p = st.progress
-          if (x.kind === 'scissors') { const a = 16 * Math.abs(Math.sin(p * Math.PI * 4)); x.ha.setAttribute('transform', `rotate(${-a})`); x.hb.setAttribute('transform', `rotate(${a})`) }
-          else x.hb.setAttribute('transform', `rotate(${Math.sin(p * Math.PI * 3) * 2})`) } } })
+          const a = 16 * Math.abs(Math.sin(p * Math.PI * 4)); x.ha.setAttribute('transform', `rotate(${-a})`); x.hb.setAttribute('transform', `rotate(${a})`)
+        } } })
       tl.to(x.tool, { motionPath: { path: x.path, align: x.path, alignOrigin: [.5, .5], autoRotate: x.rtl ? 180 : 0 }, ease: 'none' }, 0)
         .fromTo(x.rect, { attr: { x: x.rtl ? 400 : 0, width: 0 } }, { attr: { x: 0, width: 400 }, ease: 'none' }, 0)
     })
@@ -586,7 +461,29 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
       gsap.timeline({ scrollTrigger: { trigger: '#fan', start: 'top 92%', end: 'top 30%', scrub: .5 } })
         .fromTo('#fan .p1 img', { scale: 1.12 }, { scale: 1, ease: 'none' }, 0)
         .fromTo('#fan .p2', { x: -40, y: 28, rotation: -3 }, { x: 0, y: 0, rotation: 0, ease: 'none' }, 0)
-      gsap.fromTo('#island img', { scale: 1.1, yPercent: -4 }, { scale: 1, yPercent: 4, ease: 'none', scrollTrigger: { trigger: '#island', start: 'top bottom', end: 'bottom top', scrub: .6 } })
+      // counter-drift while the pair is on screen: lead rises, inset sinks (the relationship changes, the page does not)
+      gsap.to('#fan .p1 img', { yPercent: -6, ease: 'none', scrollTrigger: { trigger: '#fan', start: 'top bottom', end: 'bottom top', scrub: .6 } })
+      gsap.to('#fan .p2 img', { yPercent: 6, ease: 'none', scrollTrigger: { trigger: '#fan', start: 'top bottom', end: 'bottom top', scrub: .6 } })
+    }
+    /* tap the inset and the two prints trade places — a hand-rolled FLIP: clones fly between the two frames, then the sources swap underneath */
+    {
+      const p1 = document.querySelector('#fan .p1'), p2 = document.querySelector('#fan .p2'); let busy = false
+      const swap = () => {
+        if (busy) return; busy = true
+        const a = p1.querySelector('img'), b = p2.querySelector('img')
+        const r1 = p1.getBoundingClientRect(), r2 = p2.getBoundingClientRect()
+        const c1 = a.cloneNode(), c2 = b.cloneNode(); c1.className = c2.className = 'fly'; c1.style.transform = c2.style.transform = 'none'
+        gsap.set(c1, { left: r1.left, top: r1.top, width: r1.width, height: r1.height }); gsap.set(c2, { left: r2.left, top: r2.top, width: r2.width, height: r2.height })
+        document.body.append(c1, c2); a.style.visibility = b.style.visibility = 'hidden'
+        const done = () => { [a.src, b.src] = [b.src, a.src]; [a.alt, b.alt] = [b.alt, a.alt]
+          const t1 = p1.querySelector('.cap'), t2 = p2.querySelector('.cap'); const h = t1.innerHTML; t1.innerHTML = t2.innerHTML; t2.innerHTML = h
+          a.style.visibility = b.style.visibility = ''; c1.remove(); c2.remove(); busy = false }
+        if (reduce) { done(); return }
+        gsap.to(c1, { left: r2.left, top: r2.top, width: r2.width, height: r2.height, duration: .48, ease: 'expo.out' })
+        gsap.to(c2, { left: r1.left, top: r1.top, width: r1.width, height: r1.height, duration: .48, ease: 'expo.out', onComplete: done })
+      }
+      p2.style.cursor = 'pointer'; p2.addEventListener('click', swap)
+      if (!reduce) gsap.fromTo('#island img', { scale: 1.1, yPercent: -4 }, { scale: 1, yPercent: 4, ease: 'none', scrollTrigger: { trigger: '#island', start: 'top bottom', end: 'bottom top', scrub: .6 } })
     }
 
     /* ---- the work: the blade draws the portfolio — a dotted cut line runs left to right, the print unmasks in its wake (21st 10905), viewfinder marks in the eye band ---- */
@@ -594,15 +491,35 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
     if (!reduce) prints.forEach((p) => {
       const fr = p.querySelector('.fr'), ln = p.querySelector('.line'), bl = p.querySelector('.blade'), im = p.querySelector('img')
       gsap.timeline({ scrollTrigger: { trigger: p, start: 'top 94%', end: 'top 46%', scrub: .5, onUpdate: st => { bl.style.transform = `translateX(${(st.progress * (p.clientWidth - 26)).toFixed(1)}px)` } } })
-        .fromTo(fr, { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', ease: 'none' }, 0)
+        .fromTo(fr, { clipPath: 'inset(0 100% 0 0 round 18px)', rotateX: 9, y: 24 }, { clipPath: 'inset(0 0% 0 0 round 18px)', rotateX: 0, y: 0, ease: 'none' }, 0)
         .fromTo(ln, { scaleX: 0 }, { scaleX: 1, ease: 'none' }, 0)
         .fromTo(im, { scale: 1.12 }, { scale: 1, ease: 'none' }, 0)
       ScrollTrigger.create({ trigger: p, start: 'top 60%', end: 'bottom 40%', onToggle: s => p.classList.toggle('on', s.isActive) })
     })
+    /* the lightbox: the tapped print itself flies to the frame (shared element), and flies home on close */
     const lb = document.getElementById('lb'), lbimg = document.getElementById('lbimg'), lbcap = document.getElementById('lbcap'), lbfr = document.getElementById('lbfr')
-    prints.forEach(p => p.addEventListener('click', () => { lbimg.src = p.dataset.src; lbimg.alt = p.querySelector('img').alt; lbcap.textContent = p.querySelector('.cap .t').textContent; lbfr.classList.toggle('wide', !!p.dataset.wide); lb.classList.add('on'); document.body.classList.add('lb-open'); lenis.stop()
-      if (!reduce) gsap.fromTo(lb.querySelector('figure'), { scale: .94, y: 12 }, { scale: 1, y: 0, duration: .8, ease: 'expo.out' }) }))
-    const closeLb = () => { lb.classList.remove('on'); document.body.classList.remove('lb-open'); lenis.start() }
+    let home = null, fly = null
+    const rect = el => { const r = el.getBoundingClientRect(); return { left: r.left, top: r.top, width: r.width, height: r.height } }
+    prints.forEach(p => p.addEventListener('click', () => {
+      if (fly) return
+      const src = p.querySelector('.fr'); home = rect(src)
+      lbimg.src = p.dataset.src; lbimg.alt = p.querySelector('img').alt; lbcap.textContent = p.querySelector('.cap .t').textContent; lbfr.classList.toggle('wide', !!p.dataset.wide)
+      document.body.classList.add('lb-open'); lenis.stop()
+      if (reduce) { lb.classList.add('on'); return }
+      lb.style.opacity = '0'; lb.style.pointerEvents = 'auto'; const to = rect(lbfr)   // measure the frame while the scrim is still clear
+      fly = document.createElement('img'); fly.className = 'fly'; fly.src = p.dataset.src; fly.alt = ''; document.body.appendChild(fly)
+      gsap.set(fly, home)
+      gsap.to(lb, { opacity: 1, duration: .45, ease: 'power2.out', onComplete: () => { lb.style.opacity = ''; lb.classList.add('on') } })
+      gsap.to(fly, { ...to, duration: .6, ease: 'expo.out', onComplete: () => { lb.classList.add('on'); lb.style.opacity = ''; fly.remove(); fly = null } })
+    }))
+    const closeLb = () => {
+      if (!lb.classList.contains('on') || fly) return
+      document.body.classList.remove('lb-open'); lenis.start()
+      if (reduce || !home) { lb.classList.remove('on'); return }
+      fly = document.createElement('img'); fly.className = 'fly'; fly.src = lbimg.src; fly.alt = ''; document.body.appendChild(fly)
+      gsap.set(fly, rect(lbfr)); lb.classList.remove('on')
+      gsap.to(fly, { ...home, duration: .55, ease: 'expo.out', onComplete: () => { fly.remove(); fly = null } })
+    }
     lb.addEventListener('click', closeLb); document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb() })
 
     /* ---- the chair: quote in the eye band is sharp; the long review lights word by word ---- */
@@ -610,7 +527,7 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
     const read = document.getElementById('read'), who = read.querySelector('.who')
     const words = read.firstChild.textContent.trim().split(' '); read.firstChild.remove()
     const spans = words.map(w => { const s = document.createElement('span'); s.textContent = w + ' '; read.insertBefore(s, who); return s })
-    ScrollTrigger.create({ trigger: read, start: 'top 78%', end: 'bottom 45%', scrub: .4, onUpdate: st => { const n = Math.round(st.progress * spans.length); spans.forEach((s, i) => s.classList.toggle('lit', i < n)) } })
+    ScrollTrigger.create({ trigger: read, start: 'top 82%', end: 'top 34%', scrub: .4, onUpdate: st => { const n = Math.round(st.progress * spans.length); spans.forEach((s, i) => s.classList.toggle('lit', i < n)) } })   // finishes before the eye band, so nobody stops on grey text
 
     /* ---- the rate card: chips settle in; tap opens one at a time (21st 9602) ---- */
     const rows = gsap.utils.toArray('.rw')
