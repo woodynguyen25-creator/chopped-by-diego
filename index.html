@@ -156,7 +156,7 @@ section{padding:var(--beat) 22px 0}
 .card{margin-top:24px;padding:4px 20px;will-change:transform}
 .card + .card{margin-top:16px}
 .quotes{font-family:var(--disp);font-style:italic;font-weight:400;font-variation-settings:"opsz" 48;font-size:25px;line-height:1.24;text-wrap:balance}
-.q{display:block;padding:20px 0;transition:filter .35s ease,opacity .35s ease;filter:blur(1.2px);opacity:.62}
+.q{display:block;padding:20px 0;transition:filter .35s ease,opacity .35s ease;filter:blur(.8px);opacity:.8}
 .q+.q{border-top:1px solid rgba(239,230,216,.12)}
 .q.on{filter:blur(0);opacity:1}
 .q .who{display:block;margin-top:8px;font-family:var(--mono);font-style:normal;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--smoke)}
@@ -192,7 +192,9 @@ section{padding:var(--beat) 22px 0}
 .rw .more p{padding:0 20px 16px;font-weight:300;font-size:15px;line-height:1.5;color:var(--cream);opacity:.85;max-width:32ch}
 .rw .more a{display:inline-flex;align-items:center;gap:8px;margin:0 20px 18px;min-height:44px;font-weight:500;font-size:15px;letter-spacing:-.01em;color:var(--signal);text-decoration:none}
 .rw .more a:after{content:'';width:7px;height:7px;border-top:1.5px solid var(--signal);border-right:1.5px solid var(--signal);transform:rotate(45deg);margin-left:2px}
-.hours{margin-top:30px;padding-top:18px;border-top:1px solid var(--hair);line-height:1.9}
+.place{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:20px}
+.place .k{display:block;margin-bottom:8px}
+.place p{font-weight:300;font-size:15px;line-height:1.5;color:var(--cream)}
 
 /* ============ 6 · book ============ */
 .book{position:relative;padding-bottom:40px}
@@ -204,6 +206,43 @@ section{padding:var(--beat) 22px 0}
 .book .note{margin-top:18px;line-height:1.9}
 footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
 
+/* ============ proof — the numbers, at display scale, counted by the scroll (CRISP's scale-as-proof, Blind Barber's scrub, no pin) ============ */
+.proof{padding-top:calc(var(--beat) * .3)}
+.proof{padding-bottom:calc(var(--beat) * .35)}
+.proof .row3{display:grid;grid-template-columns:1fr 1fr 1fr;margin-top:8px;padding:22px 6px 20px}
+.proof .stat{display:grid;grid-template-rows:auto auto;row-gap:14px;padding:0 14px;align-content:start}
+.proof .stat+.stat{box-shadow:inset 1px 0 0 rgba(239,230,216,.12)}
+.proof .stat .n{font-family:var(--disp);font-variation-settings:"opsz" 96;font-size:clamp(44px,13vw,58px);line-height:.9;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.proof .stat .l{font-size:10px;line-height:1.55;color:#C9BBA8;min-height:2.9em}
+.proof .facts{margin-top:18px;line-height:2;display:flex;flex-wrap:wrap;column-gap:4px}
+.proof .facts span{white-space:nowrap}
+.proof .facts i{margin:0 6px}
+/* ============ the feed — a native snap strip of the actual Instagram grid (Una's IG, Rendezvous' lookbook; one thumb, no library) ============ */
+.feed{padding-top:calc(var(--beat) * .7)}
+.feed .head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.feed .head a{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;font-size:12px;font-weight:500;color:var(--cream);text-decoration:none;white-space:nowrap;margin-bottom:6px}
+.strip{display:flex;gap:10px;margin:22px -22px 0;padding:0 22px 8px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.strip::-webkit-scrollbar{display:none}
+.strip a{flex:0 0 62%;aspect-ratio:4/5;scroll-snap-align:start;border-radius:var(--r-print);overflow:hidden;background:var(--carbon);position:relative;will-change:transform}
+.strip a img{width:100%;height:100%;object-fit:cover}
+.strip a:after{content:'';position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(239,230,216,.08)}
+.strip{-webkit-mask-image:linear-gradient(90deg,#000 86%,transparent);mask-image:linear-gradient(90deg,#000 86%,transparent)}
+.strip a .ig{position:absolute;left:12px;bottom:12px;width:32px;height:32px;display:grid;place-items:center;border-radius:50%}
+.strip a .ig svg{width:16px;height:16px;fill:none;stroke:var(--cream);stroke-width:1.6;stroke-linecap:round}
+/* reviews get a face: the initial in a glass disc */
+.q{display:grid;grid-template-columns:40px 1fr;column-gap:14px;align-items:start}
+.q .av,.read .av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-family:var(--sans);font-size:15px;font-weight:600;color:#EDE3D4;background:rgba(214,178,116,.14);border:1px solid rgba(214,178,116,.45);margin-top:2px}
+.q{grid-template-columns:44px 1fr}
+.read{display:grid;grid-template-columns:44px 1fr;column-gap:14px}
+.read .who{grid-column:2}
+.q .who{grid-column:2}
+/* desktop is deliberate: the phone composition sits in a darkroom — the hero, blurred and dimmed, behind a hairlined column */
+@media (min-width:900px){
+  body{background:var(--canvas)}
+  #scroll{background:radial-gradient(70% 60% at 50% 40%,rgba(58,46,36,.35),rgba(16,11,8,0) 70%)}
+  #root{box-shadow:0 0 0 1px rgba(239,230,216,.08),0 40px 120px rgba(0,0,0,.6);background:var(--canvas)}
+  .fab{right:calc(50% - 260px + 16px)}
+}
 @media (prefers-reduced-motion:reduce){
   #pre{display:none} .q{filter:none;opacity:1} .read span{color:var(--cream)} .cross{display:none} .sh{display:none} .mastwrap{transition:none} .fab{transition:none}
 }
@@ -241,6 +280,16 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
 </section>
 
 <div class="cross" data-tool="shear" data-dir="ltr" aria-hidden="true"></div>
+
+<!-- 1b · proof — the numbers a reel viewer wants before the story -->
+<section class="proof" id="proof">
+  <div class="row3 g-card">
+    <div class="stat"><span class="n" data-count="4.9" data-dec="1">0.0</span><span class="l mono" data-en="Booksy<br>rating" data-es="Calificación<br>Booksy">Booksy<br>rating</span></div>
+    <div class="stat"><span class="n" data-count="54">0</span><span class="l mono" data-en="Booksy<br>reviews" data-es="Reseñas<br>Booksy">Booksy<br>reviews</span></div>
+    <div class="stat"><span class="n" data-count="17">0</span><span class="l mono" data-en="Years old<br>licensed" data-es="Años<br>con licencia">Years old<br>licensed</span></div>
+  </div>
+  <p class="facts mono"><span data-en="Northwest Houston · 77064" data-es="Noroeste de Houston · 77064">Northwest Houston · 77064</span><i>·</i><span data-en="EN / ES" data-es="ES / EN">EN / ES</span><i>·</i><span data-en="Appointments only" data-es="Solo con cita">Appointments only</span></p>
+</section>
 
 <!-- 2 · the barber -->
 <section class="bio" id="bio">
@@ -285,11 +334,24 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
   <div class="score"><span class="n d">4.9</span><a class="src g-pill" href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener"><span data-en="54 reviews" data-es="54 reseñas">54 reviews</span><i>·</i><span>Booksy</span></a></div>
   <h2 class="d rv" data-en="What people <em>say.</em>" data-es="Lo que <em>dicen.</em>">What people <em>say.</em></h2>
   <div class="card g-card" id="quotes"><div class="quotes">
-    <span class="q">“The LeBron of cutting hair.”<span class="who"><i>—</i> Jaspur</span></span>
-    <span class="q">“Best cuts in the Nawfwest.”<span class="who"><i>—</i> Andrew</span></span>
-    <span class="q">“Bro, made me look younger.”<span class="who"><i>—</i> Cesar</span></span>
+    <span class="q"><span class="av g-pill">J</span><span>“The LeBron of cutting hair.”</span><span class="who"><i>—</i> Jaspur <i>·</i> Booksy</span></span>
+    <span class="q"><span class="av g-pill">A</span><span>“Best cuts in the Nawfwest.”</span><span class="who"><i>—</i> Andrew <i>·</i> Booksy</span></span>
+    <span class="q"><span class="av g-pill">C</span><span>“Bro, made me look younger.”</span><span class="who"><i>—</i> Cesar <i>·</i> Booksy</span></span>
   </div></div>
-  <div class="card g-card"><p class="read" id="read">I booked my appointment for 6:00pm and got a 10 guard, mid fade. Diego did a really good job and he takes his time.<span class="who mono"><i>—</i> German</span></p></div>
+  <div class="card g-card"><p class="read"><span class="av">G</span><span id="read">I booked my appointment for 6:00pm and got a 10 guard, mid fade. Diego did a really good job and he takes his time.</span><span class="who mono"><i>—</i> German <i>·</i> Booksy</span></p></div>
+</section>
+
+<!-- 4b · the feed -->
+<section class="feed" id="feed">
+  <div class="head"><h2 class="d rv" data-en="From <em>the feed.</em>" data-es="Del <em>feed.</em>">From <em>the feed.</em></h2><a class="g-pill" href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener">@choppedbydiego</a></div>
+  <div class="strip" id="strip">
+    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-1.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#EFE6D8" stroke="none"/></svg></span></a>
+    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-2.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#EFE6D8" stroke="none"/></svg></span></a>
+    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-3.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#EFE6D8" stroke="none"/></svg></span></a>
+    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-4.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#EFE6D8" stroke="none"/></svg></span></a>
+    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-5.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#EFE6D8" stroke="none"/></svg></span></a>
+    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-6.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#EFE6D8" stroke="none"/></svg></span></a>
+  </div>
 </section>
 
 <!-- 5 · the rate card -->
@@ -304,7 +366,10 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
   <div class="rw"><button type="button" aria-expanded="false"><span class="svc"><span data-en="Kids, 8 &amp; under" data-es="Niños, 8 o menos">Kids, 8 &amp; under</span><small>45 min</small></span><span class="p"><span class="dd"><b>$25</b></span></span><span class="pl"></span></button><div class="more"><div><p data-en="Same care, smaller chair." data-es="El mismo cuidado, silla más chica.">Same care, smaller chair.</p><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="Book this on Booksy" data-es="Reservar en Booksy">Book this on Booksy</a></div></div></div>
   <div class="rw"><button type="button" aria-expanded="false"><span class="svc"><span data-en="House call" data-es="A domicilio">House call</span><small>2 hrs · NW Houston</small></span><span class="p"><span class="dd"><b>$60</b></span></span><span class="pl"></span></button><div class="more"><div><p data-en="Diego comes to you, Northwest Houston." data-es="Diego va a ti, noroeste de Houston.">Diego comes to you, Northwest Houston.</p><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="Book this on Booksy" data-es="Reservar en Booksy">Book this on Booksy</a></div></div></div>
   </div>
-  <p class="hours mono"><span data-en="Mon–Fri 4–9 pm · Sat 10–6" data-es="Lun–Vie 4–9 pm · Sáb 10–6">Mon–Fri 4–9 pm · Sat 10–6</span><br><span data-en="Sun closed" data-es="Dom cerrado">Sun closed</span></p>
+  <div class="place g-card">
+    <div><span class="k mono" data-en="Where" data-es="Dónde">Where</span><p data-en="Northwest Houston, 77064. Appointments only — the address comes with your booking." data-es="Noroeste de Houston, 77064. Solo con cita — la dirección llega con tu reserva.">Northwest Houston, 77064. Appointments only — the address comes with your booking.</p></div>
+    <div><span class="k mono" data-en="When" data-es="Cuándo">When</span><p><span data-en="Mon–Fri 4–9 pm" data-es="Lun–Vie 4–9 pm">Mon–Fri 4–9 pm</span><br><span data-en="Sat 10–6 · Sun closed" data-es="Sáb 10–6 · Dom cerrado">Sat 10–6 · Sun closed</span></p></div>
+  </div>
 </section>
 
 <!-- 6 · book -->
@@ -420,7 +485,7 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
        headline / card crosses the bottom 132px — decided from live rects on every scroll tick, never from counters */
     const fab = document.getElementById('fab'), hero = document.querySelector('.hero')
     const avoidBeats = [document.querySelector('.rate'), document.querySelector('.book')]
-    const avoidEdges = Array.from(document.querySelectorAll('h2.d, .book .tagline, .card'))
+    const avoidEdges = Array.from(document.querySelectorAll('h2.d, .book .tagline, .card, .proof .row3, .body, .place'))
     const fabSync = () => {
       const H = scroller.clientHeight, zone = H - 132
       const past = hero.getBoundingClientRect().bottom < H * .7
@@ -440,6 +505,12 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
         .fromTo(x.rect, { attr: { x: x.rtl ? 400 : 0, width: 0 } }, { attr: { x: 0, width: 400 }, ease: 'none' }, 0)
     })
 
+    /* ---- proof: the numbers count with the scroll (scrub, no pin) — 0 to the real figure as the card climbs the screen ---- */
+    document.querySelectorAll('.proof .n').forEach(n => { const target = +n.dataset.count, dec = +(n.dataset.dec || 0)
+      const fmt = v => v.toFixed(dec)
+      if (reduce) { n.textContent = fmt(target); return }
+      ScrollTrigger.create({ trigger: n, start: 'top 95%', end: 'top 45%', scrub: .4, onUpdate: st => { n.textContent = fmt(target * gsap.parseEase('power2.out')(st.progress)) } }) })
+    if (!reduce) gsap.utils.toArray('.strip a').forEach((a, i) => gsap.from(a, { y: 24, duration: .7, ease: 'expo.out', delay: i * .06, clearProps: 'transform', scrollTrigger: { trigger: '#strip', start: 'top 90%', once: true } }))
     /* ---- the barber: shutter print; lead/inset counter-drift; tap the inset to trade places ---- */
     if (!reduce) {
       gsap.timeline({ scrollTrigger: { trigger: '#shutter', start: 'top 88%', end: 'top 28%', scrub: .5 } })
@@ -506,9 +577,9 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
 
     /* ---- the chair: the quote in the eye band is sharp; the long review lights word by word, done before the eye band ---- */
     gsap.utils.toArray('.q').forEach(q => ScrollTrigger.create({ trigger: q, start: 'top 65%', end: 'bottom 35%', onToggle: s => q.classList.toggle('on', s.isActive) }))
-    const read = document.getElementById('read'), who = read.querySelector('.who')
+    const read = document.getElementById('read'), who = null
     const words = read.firstChild.textContent.trim().split(' '); read.firstChild.remove()
-    const spans = words.map(w => { const s = document.createElement('span'); s.textContent = w + ' '; read.insertBefore(s, who); return s })
+    const spans = words.map(w => { const s = document.createElement('span'); s.textContent = w + ' '; read.appendChild(s); return s })
     ScrollTrigger.create({ trigger: read, start: 'top 80%', end: 'bottom 35%', scrub: .4, onUpdate: st => { const n = Math.round(st.progress * spans.length); spans.forEach((s, i) => s.classList.toggle('lit', i < n)) } })
 
     /* ---- the rate card ---- */
