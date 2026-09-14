@@ -7,357 +7,398 @@
 <meta name="description" content="Diego Sandoval — fades, tapers and freehand designs in Northwest Houston. 4.9 on Booksy across 54 confirmed clients. See open times and book a chair.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..600&family=Azeret+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..600&display=swap" rel="stylesheet">
 <style>
-/* ============ the darkroom, v5 — the same dark world; controls and surfaces in Apple's material language ============ */
+/* ============ v7 — the price-list register: his own graphic, blacks, whites and greys; the photographs supply the colour ============ */
 :root{
-  --canvas:#100B08; --carbon:#0A0705; --hair:#3A2E24; --hair-2:#2A2119; --smoke:#8E8073; --cream:#EFE6D8; --signal:#D28E3A;
+  --ink:#F5F5F2; --ink-2:#B2B4B6; --g0:#090909; --g1:#242526; --surface:#303234; --line:rgba(255,255,255,.16);
+  --lt:#F1F2F0; --lt-ink:#111213; --lt-2:#606367; --lt-line:rgba(0,0,0,.14);
   --vh:8px; --vh-px:800px;                   /* overwritten by JS from the first non-zero pane height; never a viewport unit */
-  --mono:'Azeret Mono',ui-monospace,Menlo,monospace;
   --sans:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --disp:'Bodoni Moda','Bodoni 72','Didot',Georgia,serif;
+  --disp:'Archivo','Archivo Black','Arial Black',system-ui,sans-serif;
   --ease:cubic-bezier(.16,1,.3,1);           /* reveals: exponential out */
   --apple:cubic-bezier(.32,.72,0,1);         /* controls: the iOS curve — quick in, long settle */
-  --r-print:24px; --r-card:24px;             /* photographs and cards share a radius; pills are 999; the bar is 26 */
-  --beat:104px;
-  /* glass, three levels — warmth borrowed from the photographs, never a grey backing */
-  --g-line:rgba(239,230,216,.16); --g-top:inset 0 1px 0 rgba(255,246,228,.28); --g-in:inset 0 -1px 8px rgba(16,11,8,.24); --g-out:0 8px 24px rgba(0,0,0,.24);
+  --r-print:20px; --r-card:20px; --r-bar:28px;
+  --beat:104px; --gut:20px;
+  --grade:saturate(.94) contrast(1.025) brightness(1.025);
 }
-.g-bar{background:rgba(32,22,16,.72);backdrop-filter:blur(20px) saturate(140%);-webkit-backdrop-filter:blur(20px) saturate(140%);border:1px solid var(--g-line);box-shadow:var(--g-top),var(--g-in),var(--g-out)}
-.g-card{background:rgba(43,29,20,.78);backdrop-filter:blur(16px) saturate(125%);-webkit-backdrop-filter:blur(16px) saturate(125%);border:1px solid var(--g-line);box-shadow:var(--g-top),var(--g-in),var(--g-out);border-radius:var(--r-card)}
-.g-pill{background:rgba(28,19,13,.68);backdrop-filter:blur(12px) saturate(150%);-webkit-backdrop-filter:blur(12px) saturate(150%);border:1px solid var(--g-line);box-shadow:var(--g-top),var(--g-in),var(--g-out);border-radius:999px}
+/* glass, three levels, re-derived for a neutral ground (bar / card / pill) */
+.g-bar{background:rgba(18,20,22,.62);backdrop-filter:blur(24px) saturate(115%);-webkit-backdrop-filter:blur(24px) saturate(115%);border:1px solid rgba(255,255,255,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.30),0 6px 20px rgba(0,0,0,.18)}
+.g-card{background:rgba(255,255,255,.055);backdrop-filter:blur(12px) saturate(105%);-webkit-backdrop-filter:blur(12px) saturate(105%);border:1px solid rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.20);border-radius:var(--r-card)}
+.g-pill{background:rgba(245,245,242,.90);color:var(--lt-ink);backdrop-filter:blur(16px) saturate(110%);-webkit-backdrop-filter:blur(16px) saturate(110%);border:1px solid rgba(255,255,255,.40);box-shadow:inset 0 1px 0 rgba(255,255,255,.80),0 6px 20px rgba(0,0,0,.14);border-radius:999px}
+.lt .g-card{background:rgba(255,255,255,.48);border-color:rgba(0,0,0,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 6px 20px rgba(0,0,0,.07)}
+.lt .g-pill{background:rgba(255,255,255,.88);border-color:rgba(0,0,0,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 6px 20px rgba(0,0,0,.07)}
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{height:var(--vh-px);overflow:hidden;background:var(--canvas)}
-body{color:var(--cream);font-family:var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+html,body{height:var(--vh-px);overflow:hidden;background:var(--g0)}
+body{color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 #scroll{position:relative;height:var(--vh-px);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
-#root{position:relative;max-width:520px;margin:0 auto}
-.grain{position:absolute;inset:0;pointer-events:none;z-index:5;opacity:.06;background-image:radial-gradient(rgba(255,255,255,.9) .6px,transparent .7px);background-size:3px 3px;mix-blend-mode:overlay}
+#root{position:relative;max-width:520px;margin:0 auto;background:var(--g0)}
+.grain{position:absolute;inset:0;pointer-events:none;z-index:5;opacity:.05;background-image:radial-gradient(rgba(255,255,255,.9) .6px,transparent .7px);background-size:3px 3px;mix-blend-mode:overlay}
 img{display:block;max-width:100%}
 a{color:inherit}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
-:focus-visible{outline:1px solid var(--signal);outline-offset:4px}
-.mono{font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--smoke)}
-.mono i{font-style:normal;color:var(--signal)}
-.d{font-family:var(--disp);font-weight:400;font-variation-settings:"opsz" 96;letter-spacing:-.015em;text-wrap:balance}
-.d em{font-style:italic;font-weight:400;font-variation-settings:"opsz" 96}
-h2.d{font-size:clamp(46px,13vw,56px);line-height:.98}
-.body{margin-top:26px;font-weight:300;font-size:17px;line-height:1.62;letter-spacing:-.005em;font-variation-settings:"opsz" 24,"wdth" 96;max-width:36ch;color:var(--cream)}
-.body b{font-weight:400}
+:focus-visible{outline:1.5px solid var(--ink);outline-offset:4px}
+.lt :focus-visible{outline-color:var(--lt-ink)}
+/* the ground: his gradient, continuous across a band of beats; direction reverses across tools–gallery */
+.band{position:relative;background:linear-gradient(110deg,var(--g0) 0%,var(--g1) 100%)}
+.band.rev{background:linear-gradient(250deg,var(--g0) 0%,var(--g1) 100%)}
+.lt{position:relative;z-index:1;background:var(--lt);color:var(--lt-ink)}
+.seam{height:32px;pointer-events:none}
+.seam.in{background:linear-gradient(180deg,#111213,var(--lt))}      /* dark band → light beat */
+.seam.out{background:linear-gradient(180deg,var(--lt),#111213)}     /* light beat → dark band */
+/* type — Archivo's width axis does the price list's work: heavy extended caps up top, light tracked caps for the small stuff */
+.lab{font-family:var(--disp);font-weight:500;font-size:12px;line-height:16px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.lt .lab{color:var(--lt-2)}
+.d{font-family:var(--disp);font-weight:800;font-variation-settings:"wdth" 106;letter-spacing:-.025em;text-transform:uppercase;text-wrap:balance}
+h2.d{font-size:34px;line-height:35px}
+.body{margin-top:24px;font-weight:400;font-size:16px;line-height:25px;letter-spacing:-.003em;font-variation-settings:"opsz" 24,"wdth" 96;max-width:36ch;color:var(--ink)}
+.body b{font-weight:500}
+.lt .body{color:var(--lt-ink)}
 .w{display:inline-block;overflow:hidden;vertical-align:top;padding:.04em .08em .14em;margin:-.04em -.08em -.14em}
 .w b{display:inline-block;font-weight:inherit}
-section{padding:var(--beat) 22px 0}
-/* the photo caption: a glass pill sitting on the photograph, index in mono, words in sans */
-.tag{position:absolute;left:16px;bottom:16px;z-index:2;display:inline-flex;align-items:center;gap:10px;height:36px;padding:0 14px 0 12px;font-size:12px;font-weight:500;letter-spacing:-.005em;color:var(--cream);white-space:nowrap}
-.tag i{font-family:var(--mono);font-style:normal;font-size:10px;letter-spacing:.12em;color:var(--signal)}
+section{padding:var(--beat) var(--gut) 0;scroll-margin-top:80px}
+/* the photo caption: a light pill, words only */
+.tag{position:absolute;left:16px;bottom:16px;z-index:2;display:block;font-family:var(--disp);font-weight:500;font-size:11px;line-height:16px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;color:var(--ink);text-shadow:0 1px 2px rgba(0,0,0,.5)}
+.tag.g-pill{background:none;border:0;box-shadow:none;border-radius:0;padding:0;backdrop-filter:none;-webkit-backdrop-filter:none;color:var(--ink)}
+/* every photograph gets the same grade so it sits on grey instead of fighting it */
+.plate img,.shutter img,.fan img,.island img,.pr img,.strip img,.lb img{filter:var(--grade)}
 
-/* ============ preloader ============ */
-#pre{position:absolute;inset:0;height:var(--vh-px);z-index:60;background:var(--canvas);display:grid;place-items:center;transition:opacity .6s var(--ease)}
-#pre svg{width:220px;height:auto;overflow:visible}
-#pre path{fill:none;stroke:var(--cream);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
-#pre.off{opacity:0;pointer-events:none}
+/* ============ loader — the wordmark, then it becomes the nav ============ */
+#pre{position:absolute;inset:0;height:var(--vh-px);z-index:60;display:grid;place-items:center;pointer-events:none}
+#pre .bg{position:absolute;inset:0;background:var(--g0)}
+.wm{font-family:var(--disp);font-weight:900;font-variation-settings:"wdth" 112;letter-spacing:-.035em;text-transform:uppercase;line-height:.92;color:var(--ink)}
+.wm span{display:block}
+.wm .cl{overflow:hidden;padding:.06em 0 .12em;margin:-.06em 0 -.12em}
+.wm .cl b{display:block;font-weight:inherit}
+#prewm{position:relative;font-size:46px;transform-origin:0 0;will-change:transform}
 
-/* ============ mast — a floating glass bar, gets out of the way on the way down ============ */
-.mastwrap{position:sticky;top:0;z-index:40;padding:12px 16px 0;pointer-events:none;transition:transform .5s var(--apple)}
-.mastwrap.hide{transform:translateY(-120%)}
-.mast{pointer-events:auto;display:flex;justify-content:space-between;align-items:center;height:52px;padding:0 6px 0 18px;border-radius:26px}
-.mast b{font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cream)}
-.seg{position:relative;display:grid;grid-template-columns:1fr 1fr;border-radius:999px;padding:3px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;user-select:none;background:rgba(239,230,216,.08)}
-.seg button{padding:8px 13px;color:var(--smoke);position:relative;z-index:1;letter-spacing:inherit;text-transform:inherit;border-radius:999px;min-height:34px}
-.seg .thumb{position:absolute;top:3px;bottom:3px;left:3px;width:calc(50% - 3px);border-radius:999px;background:var(--cream);overflow:hidden;transition:transform .42s var(--apple)}
-.seg .thumb .inv{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;width:200%;transition:transform .42s var(--apple)}
-.seg .thumb .inv span{padding:8px 13px;text-align:center;color:var(--canvas)}
-.seg.es .thumb{transform:translateX(100%)} .seg.es .thumb .inv{transform:translateX(-50%)}
+/* ============ nav — a floating glass bar holding the wordmark, language, menu and Book; the menu is a sheet under the bar ============ */
+.mastwrap{position:sticky;top:0;z-index:40;padding:12px 12px 0;pointer-events:none;transition:transform .22s cubic-bezier(.33,1,.68,1)}
+.mastwrap.hide{transform:translateY(-140%)}
+.mastwrap.lt .mast{background:rgba(255,255,255,.72);color:var(--lt-ink);border-color:rgba(0,0,0,.10);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 6px 20px rgba(0,0,0,.07)}
+.mastwrap.lt .mast .wm,.mastwrap.lt .ctl .lang{color:var(--lt-ink)} .mastwrap.lt .ctl .menu i{background:var(--lt-ink)} .mastwrap.lt .ctl .bk{background:var(--lt-ink);color:var(--ink)}
+.mastwrap.open .mast{background:transparent;border-color:transparent;box-shadow:none;color:var(--ink)} .mastwrap.open .mast .wm,.mastwrap.open .ctl .lang{color:var(--ink)} .mastwrap.open .ctl .menu i{background:var(--ink)} .mastwrap.open .ctl .bk{background:var(--ink);color:var(--g0)}
+.mast{pointer-events:auto;display:flex;justify-content:space-between;align-items:center;height:56px;padding:0 6px 0 16px;border-radius:var(--r-bar);position:relative;z-index:2}
+.mast .wm{font-size:11px;visibility:hidden;text-decoration:none}
+.mast .wm.on{visibility:visible}
+.ctl{display:flex;align-items:center;gap:4px}
+.ctl .lang{width:44px;height:44px;border-radius:999px;font-family:var(--disp);font-weight:600;font-size:12px;letter-spacing:.08em;color:var(--ink);transition:background .3s var(--apple)}
+.ctl .lang:hover{background:rgba(255,255,255,.08)}
+.ctl .menu{position:relative;width:44px;height:44px;border-radius:999px;transition:background .3s var(--apple)}
+.ctl .menu:hover{background:rgba(255,255,255,.08)}
+.ctl .menu i{position:absolute;left:50%;top:50%;width:18px;height:1.5px;border-radius:1px;background:var(--ink);transform:translate(-50%,-50%) translateY(-3.5px);transition:transform .4s var(--apple)}
+.ctl .menu i+i{transform:translate(-50%,-50%) translateY(3.5px)}
+.open .ctl .menu i{transform:translate(-50%,-50%) rotate(45deg)} .open .ctl .menu i+i{transform:translate(-50%,-50%) rotate(-45deg)}
+.ctl .bk{display:inline-flex;align-items:center;justify-content:center;min-width:64px;height:44px;padding:0 16px;border-radius:999px;background:var(--ink);color:var(--g0);text-decoration:none;font-family:var(--disp);font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;transition:transform .35s var(--apple)}
+.ctl .bk:active{transform:scale(.96)}
+/* the sheet: opaque, under the bar, rows fade in staggered once the container has grown (21st 16369's morph, on our clock) */
+.sheet{pointer-events:auto;position:absolute;left:12px;right:12px;top:12px;padding-top:56px;border-radius:var(--r-bar);background:#111213;border:1px solid rgba(255,255,255,.12);box-shadow:0 20px 50px rgba(0,0,0,.45);clip-path:inset(0 0 100% 0 round var(--r-bar));transition:clip-path .55s var(--apple);z-index:1}
+.open .sheet{clip-path:inset(0 0 0 0 round var(--r-bar))}
+.sheet a{display:flex;align-items:center;justify-content:space-between;height:56px;padding:0 20px;font-family:var(--disp);font-weight:700;font-size:16px;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);text-decoration:none;opacity:0;transform:translateY(8px);transition:opacity .3s var(--ease),transform .5s var(--ease)}
+.sheet a+a{border-top:1px solid rgba(255,255,255,.08)}
+.sheet a span{position:relative;padding-bottom:4px}
+.sheet a span:after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--ink);transform:scaleX(0);transform-origin:0 50%;transition:transform .4s var(--apple)}
+.sheet a[aria-current="true"] span:after{transform:scaleX(1)}
+.sheet a i{font-style:normal;font-weight:400;font-size:12px;letter-spacing:.08em;color:var(--ink-2)}
+.sheet .row-pad{height:12px}
+.open .sheet a{opacity:1;transform:none}
+.open .sheet a:nth-child(1){transition-delay:.18s} .open .sheet a:nth-child(2){transition-delay:.24s} .open .sheet a:nth-child(3){transition-delay:.30s} .open .sheet a:nth-child(4){transition-delay:.36s} .open .sheet a:nth-child(5){transition-delay:.42s}
+.scrim{position:fixed;inset:0;z-index:39;background:rgba(9,9,9,.4);opacity:0;pointer-events:none;transition:opacity .4s var(--apple)}
+.menu-open .scrim{opacity:1;pointer-events:auto}
 
 /* ============ 1 · the name ============ */
-.hero{margin-top:-64px;padding:0 22px}
-.cover{margin:0 -22px;position:relative;height:calc(var(--vh) * 94);min-height:580px;overflow:hidden;background:var(--carbon)}
-.plate{position:absolute;inset:-40px 0 0;will-change:transform}
-.plate img{width:100%;height:100%;object-fit:cover;object-position:55% 30%;filter:contrast(1.06) saturate(.86) brightness(.9);transform-origin:50% 40%;will-change:transform}
-.cover:before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(16,11,8,.34) 0%,rgba(16,11,8,0) 26%,rgba(16,11,8,.4) 56%,rgba(16,11,8,.97) 100%)}
-.lockup{position:absolute;left:22px;right:22px;bottom:40px;z-index:2;will-change:transform}
+.hero{margin-top:-68px;padding:0 var(--gut)}
+.cover{margin:0 calc(var(--gut) * -1);position:relative;height:calc(var(--vh) * 94);min-height:580px;overflow:hidden;background:var(--g0)}
+.plate{position:absolute;left:0;right:0;top:-24px;bottom:-24px;will-change:transform}
+.plate img{width:100%;height:100%;object-fit:cover;object-position:55% 30%;transform-origin:50% 40%;will-change:transform}
+.cover:before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(9,9,9,.36) 0%,rgba(9,9,9,0) 26%,rgba(9,9,9,.34) 56%,rgba(9,9,9,.96) 100%)}
+.lockup{position:absolute;left:var(--gut);right:var(--gut);bottom:66px;z-index:2;will-change:transform}
 .lockup .k{display:flex;gap:10px;align-items:center;margin-bottom:16px}
-.lockup .k i{width:22px;height:1px;background:var(--signal)}
-.name{font-size:clamp(68px,21vw,96px);line-height:.9;letter-spacing:-.03em;text-shadow:0 2px 30px rgba(10,7,5,.65)}
+.lockup .k i{width:22px;height:1px;background:var(--ink)}
+.name{font-size:clamp(40px,11.6vw,46px);line-height:.98;letter-spacing:-.035em;font-weight:900;text-shadow:0 2px 24px rgba(0,0,0,.45)}
 .name span{display:block}
-.name span:first-child{font-weight:400;font-variation-settings:"opsz" 96}
-.name span+span{font-weight:650;font-variation-settings:"opsz" 96}
-.quote{margin-top:18px;font-family:var(--disp);font-style:italic;font-weight:400;font-variation-settings:"opsz" 48;font-size:23px;line-height:1.28;max-width:20ch;text-wrap:balance}
-.cover .cta{margin-top:26px}
-.cover .tag{left:22px;bottom:14px}
-/* buttons — the iOS pill */
-.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:14px 24px;border-radius:999px;background:var(--cream);color:var(--canvas);text-decoration:none;font-family:var(--sans);font-weight:600;font-size:15px;letter-spacing:-.005em;font-variation-settings:"opsz" 18,"wdth" 100;transition:transform .35s var(--apple),background .35s var(--apple);box-shadow:0 10px 26px rgba(0,0,0,.3)}
-.btn:hover{background:#fff8ec}
+.quote{margin-top:16px;font-family:var(--disp);font-weight:300;font-size:20px;line-height:1.3;letter-spacing:-.005em;max-width:24ch;text-wrap:balance;color:var(--ink)}
+.cover .cta{margin-top:24px}
+.cover .tag{left:var(--gut);bottom:14px}
+/* buttons — the iOS pill, solid ink */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:14px 24px;border-radius:999px;background:var(--ink);color:var(--g0);text-decoration:none;font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;transition:transform .35s var(--apple),background .35s var(--apple);box-shadow:0 10px 26px rgba(0,0,0,.3)}
+.btn:hover{background:#fff}
 .btn:active{transform:scale(.965)}
-.btn.ghost{background:rgba(28,19,13,.68);color:var(--cream);backdrop-filter:blur(12px) saturate(150%);-webkit-backdrop-filter:blur(12px) saturate(150%);border:1px solid var(--g-line);box-shadow:var(--g-top),var(--g-in),var(--g-out)}
-.btn.ghost:hover{background:rgba(43,29,20,.8)}
-.fab{position:fixed;right:16px;bottom:max(16px,env(safe-area-inset-bottom));z-index:50;min-width:144px;transform:translateY(140%);transition:transform .6s var(--apple);box-shadow:0 14px 34px rgba(0,0,0,.45)}
-.fab.on{transform:none}
-.fab.on:active{transform:scale(.965)}
+.btn.ghost{background:rgba(255,255,255,.055);color:var(--ink);backdrop-filter:blur(12px) saturate(105%);-webkit-backdrop-filter:blur(12px) saturate(105%);border:1px solid rgba(255,255,255,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.2)}
+.btn.ghost:hover{background:rgba(255,255,255,.1)}
 
-/* ============ crossings — the shears travel a cut line between beats ============ */
-.cross{position:relative;margin:0 -22px;pointer-events:none}
+/* ============ crossings — the shears travel a cut line between beats, monochrome ============ */
+.cross{position:relative;margin:0 calc(var(--gut) * -1);pointer-events:none}
 .cross svg{display:block;width:100%;height:auto;overflow:visible}
-.cross .cut{fill:none;stroke:var(--smoke);stroke-width:1;stroke-linecap:round;opacity:.9}
+.cross .cut{fill:none;stroke:var(--ink-2);stroke-width:1;stroke-linecap:round;opacity:.7}
 .cross .cut.dash{stroke-dasharray:3 4}
-.cross .sc path,.cross .sc circle,.cross .sc line,.cross .sc ellipse{fill:none;stroke:var(--cream);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
-.cross .sc .fl{fill:rgba(239,230,216,.06)}
-.cross .sc .au{stroke:var(--signal)} .cross .sc .auf{fill:var(--signal);stroke:none}
+.cross .sc path,.cross .sc circle,.cross .sc line,.cross .sc ellipse{fill:none;stroke:var(--ink);stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.cross .sc .fl{fill:rgba(255,255,255,.05)}
 .cross + section{padding-top:calc(var(--beat) * .3)}
 
-/* ============ 2 · the barber ============ */
-.shutter{position:relative;margin:44px -22px 0;aspect-ratio:4/5;overflow:hidden;background:var(--carbon)}
-.shutter img{width:100%;height:100%;object-fit:cover;object-position:center 30%;will-change:transform}
-.sh{position:absolute;left:0;right:0;height:50.5%;background:var(--canvas);will-change:transform}
+/* ============ 1b · proof — a light beat: the numbers at display scale on his white ============ */
+.proof{padding-top:22px;padding-bottom:calc(var(--beat) * .5)}
+.proof .row3{display:grid;grid-template-columns:1fr 1fr 1fr;margin-top:4px}
+.proof .stat{display:grid;grid-template-rows:auto auto;row-gap:12px;padding:0 12px 0 0;align-content:start;will-change:transform}
+.proof .stat+.stat{padding-left:14px;box-shadow:inset 1px 0 0 var(--lt-line)}
+.proof .stat .n{font-family:var(--disp);font-weight:800;font-variation-settings:"wdth" 112;font-size:44px;line-height:46px;letter-spacing:-.03em;font-variant-numeric:tabular-nums lining-nums;color:var(--lt-ink)}
+.proof .stat .l{min-height:2.7em;font-size:11px;line-height:15px}
+.proof .facts{margin-top:26px;padding-top:16px;border-top:1px solid var(--lt-line);line-height:2;display:flex;flex-wrap:wrap;column-gap:4px}
+.proof .facts span{white-space:nowrap}
+.proof .facts i{margin:0 6px;font-style:normal}
+
+/* ============ 2 · the barber — deepest depth on the page ============ */
+.shutter{position:relative;margin:44px calc(var(--gut) * -1) 0;aspect-ratio:4/5;overflow:hidden;background:var(--g0)}
+.shutter img{position:absolute;left:0;top:-20px;width:100%;height:calc(100% + 40px);object-fit:cover;object-position:center 30%;will-change:transform}
+.sh{position:absolute;left:0;right:0;height:50.5%;background:var(--g0);will-change:transform;z-index:1}
 .sh.t{top:0;transform-origin:50% 0} .sh.b{bottom:0;transform-origin:50% 100%}
-.sh:after{content:'';position:absolute;left:0;right:0;height:1px;background:rgba(239,230,216,.4)}
+.sh:after{content:'';position:absolute;left:0;right:0;height:1px;background:rgba(255,255,255,.4)}
 .sh.t:after{bottom:0} .sh.b:after{top:0}
-.shutter .tag{left:22px}
+.shutter .tag{left:var(--gut)}
 .fan{position:relative;margin:64px 0 0;padding-bottom:40px}
-.fan figure{position:relative;overflow:hidden;background:var(--carbon);border-radius:var(--r-print)}
-.fan figure img{width:100%;height:100%;object-fit:cover;will-change:transform}
+.fan figure{position:relative;overflow:hidden;background:var(--g0);border-radius:var(--r-print);will-change:transform}
+.fan figure img{position:absolute;left:0;top:-36px;width:100%;height:calc(100% + 72px);object-fit:cover;will-change:transform}
 .fan .p1{width:100%;aspect-ratio:4/5}
-.fan .p2{position:absolute;left:-22px;bottom:0;width:46%;aspect-ratio:4/5;box-shadow:0 22px 44px rgba(0,0,0,.55),0 0 0 6px var(--canvas);will-change:transform;z-index:2;cursor:pointer}
-.fan .p2 .tag{left:12px;bottom:12px;height:30px;padding:0 12px 0 10px;font-size:11px}
+.fan .p2{position:absolute;left:0;bottom:0;width:156px;aspect-ratio:4/5;box-shadow:0 22px 44px rgba(0,0,0,.5),0 0 0 3px #111213;z-index:2;cursor:pointer}
+.fan .p2 .tag{left:12px;bottom:12px}
 
 /* ============ 2b · the tools ============ */
-.island{position:relative;margin:44px -22px 0;aspect-ratio:3/4;overflow:hidden;background:var(--carbon)}
-.island img{width:100%;height:100%;object-fit:cover;object-position:50% 40%;filter:contrast(1.05) saturate(.9) brightness(.92);will-change:transform}
-.island .tag{left:22px}
+.island{position:relative;margin:44px calc(var(--gut) * -1) 0;aspect-ratio:3/4;overflow:hidden;background:var(--g0)}
+.island img{position:absolute;left:0;top:-20px;width:100%;height:calc(100% + 40px);object-fit:cover;object-position:50% 40%;will-change:transform}
+.island .tag{left:var(--gut)}
 
 /* ============ 3 · the work — full-page prints ============ */
-.lede{margin-top:22px;font-family:var(--disp);font-style:italic;font-weight:400;font-variation-settings:"opsz" 48;font-size:23px;line-height:1.28;max-width:24ch}
-.prints{margin:44px -22px 0;perspective:1400px}
+.lede{margin-top:18px;font-family:var(--disp);font-weight:300;font-size:20px;line-height:1.3;max-width:26ch;color:var(--ink)}
+.prints{margin:44px calc(var(--gut) * -1) 0}
 .pr{position:relative;display:block;width:100%;padding:0 12px;margin-top:24px;text-align:left}
-.pr .fr{position:relative;height:calc(var(--vh) * 88.5);overflow:hidden;background:var(--carbon);border-radius:var(--r-print);will-change:clip-path,transform;transform-origin:50% 100%}
-.pr .fr img{width:100%;height:100%;object-fit:cover;will-change:transform}
+.pr .fr{position:relative;height:calc(var(--vh) * 88.5);overflow:hidden;background:var(--g0);border-radius:var(--r-print);will-change:clip-path,transform;transform-origin:50% 100%}
+.pr .fr img{position:absolute;left:0;top:-16px;width:100%;height:calc(100% + 32px);object-fit:cover;will-change:transform}
 .pr.full{padding:0;margin-top:0}
 .pr.full .fr{height:var(--vh-px);border-radius:0}
 .pr.full .fr img{object-position:50% 45%}
 .pr .tag{left:28px;bottom:24px}
 .pr.full .tag{left:16px;bottom:16px}
 /* the lightbox */
-.lb{position:fixed;top:0;left:0;width:100%;height:var(--vh-px);z-index:70;background:rgba(10,7,5,.84);backdrop-filter:blur(26px) saturate(1.2);-webkit-backdrop-filter:blur(26px) saturate(1.2);display:grid;place-items:center;padding:12px;opacity:0;pointer-events:none;transition:opacity .45s var(--apple)}
+.lb{position:fixed;top:0;left:0;width:100%;height:var(--vh-px);z-index:70;background:rgba(9,9,9,.86);backdrop-filter:blur(26px) saturate(1.1);-webkit-backdrop-filter:blur(26px) saturate(1.1);display:grid;place-items:center;padding:12px;opacity:0;pointer-events:none;transition:opacity .45s var(--apple)}
 .lb.on{opacity:1;pointer-events:auto}
-.lb-open .fab{transform:translateY(140%)}
 .lb .x{position:absolute;top:max(16px,env(safe-area-inset-top));right:16px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center}
-.lb .x i{position:absolute;width:16px;height:1.5px;border-radius:1px;background:var(--cream);transform:rotate(45deg)} .lb .x i+i{transform:rotate(-45deg)}
+.lb .x i{position:absolute;width:16px;height:1.5px;border-radius:1px;background:var(--lt-ink);transform:rotate(45deg)} .lb .x i+i{transform:rotate(-45deg)}
 .lb figure{width:100%;max-width:520px;opacity:0;transition:opacity .2s;position:relative}
 .lb.on figure{opacity:1}
-.lb .fr{overflow:hidden;background:var(--carbon);height:calc(var(--vh) * 76);border-radius:var(--r-print);position:relative}
+.lb .fr{overflow:hidden;background:var(--g0);height:calc(var(--vh) * 76);border-radius:var(--r-print);position:relative}
 .lb .fr.full{height:calc(var(--vh) * 82)}
 .lb img{width:100%;height:100%;object-fit:cover}
-.fly{position:fixed;z-index:72;object-fit:cover;border-radius:var(--r-print);pointer-events:none;will-change:transform,width,height}
+.fly{position:fixed;z-index:72;object-fit:cover;border-radius:var(--r-print);pointer-events:none;will-change:transform,width,height;filter:var(--grade)}
 
-/* ============ 4 · the chair — glass cards ============ */
-.score{display:flex;align-items:flex-end;gap:14px;margin:8px 0 26px}
-.score .n{font-family:var(--disp);font-variation-settings:"opsz" 96;font-size:76px;line-height:.86;letter-spacing:-.02em}
-.score .src{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;font-size:12px;font-weight:500;color:var(--cream);text-decoration:none;margin-bottom:4px}
-.score .src i{font-style:normal;color:var(--signal)}
-.card{margin-top:24px;padding:4px 20px;will-change:transform}
-.card + .card{margin-top:16px}
-.quotes{font-family:var(--disp);font-style:italic;font-weight:400;font-variation-settings:"opsz" 48;font-size:25px;line-height:1.24;text-wrap:balance}
-.q{display:block;padding:20px 0;transition:filter .35s ease,opacity .35s ease;filter:blur(.8px);opacity:.8}
-.q+.q{border-top:1px solid rgba(239,230,216,.12)}
+/* ============ 4 · the chair — a light beat: the reviews read like print ============ */
+.chair{padding-top:32px}
+.score{display:flex;align-items:flex-end;gap:14px;margin:0 0 22px}
+.score .n{font-family:var(--disp);font-weight:800;font-variation-settings:"wdth" 112;font-size:72px;line-height:.88;letter-spacing:-.03em;color:var(--lt-ink);font-variant-numeric:tabular-nums}
+.score .src{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;font-family:var(--disp);font-weight:500;font-size:12px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;margin-bottom:4px}
+.quotes{margin-top:24px;border-top:1px solid var(--lt-line)}
+.q{display:grid;grid-template-columns:44px 1fr;column-gap:14px;align-items:start;padding:22px 0;border-bottom:1px solid var(--lt-line);transition:filter .35s ease,opacity .35s ease;filter:blur(.8px);opacity:.7}
 .q.on{filter:blur(0);opacity:1}
-.q .who{display:block;margin-top:8px;font-family:var(--mono);font-style:normal;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--smoke)}
-.q .who i{font-style:normal;color:var(--signal)}
-.read{padding:18px 0 16px;font-weight:300;font-size:18px;line-height:1.6;letter-spacing:-.005em;font-variation-settings:"opsz" 24,"wdth" 96}
-.read span{color:rgba(239,230,216,.62);transition:color .25s ease}
-.read span.lit{color:var(--cream)}
-.read .who{display:block;margin-top:14px;color:var(--smoke)}
+.q .t{font-family:var(--disp);font-weight:400;font-size:20px;line-height:26px;letter-spacing:-.01em;color:var(--lt-ink);text-wrap:balance}
+.q .who{grid-column:2;display:block;margin-top:8px}
+.av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-family:var(--disp);font-size:14px;font-weight:700;color:var(--lt-ink);border:1px solid rgba(0,0,0,.28);margin-top:2px}
+.read{display:grid;grid-template-columns:44px 1fr;column-gap:14px;padding:22px 0 0;font-weight:400;font-size:17px;line-height:26px;letter-spacing:-.003em;font-variation-settings:"opsz" 24,"wdth" 96}
+.read span{color:rgba(17,18,19,.62);transition:color .25s ease}
+.read span.lit{color:var(--lt-ink)}
+.read .who{grid-column:2;display:block;margin-top:12px}
 
-/* ============ 5 · the rate card — one glass card ============ */
+/* ============ 4b · the feed ============ */
+.feed{padding-top:calc(var(--beat) * .6)}
+.feed .head{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.feed .head a{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;font-family:var(--disp);font-weight:500;font-size:12px;letter-spacing:.04em;text-decoration:none;white-space:nowrap}
+.strip{display:flex;gap:10px;margin:22px calc(var(--gut) * -1) 0;padding:0 var(--gut) 8px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 94%,transparent);mask-image:linear-gradient(90deg,#000 94%,transparent)}
+.strip::-webkit-scrollbar{display:none}
+.strip a{flex:0 0 74%;aspect-ratio:4/5;scroll-snap-align:start;border-radius:var(--r-print);overflow:hidden;background:var(--g0);position:relative;will-change:transform}
+.strip a img{width:100%;height:100%;object-fit:cover}
+.strip a:after{content:'';position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.strip a .ig{position:absolute;left:12px;bottom:12px;width:32px;height:32px;display:grid;place-items:center;border-radius:50%}
+.strip a .ig svg{width:16px;height:16px;fill:none;stroke:var(--lt-ink);stroke-width:1.6;stroke-linecap:round}
+
+/* ============ 5 · the rate card — his sheet: names left, a rule, prices right; two hairline circles behind ============ */
+.rate{position:relative;overflow:hidden}
+.rate .ring{position:absolute;width:320px;height:320px;border-radius:50%;border:1px solid rgba(255,255,255,.05);pointer-events:none;will-change:transform}
+.rate .ring.a{right:-120px;top:40px} .rate .ring.b{left:-160px;bottom:-40px}
 .rate .hint{margin-top:14px}
-.rows{margin-top:30px;overflow:hidden}
+.rows{position:relative;margin-top:30px;overflow:hidden}
 .rw{position:relative;transition:background .45s var(--apple)}
-.rw+.rw{box-shadow:inset 0 1px 0 rgba(239,230,216,.12)}
-.rw.open{background:rgba(239,230,216,.06)}
-.rw:after{content:'';position:absolute;left:0;top:16px;bottom:16px;width:2px;border-radius:2px;background:var(--signal);transform:scaleY(0);transform-origin:50% 0;transition:transform .45s var(--apple)}
-.rw.open:after{transform:scaleY(1)}
-.rw.open .p{color:var(--signal)}
-.rw button{display:grid;grid-template-columns:1fr auto auto;column-gap:14px;align-items:center;width:100%;padding:17px 8px 17px 20px;text-align:left;-webkit-tap-highlight-color:transparent}
-.rw .svc{font-weight:400;font-size:17px;letter-spacing:-.01em}
-.rw .svc small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--smoke);margin-top:6px}
-.rw .p{font-family:var(--disp);font-variation-settings:"opsz" 48;font-size:27px;letter-spacing:-.01em;color:var(--cream);font-variant-numeric:tabular-nums;transition:color .35s var(--apple)}
-.rw .p .dd{display:inline-block;overflow:hidden;height:30px;line-height:30px;vertical-align:bottom}
+.rw+.rw{box-shadow:inset 0 1px 0 rgba(255,255,255,.1)}
+.rw.open{background:rgba(255,255,255,.09);box-shadow:inset 2px 0 0 var(--ink)}
+.rw button{display:grid;grid-template-columns:1fr 72px 40px;align-items:center;width:100%;padding:16px 4px 16px 20px;text-align:left;-webkit-tap-highlight-color:transparent}
+.rw .svc{font-family:var(--disp);font-weight:350;font-size:15px;line-height:20px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);padding-right:12px}
+.rw .svc small{display:block;font-family:var(--disp);font-weight:500;font-size:11px;line-height:16px;letter-spacing:.06em;color:var(--ink-2);margin-top:4px;text-transform:none}
+.rw .p{font-family:var(--disp);font-weight:500;font-size:28px;line-height:32px;letter-spacing:-.02em;color:var(--ink);font-variant-numeric:tabular-nums lining-nums;border-left:1px solid var(--line);padding-left:14px;height:44px;display:flex;align-items:center}
+.rw .p .dd{display:inline-block;overflow:hidden;height:32px;line-height:32px}
 .rw .p .dd b{display:block;font-weight:500}
-.rw .p .cur{font-size:.62em;vertical-align:.3em;margin-right:.04em;font-style:normal}
-.rw .pl{position:relative;width:44px;height:44px;transition:transform .45s var(--apple)}
-.rw .pl:before,.rw .pl:after{content:'';position:absolute;left:50%;top:50%;width:14px;height:1.5px;border-radius:1px;background:var(--signal);transform:translate(-50%,-50%)}
+.rw .pl{position:relative;width:40px;height:44px;transition:transform .45s var(--apple)}
+.rw .pl:before,.rw .pl:after{content:'';position:absolute;left:50%;top:50%;width:14px;height:1.5px;border-radius:1px;background:var(--ink-2);transform:translate(-50%,-50%)}
 .rw .pl:after{transform:translate(-50%,-50%) rotate(90deg)}
 .rw.open .pl{transform:rotate(45deg)}
+.rw.open .pl:before,.rw.open .pl:after{background:var(--ink)}
 .rw .more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--apple)}
 .rw.open .more{grid-template-rows:1fr}
 .rw .more>div{overflow:hidden}
-.rw .more p{padding:0 20px 16px;font-weight:300;font-size:15px;line-height:1.5;color:var(--cream);opacity:.85;max-width:32ch}
-.rw .more a{display:inline-flex;align-items:center;gap:8px;margin:0 20px 18px;min-height:44px;font-weight:500;font-size:15px;letter-spacing:-.01em;color:var(--signal);text-decoration:none}
-.rw .more a:after{content:'';width:7px;height:7px;border-top:1.5px solid var(--signal);border-right:1.5px solid var(--signal);transform:rotate(45deg);margin-left:2px}
-.place{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:20px}
+.rw .more p{padding:0 20px 16px;font-weight:400;font-size:15px;line-height:1.55;color:var(--ink);opacity:.85;max-width:32ch}
+.rw .more a{display:inline-flex;align-items:center;gap:8px;margin:0 20px 18px;min-height:44px;font-family:var(--disp);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);text-decoration:none}
+.rw .more a:after{content:'';width:7px;height:7px;border-top:1.5px solid var(--ink);border-right:1.5px solid var(--ink);transform:rotate(45deg);margin-left:2px}
+.place{margin-top:28px;padding-top:22px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .place .k{display:block;margin-bottom:8px}
-.place p{font-weight:300;font-size:15px;line-height:1.5;color:var(--cream)}
+.place p{font-weight:400;font-size:15px;line-height:1.5;color:var(--ink)}
 
 /* ============ 6 · book ============ */
 .book{position:relative;padding-bottom:40px}
-.book:before{content:'';position:absolute;left:-40px;right:-40px;top:0;height:380px;pointer-events:none;background:radial-gradient(60% 50% at 50% 30%,rgba(210,142,58,.16),rgba(210,142,58,0) 70%)}
-.book .tagline{position:relative;font-size:clamp(40px,11vw,48px);line-height:1.02}
-.book .cta{position:relative;margin-top:32px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.book .tagline{position:relative;font-size:29px;line-height:31px;font-variation-settings:"wdth" 106;will-change:transform}
+.book .cta{position:relative;margin-top:30px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .widget{margin-top:30px;border-radius:var(--r-card);overflow:hidden;min-height:120px;position:relative}
 .widget:empty{display:none}
 .book .note{margin-top:18px;line-height:1.9}
-footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+footer{padding:26px var(--gut) 34px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
 
-/* ============ proof — the numbers, at display scale, counted by the scroll (CRISP's scale-as-proof, Blind Barber's scrub, no pin) ============ */
-.proof{padding-top:calc(var(--beat) * .3)}
-.proof{padding-bottom:calc(var(--beat) * .35)}
-.proof .row3{display:grid;grid-template-columns:1fr 1fr 1fr;margin-top:8px;padding:22px 6px 20px}
-.proof .stat{display:grid;grid-template-rows:auto auto;row-gap:14px;padding:0 14px;align-content:start}
-.proof .stat+.stat{box-shadow:inset 1px 0 0 rgba(239,230,216,.12)}
-.proof .stat .n{font-family:var(--disp);font-variation-settings:"opsz" 96;font-size:clamp(44px,13vw,58px);line-height:.9;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.proof .stat .l{font-size:10px;line-height:1.55;color:#C9BBA8;min-height:2.9em}
-.proof .facts{margin-top:18px;line-height:2;display:flex;flex-wrap:wrap;column-gap:4px}
-.proof .facts span{white-space:nowrap}
-.proof .facts i{margin:0 6px}
-/* ============ the feed — a native snap strip of the actual Instagram grid (Una's IG, Rendezvous' lookbook; one thumb, no library) ============ */
-.feed{padding-top:calc(var(--beat) * .7)}
-.feed .head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
-.feed .head a{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;font-size:12px;font-weight:500;color:var(--cream);text-decoration:none;white-space:nowrap;margin-bottom:6px}
-.strip{display:flex;gap:10px;margin:22px -22px 0;padding:0 22px 8px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.strip::-webkit-scrollbar{display:none}
-.strip a{flex:0 0 62%;aspect-ratio:4/5;scroll-snap-align:start;border-radius:var(--r-print);overflow:hidden;background:var(--carbon);position:relative;will-change:transform}
-.strip a img{width:100%;height:100%;object-fit:cover}
-.strip a:after{content:'';position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(239,230,216,.08)}
-.strip{-webkit-mask-image:linear-gradient(90deg,#000 86%,transparent);mask-image:linear-gradient(90deg,#000 86%,transparent)}
-.strip a .ig{position:absolute;left:12px;bottom:12px;width:32px;height:32px;display:grid;place-items:center;border-radius:50%}
-.strip a .ig svg{width:16px;height:16px;fill:none;stroke:var(--cream);stroke-width:1.6;stroke-linecap:round}
-/* reviews get a face: the initial in a glass disc */
-.q{display:grid;grid-template-columns:40px 1fr;column-gap:14px;align-items:start}
-.q .av,.read .av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-family:var(--sans);font-size:15px;font-weight:600;color:#EDE3D4;background:rgba(214,178,116,.14);border:1px solid rgba(214,178,116,.45);margin-top:2px}
-.q{grid-template-columns:44px 1fr}
-.read{display:grid;grid-template-columns:44px 1fr;column-gap:14px}
-.read .who{grid-column:2}
-.q .who{grid-column:2}
-/* desktop is deliberate: the phone composition sits in a darkroom — the hero, blurred and dimmed, behind a hairlined column */
+/* desktop is deliberate: the phone column sits hairlined on his grey */
 @media (min-width:900px){
-  body{background:var(--canvas)}
-  #scroll{background:radial-gradient(70% 60% at 50% 40%,rgba(58,46,36,.35),rgba(16,11,8,0) 70%)}
-  #root{box-shadow:0 0 0 1px rgba(239,230,216,.08),0 40px 120px rgba(0,0,0,.6);background:var(--canvas)}
-  .fab{right:calc(50% - 260px + 16px)}
+  body{background:#131415}
+  #scroll{background:radial-gradient(70% 60% at 50% 40%,rgba(48,50,52,.5),rgba(19,20,21,0) 70%)}
+  #root{box-shadow:0 0 0 1px rgba(255,255,255,.08),0 40px 120px rgba(0,0,0,.6)}
 }
 @media (prefers-reduced-motion:reduce){
-  #pre{display:none} .q{filter:none;opacity:1} .read span{color:var(--cream)} .cross{display:none} .sh{display:none} .mastwrap{transition:none} .fab{transition:none}
+  #pre{display:none} .mast .wm{visibility:visible} .q{filter:none;opacity:1} .read span{color:var(--lt-ink)} .cross{display:none} .sh{display:none} .mastwrap{transition:none}
+  .sheet,.sheet a{transition:none}
 }
 </style>
 </head>
 <body>
 <div id="scroll">
 <div class="grain"></div>
-<div id="pre" aria-hidden="true">
-  <svg viewBox="0 0 220 120"><path id="line" d="M8 78 C 30 40, 52 40, 62 62 S 40 96, 26 84 S 46 48, 76 58 S 96 92, 118 70 S 150 40, 168 62 S 150 92, 138 80 S 160 50, 190 62 S 214 86, 212 96"/></svg>
-</div>
+<div id="pre" aria-hidden="true"><div class="bg" id="prebg"></div><div class="wm" id="prewm"><span class="cl"><b>Chopped</b></span><span class="cl"><b>by Diego</b></span></div></div>
 <div id="root">
 
-<div class="mastwrap" id="mastwrap"><header class="mast g-bar">
-  <b>Chopped by Diego</b>
-  <div class="seg" id="seg" role="radiogroup" aria-label="Language / Idioma">
-    <button type="button" role="radio" aria-checked="true" data-l="en" id="lang-en">EN</button>
-    <button type="button" role="radio" aria-checked="false" data-l="es" id="lang-es">ES</button>
-    <div class="thumb" aria-hidden="true"><div class="inv"><span>EN</span><span>ES</span></div></div>
-  </div>
-</header></div>
+<div class="mastwrap" id="mastwrap">
+  <header class="mast g-bar">
+    <a class="wm" id="wm" href="#top" aria-label="Chopped by Diego — top"><span>Chopped</span><span>by Diego</span></a>
+    <div class="ctl">
+      <button type="button" class="lang" id="lang" aria-label="Cambiar a español">ES</button>
+      <button type="button" class="menu" id="menubtn" aria-expanded="false" aria-controls="sheet" aria-label="Menu"><i></i><i></i></button>
+      <a class="bk" href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener"><span data-en="Book" data-es="Reservar">Book</span></a>
+    </div>
+  </header>
+  <nav class="sheet" id="sheet" aria-label="Sections">
+    <a href="#work"><span data-en="Work" data-es="Trabajo">Work</span><i>01</i></a>
+    <a href="#bio"><span>Diego</span><i>02</i></a>
+    <a href="#chair"><span data-en="Reviews" data-es="Reseñas">Reviews</span><i>03</i></a>
+    <a href="#rate"><span data-en="Prices" data-es="Precios">Prices</span><i>04</i></a>
+    <a href="#book"><span data-en="Visit" data-es="Visita">Visit</span><i>05</i></a>
+    <div class="row-pad"></div>
+  </nav>
+</div>
+<div class="scrim" id="scrim"></div>
 
+<div class="band">
 <!-- 1 · the name -->
 <section class="hero" id="top">
   <figure class="cover">
     <div class="plate" id="plate"><img src="assets/hero-02.jpg" width="1080" height="1440" alt="Diego Sandoval finishing a cut in the shop, client in the chair" fetchpriority="high" decoding="async" id="heroimg"></div>
     <div class="lockup" id="lockup">
-      <div class="k mono"><i></i><span data-en="Barber · Northwest Houston" data-es="Barbero · Noroeste de Houston">Barber · Northwest Houston</span></div>
+      <div class="k lab"><i></i><span data-en="Barber · Northwest Houston" data-es="Barbero · Noroeste de Houston">Barber · Northwest Houston</span></div>
       <h1 class="name d" id="name"><span class="rv">Diego</span><span class="rv">Sandoval</span></h1>
       <p class="quote rv">“Being a barber isn’t just cutting hair.”</p>
       <div class="cta"><a class="btn" href="#book"><span data-en="Book a chair" data-es="Reservar silla">Book a chair</span></a></div>
     </div>
-    <figcaption class="tag g-pill"><i>01</i><span data-en="In the chair · by appointment" data-es="En la silla · con cita">In the chair · by appointment</span></figcaption>
+    <figcaption class="tag g-pill"><span data-en="In the chair · by appointment" data-es="En la silla · con cita">In the chair · by appointment</span></figcaption>
   </figure>
 </section>
+<div class="seam in"></div>
+</div>
 
-<div class="cross" data-tool="shear" data-dir="ltr" aria-hidden="true"></div>
-
-<!-- 1b · proof — the numbers a reel viewer wants before the story -->
-<section class="proof" id="proof">
-  <div class="row3 g-card">
-    <div class="stat"><span class="n" data-count="4.9" data-dec="1">0.0</span><span class="l mono" data-en="Booksy<br>rating" data-es="Calificación<br>Booksy">Booksy<br>rating</span></div>
-    <div class="stat"><span class="n" data-count="54">0</span><span class="l mono" data-en="Booksy<br>reviews" data-es="Reseñas<br>Booksy">Booksy<br>reviews</span></div>
-    <div class="stat"><span class="n" data-count="17">0</span><span class="l mono" data-en="Years old<br>licensed" data-es="Años<br>con licencia">Years old<br>licensed</span></div>
+<!-- 1b · proof — the numbers a reel viewer wants before the story, on his white -->
+<section class="proof lt" id="proof">
+  <div class="row3">
+    <div class="stat"><span class="n" data-count="4.9" data-dec="1">0.0</span><span class="l lab" data-en="Booksy<br>rating" data-es="Calificación<br>Booksy">Booksy<br>rating</span></div>
+    <div class="stat"><span class="n" data-count="54">0</span><span class="l lab" data-en="Booksy<br>reviews" data-es="Reseñas<br>Booksy">Booksy<br>reviews</span></div>
+    <div class="stat"><span class="n" data-count="17">0</span><span class="l lab" data-en="Licensed<br>at 17" data-es="Licencia<br>a los 17">Licensed<br>at 17</span></div>
   </div>
-  <p class="facts mono"><span data-en="Northwest Houston · 77064" data-es="Noroeste de Houston · 77064">Northwest Houston · 77064</span><i>·</i><span data-en="EN / ES" data-es="ES / EN">EN / ES</span><i>·</i><span data-en="Appointments only" data-es="Solo con cita">Appointments only</span></p>
+  <p class="facts lab"><span data-en="Northwest Houston · 77064" data-es="Noroeste de Houston · 77064">Northwest Houston · 77064</span><i>·</i><span data-en="EN / ES" data-es="ES / EN">EN / ES</span><i>·</i><span data-en="Appointments only" data-es="Solo con cita">Appointments only</span></p>
 </section>
+
+<div class="band">
+<div class="seam out"></div>
+<div class="cross" data-tool="shear" data-dir="ltr" aria-hidden="true"></div>
 
 <!-- 2 · the barber -->
 <section class="bio" id="bio">
-  <h2 class="d rv" data-en="More than a job. <em>It’s a passion.</em>" data-es="Más que un trabajo. <em>Es una pasión.</em>">More than a job. <em>It’s a passion.</em></h2>
+  <h2 class="d rv" data-en="“I get paid to make people look good”" data-es="“Me pagan por hacer que la gente se vea bien”">“I get paid to make people look good”</h2>
   <!-- PLACEHOLDER COPY — replace with Diego's own words -->
   <p class="body rv" data-en="Diego started cutting hair for friends, then their friends, and never stopped. Today he’s a licensed barber in Northwest Houston, booked through Booksy, and he still takes his time on every chair — because a good fade isn’t the job. <b>Making someone walk out standing taller is.</b>" data-es="Diego empezó cortándole el pelo a sus amigos, luego a los amigos de ellos, y nunca paró. Hoy es barbero con licencia en el noroeste de Houston, con citas por Booksy, y sigue tomándose su tiempo en cada silla — porque un buen fade no es el trabajo. <b>Que alguien salga caminando más erguido, eso sí.</b>">Diego started cutting hair for friends, then their friends, and never stopped. Today he’s a licensed barber in Northwest Houston, booked through Booksy, and he still takes his time on every chair — because a good fade isn’t the job. <b>Making someone walk out standing taller is.</b></p>
   <figure class="shutter" id="shutter">
     <img src="assets/island-07.jpg" width="1080" height="1440" alt="Diego working over the shoulder in the room" loading="lazy" decoding="async">
     <div class="sh t"></div><div class="sh b"></div>
-    <figcaption class="tag g-pill"><i>07</i><span data-en="In the room" data-es="En la sala">In the room</span></figcaption>
+    <figcaption class="tag g-pill"><span data-en="In the room" data-es="En la sala">In the room</span></figcaption>
   </figure>
   <div class="fan" id="fan">
-    <figure class="p1"><img src="assets/b-02-hands.jpg" width="720" height="900" alt="Gloved hands finishing a cut, client in the chair" loading="lazy" decoding="async"><figcaption class="tag g-pill"><i>02</i><span data-en="In the shop" data-es="En el shop">In the shop</span></figcaption></figure>
-    <figure class="p2" title="Tap to swap"><img src="assets/b-09-edge.jpg" width="720" height="900" alt="Diego edging a line-up" loading="lazy" decoding="async"><figcaption class="tag g-pill"><i>09</i><span data-en="Edge work" data-es="Perfilado">Edge work</span></figcaption></figure>
+    <figure class="p1"><img src="assets/b-02-hands.jpg" width="720" height="900" alt="Gloved hands finishing a cut, client in the chair" loading="lazy" decoding="async"><figcaption class="tag g-pill"><span data-en="In the shop" data-es="En el shop">In the shop</span></figcaption></figure>
+    <figure class="p2" title="Tap to swap"><img src="assets/b-09-edge.jpg" width="720" height="900" alt="Diego edging a line-up" loading="lazy" decoding="async"><figcaption class="tag g-pill"><span data-en="Edge work" data-es="Perfilado">Edge work</span></figcaption></figure>
   </div>
 </section>
+</div>
 
+<div class="band rev">
 <!-- 2b · the tools -->
 <section class="tools" id="tools">
-  <h2 class="d rv" data-en="The tools don’t make <em>the fade.</em>" data-es="Las herramientas no hacen <em>el fade.</em>">The tools don’t make <em>the fade.</em></h2>
-  <figure class="island" id="island"><img src="assets/tools-05.jpg" width="1080" height="1440" alt="Diego holding his gold Black Ice clipper toward the camera" loading="lazy" decoding="async"><figcaption class="tag g-pill"><i>05</i><span data-en="Black Ice FX, gold · shot in shop" data-es="Black Ice FX, dorado · en el shop">Black Ice FX, gold · shot in shop</span></figcaption></figure>
+  <h2 class="d rv" id="toolsh" data-en="The tools don’t make the fade" data-es="Las herramientas no hacen el fade">The tools don’t make the fade</h2>
+  <figure class="island" id="island"><img src="assets/tools-05.jpg" width="1080" height="1440" alt="Diego holding his gold Black Ice clipper toward the camera" loading="lazy" decoding="async"><figcaption class="tag g-pill"><span data-en="Black Ice FX, gold · shot in shop" data-es="Black Ice FX, dorado · en el shop">Black Ice FX, gold · shot in shop</span></figcaption></figure>
 </section>
 
 <!-- 3 · the work -->
 <section class="work" id="work">
-  <h2 class="d rv" data-en="Fades, tapers, <em>freehand.</em>" data-es="Fades, tapers, <em>a mano.</em>">Fades, tapers, <em>freehand.</em></h2>
-  <p class="lede rv">“I get paid to make people look good.”</p>
+  <h2 class="d rv" data-en="Fades, tapers, freehand" data-es="Fades, tapers, a mano">Fades, tapers, freehand</h2>
   <div class="prints" id="prints">
-    <button class="pr full" type="button" data-src="assets/g-03-event-full.jpg" data-full="1"><div class="fr"><img src="assets/g-03-event-full.jpg" width="1080" height="1350" alt="Diego cutting on the floor at a Houston barber event, crowd behind him" loading="lazy" decoding="async"></div><span class="tag g-pill"><i>03</i><span data-en="On the floor · Houston" data-es="En el evento · Houston">On the floor · Houston</span></span></button>
-    <button class="pr" type="button" data-src="assets/g-10-ornamental-nape-design.jpg"><div class="fr"><img src="assets/g-10-ornamental-nape-design.jpg" width="1080" height="1350" alt="Ornamental freehand design carved into the nape" loading="lazy" decoding="async"></div><span class="tag g-pill"><i>01</i><span data-en="Ornamental nape, freehand · 60 min" data-es="Nuca ornamental, a mano · 60 min">Ornamental nape, freehand · 60 min</span></span></button>
-    <button class="pr" type="button" data-src="assets/g-06-freehand-design-white.jpg"><div class="fr"><img src="assets/g-06-freehand-design-white.jpg" width="1080" height="1350" alt="White line-work design drawn to the head" loading="lazy" decoding="async"></div><span class="tag g-pill"><i>02</i><span data-en="Line work, drawn to the head · 60 min" data-es="Líneas dibujadas a la cabeza · 60 min">Line work, drawn to the head · 60 min</span></span></button>
-    <button class="pr" type="button" data-src="assets/g-04-skinfade-beige-wall.jpg"><div class="fr"><img src="assets/g-04-skinfade-beige-wall.jpg" width="1080" height="1350" alt="Skin fade with a hard line-up" loading="lazy" decoding="async"></div><span class="tag g-pill"><i>03</i><span data-en="Skin fade, hard line · 45 min" data-es="Skin fade, línea marcada · 45 min">Skin fade, hard line · 45 min</span></span></button>
-    <button class="pr" type="button" data-src="assets/g-08-curly-hightop-staircase.jpg"><div class="fr"><img src="assets/g-08-curly-hightop-staircase.jpg" width="1080" height="1350" alt="Curly high top with a clean taper" loading="lazy" decoding="async"></div><span class="tag g-pill"><i>04</i><span data-en="Curly top, clean taper · 45 min" data-es="Rizado arriba, taper limpio · 45 min">Curly top, clean taper · 45 min</span></span></button>
+    <button class="pr full" type="button" data-src="assets/g-03-event-full.jpg" data-full="1"><div class="fr"><img src="assets/g-03-event-full.jpg" width="1080" height="1350" alt="Diego cutting on the floor at a Houston barber event, crowd behind him" loading="lazy" decoding="async"></div><span class="tag g-pill"><span data-en="On the floor · Houston" data-es="En el evento · Houston">On the floor · Houston</span></span></button>
+    <button class="pr" type="button" data-src="assets/g-10-ornamental-nape-design.jpg"><div class="fr"><img src="assets/g-10-ornamental-nape-design.jpg" width="1080" height="1350" alt="Ornamental freehand design carved into the nape" loading="lazy" decoding="async"></div><span class="tag g-pill"><span data-en="Ornamental nape, freehand · 60 min" data-es="Nuca ornamental, a mano · 60 min">Ornamental nape, freehand · 60 min</span></span></button>
+    <button class="pr" type="button" data-src="assets/g-06-freehand-design-white.jpg"><div class="fr"><img src="assets/g-06-freehand-design-white.jpg" width="1080" height="1350" alt="White line-work design drawn to the head" loading="lazy" decoding="async"></div><span class="tag g-pill"><span data-en="Line work, drawn to the head · 60 min" data-es="Líneas dibujadas a la cabeza · 60 min">Line work, drawn to the head · 60 min</span></span></button>
+    <button class="pr" type="button" data-src="assets/g-04-skinfade-beige-wall.jpg"><div class="fr"><img src="assets/g-04-skinfade-beige-wall.jpg" width="1080" height="1350" alt="Skin fade with a hard line-up" loading="lazy" decoding="async"></div><span class="tag g-pill"><span data-en="Skin fade, hard line · 45 min" data-es="Skin fade, línea marcada · 45 min">Skin fade, hard line · 45 min</span></span></button>
+    <button class="pr" type="button" data-src="assets/g-08-curly-hightop-staircase.jpg"><div class="fr"><img src="assets/g-08-curly-hightop-staircase.jpg" width="1080" height="1350" alt="Curly high top with a clean taper" loading="lazy" decoding="async"></div><span class="tag g-pill"><span data-en="Curly top, clean taper · 45 min" data-es="Rizado arriba, taper limpio · 45 min">Curly top, clean taper · 45 min</span></span></button>
   </div>
 </section>
-<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo"><button class="x g-pill" type="button" aria-label="Close"><i></i><i></i></button><figure><div class="fr" id="lbfr"><img id="lbimg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></div><span class="tag g-pill" id="lbtag"><i>·</i><span id="lbcap"></span></span></figure></div>
+<div class="seam in"></div>
+</div>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo"><button class="x g-pill" type="button" aria-label="Close"><i></i><i></i></button><figure><div class="fr" id="lbfr"><img id="lbimg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></div><span class="tag g-pill" id="lbtag"><span id="lbcap"></span></span></figure></div>
+
+<!-- 4 · the chair — on his white -->
+<section class="chair lt" id="chair">
+  <div class="score"><span class="n" id="scoren">4.9</span><a class="src g-pill" href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener"><span data-en="54 reviews" data-es="54 reseñas">54 reviews</span><span>·</span><span>Booksy</span></a></div>
+  <h2 class="d rv" id="chairh" data-en="What people say" data-es="Lo que dicen">What people say</h2>
+  <div class="quotes" id="quotes">
+    <div class="q"><span class="av">J</span><span class="t">“The LeBron of cutting hair.”</span><span class="who lab">Jaspur · Booksy</span></div>
+    <div class="q"><span class="av">A</span><span class="t">“Best cuts in the Nawfwest.”</span><span class="who lab">Andrew · Booksy</span></div>
+    <div class="q"><span class="av">C</span><span class="t">“Bro, made me look younger.”</span><span class="who lab">Cesar · Booksy</span></div>
+  </div>
+  <p class="read"><span class="av">G</span><span id="read">I booked my appointment for 6:00pm and got a 10 guard, mid fade. Diego did a really good job and he takes his time.</span><span class="who lab">German · Booksy</span></p>
+</section>
+
+<div class="band">
+<div class="seam out"></div>
+<!-- 4b · the feed -->
+<section class="feed" id="feed">
+  <div class="head"><h2 class="d rv" id="feedh" data-en="From the feed" data-es="Del feed">From the feed</h2><a class="g-pill" href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener">@choppedbydiego</a></div>
+  <div class="strip" id="strip">
+    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-1.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#111213" stroke="none"/></svg></span></a>
+    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-2.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#111213" stroke="none"/></svg></span></a>
+    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-3.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#111213" stroke="none"/></svg></span></a>
+    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-4.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#111213" stroke="none"/></svg></span></a>
+    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-5.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#111213" stroke="none"/></svg></span></a>
+    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-6.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#111213" stroke="none"/></svg></span></a>
+  </div>
+</section>
 
 <div class="cross" data-tool="thinning" data-dir="rtl" aria-hidden="true"></div>
 
-<!-- 4 · the chair -->
-<section class="chair" id="chair">
-  <div class="score"><span class="n d">4.9</span><a class="src g-pill" href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener"><span data-en="54 reviews" data-es="54 reseñas">54 reviews</span><i>·</i><span>Booksy</span></a></div>
-  <h2 class="d rv" data-en="What people <em>say.</em>" data-es="Lo que <em>dicen.</em>">What people <em>say.</em></h2>
-  <div class="card g-card" id="quotes"><div class="quotes">
-    <span class="q"><span class="av g-pill">J</span><span>“The LeBron of cutting hair.”</span><span class="who"><i>—</i> Jaspur <i>·</i> Booksy</span></span>
-    <span class="q"><span class="av g-pill">A</span><span>“Best cuts in the Nawfwest.”</span><span class="who"><i>—</i> Andrew <i>·</i> Booksy</span></span>
-    <span class="q"><span class="av g-pill">C</span><span>“Bro, made me look younger.”</span><span class="who"><i>—</i> Cesar <i>·</i> Booksy</span></span>
-  </div></div>
-  <div class="card g-card"><p class="read"><span class="av">G</span><span id="read">I booked my appointment for 6:00pm and got a 10 guard, mid fade. Diego did a really good job and he takes his time.</span><span class="who mono"><i>—</i> German <i>·</i> Booksy</span></p></div>
-</section>
-
-<!-- 4b · the feed -->
-<section class="feed" id="feed">
-  <div class="head"><h2 class="d rv" data-en="From <em>the feed.</em>" data-es="Del <em>feed.</em>">From <em>the feed.</em></h2><a class="g-pill" href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener">@choppedbydiego</a></div>
-  <div class="strip" id="strip">
-    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-1.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#EFE6D8" stroke="none"/></svg></span></a>
-    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-2.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#EFE6D8" stroke="none"/></svg></span></a>
-    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-3.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#EFE6D8" stroke="none"/></svg></span></a>
-    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-4.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#EFE6D8" stroke="none"/></svg></span></a>
-    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-5.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#EFE6D8" stroke="none"/></svg></span></a>
-    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-6.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#EFE6D8" stroke="none"/></svg></span></a>
-  </div>
-</section>
-
 <!-- 5 · the rate card -->
 <section class="rate" id="rate">
-  <h2 class="d rv" data-en="Rate <em>card.</em>" data-es="Precios <em>y tiempos.</em>">Rate <em>card.</em></h2>
-  <p class="hint mono"><span data-en="Tap a row · chair time shown" data-es="Toca una fila · tiempo en la silla">Tap a row · chair time shown</span></p>
+  <div class="ring a" id="ringa"></div><div class="ring b" id="ringb"></div>
+  <h2 class="d rv" data-en="Price list" data-es="Lista de precios">Price list</h2>
+  <p class="hint lab"><span data-en="Tap a row · chair time shown" data-es="Toca una fila · tiempo en la silla">Tap a row · chair time shown</span></p>
   <div class="rows g-card">
   <div class="rw"><button type="button" aria-expanded="false"><span class="svc"><span data-en="Line up" data-es="Perfilado">Line up</span><small>30 min</small></span><span class="p"><span class="dd"><b>$20</b></span></span><span class="pl"></span></button><div class="more"><div><p data-en="Edges and the neckline, cleaned up sharp." data-es="Bordes y nuca, bien perfilados.">Edges and the neckline, cleaned up sharp.</p><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="Book this on Booksy" data-es="Reservar en Booksy">Book this on Booksy</a></div></div></div>
   <div class="rw"><button type="button" aria-expanded="false"><span class="svc"><span data-en="Haircut" data-es="Corte">Haircut</span><small>45 min</small></span><span class="p"><span class="dd"><b>$30</b></span></span><span class="pl"></span></button><div class="more"><div><p data-en="Fade or taper, cut to how you wear it." data-es="Fade o taper, cortado como lo usas.">Fade or taper, cut to how you wear it.</p><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="Book this on Booksy" data-es="Reservar en Booksy">Book this on Booksy</a></div></div></div>
@@ -366,28 +407,28 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
   <div class="rw"><button type="button" aria-expanded="false"><span class="svc"><span data-en="Kids, 8 &amp; under" data-es="Niños, 8 o menos">Kids, 8 &amp; under</span><small>45 min</small></span><span class="p"><span class="dd"><b>$25</b></span></span><span class="pl"></span></button><div class="more"><div><p data-en="Same care, smaller chair." data-es="El mismo cuidado, silla más chica.">Same care, smaller chair.</p><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="Book this on Booksy" data-es="Reservar en Booksy">Book this on Booksy</a></div></div></div>
   <div class="rw"><button type="button" aria-expanded="false"><span class="svc"><span data-en="House call" data-es="A domicilio">House call</span><small>2 hrs · NW Houston</small></span><span class="p"><span class="dd"><b>$60</b></span></span><span class="pl"></span></button><div class="more"><div><p data-en="Diego comes to you, Northwest Houston." data-es="Diego va a ti, noroeste de Houston.">Diego comes to you, Northwest Houston.</p><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="Book this on Booksy" data-es="Reservar en Booksy">Book this on Booksy</a></div></div></div>
   </div>
-  <div class="place g-card">
-    <div><span class="k mono" data-en="Where" data-es="Dónde">Where</span><p data-en="Northwest Houston, 77064. Appointments only — the address comes with your booking." data-es="Noroeste de Houston, 77064. Solo con cita — la dirección llega con tu reserva.">Northwest Houston, 77064. Appointments only — the address comes with your booking.</p></div>
-    <div><span class="k mono" data-en="When" data-es="Cuándo">When</span><p><span data-en="Mon–Fri 4–9 pm" data-es="Lun–Vie 4–9 pm">Mon–Fri 4–9 pm</span><br><span data-en="Sat 10–6 · Sun closed" data-es="Sáb 10–6 · Dom cerrado">Sat 10–6 · Sun closed</span></p></div>
+  <div class="place">
+    <div><span class="k lab" data-en="Where" data-es="Dónde">Where</span><p data-en="Northwest Houston, 77064. Appointments only — the address comes with your booking." data-es="Noroeste de Houston, 77064. Solo con cita — la dirección llega con tu reserva.">Northwest Houston, 77064. Appointments only — the address comes with your booking.</p></div>
+    <div><span class="k lab" data-en="When" data-es="Cuándo">When</span><p><span data-en="Mon–Fri 4–9 pm" data-es="Lun–Vie 4–9 pm">Mon–Fri 4–9 pm</span><br><span data-en="Sat 10–6 · Sun closed" data-es="Sáb 10–6 · Dom cerrado">Sat 10–6 · Sun closed</span></p></div>
   </div>
 </section>
 
 <!-- 6 · book -->
 <section class="book" id="book">
-  <p class="tagline d rv">“If it ain’t choppedbydiego <em>then it ain’t right.</em>”</p>
+  <p class="tagline d rv" id="tagline">“If it ain’t choppedbydiego then it ain’t right.”</p>
   <div class="cta">
     <a class="btn" href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener"><span data-en="Book on Booksy" data-es="Reservar en Booksy">Book on Booksy</span></a>
     <a class="btn ghost" href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener">Instagram</a>
   </div>
   <div class="widget g-card" id="booksy"></div>
-  <p class="note mono"><span data-en="Northwest Houston · appointments only" data-es="Northwest Houston · solo con cita">Northwest Houston · appointments only</span><br><span data-en="Se habla español" data-es="English spoken">Se habla español</span></p>
+  <p class="note lab"><span data-en="Northwest Houston · appointments only" data-es="Northwest Houston · solo con cita">Northwest Houston · appointments only</span><br><span data-en="Se habla español" data-es="English spoken">Se habla español</span></p>
 </section>
 
-<footer class="mono"><span>© 2026 Chopped by Diego</span><span><i>·</i> <span data-en="Booking via Booksy" data-es="Reservas por Booksy">Booking via Booksy</span></span></footer>
+<footer class="lab"><span>© 2026 Chopped by Diego</span><span data-en="Booking via Booksy" data-es="Reservas por Booksy">Booking via Booksy</span></footer>
+</div>
 
 </div><!-- /#root -->
 </div><!-- /#scroll -->
-<a class="btn fab" id="fab" href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener"><span data-en="Book" data-es="Reservar">Book</span></a>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -405,13 +446,16 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
   window.addEventListener('resize', () => { if (!framed || window.innerWidth !== lastW) { lastW = window.innerWidth; setVh(); if (window.ScrollTrigger) ScrollTrigger.refresh() } })
 
   /* ---- the two shears: each is two halves pivoting at the origin (blades +x, rings -x); a plain rotate() on a half opens it ---- */
-  const SHEAR = `<g class="ha"> <path d="M 2.2,-1.25 C 26,-1.15 50,-1.00 68.6,-0.55 C 66.4,-1.60 63,-2.50 58,-3.40 C 49,-4.70 39,-5.80 28,-6.80 C 20,-7.60 12,-8.30 6.6,-8.50 C 3.0,-8.50 1.5,-6.00 2.2,-1.25 Z" fill="rgba(239,230,216,.06)"/> <path d="M 8.5,-5.20 C 26,-4.20 46,-2.90 62,-1.50"/> <path d="M 2.4,0.4 C -8,-0.4 -16.6,3.8 -20.6,11.6 L -24.6,4.8 C -18,-3.2 -9,-7.2 2.2,-6.8 Z" fill="rgba(239,230,216,.06)"/> <circle cx="-33" cy="12" r="11" fill="rgba(239,230,216,.06)"/><circle cx="-33" cy="12" r="7.4" fill="none"/> <path class="au" stroke="#D28E3A" fill="rgba(239,230,216,.06)" d="M -27.2,19.6 C -24.4,23.6 -20.0,25.8 -15.8,24.8 C -17.0,23.4 -17.6,22.2 -17.6,20.8 C -19.8,22.0 -21.8,21.6 -23.0,18.8 Z"/> <path class="au" stroke="#D28E3A" fill="rgba(239,230,216,.06)" d="M -11.4,-0.4 C -9.1,-0.4 -9.1,3.0 -11.4,3.0 C -13.7,3.0 -13.7,-0.4 -11.4,-0.4 Z"/> </g> <g class="hb"> <path d="M 2.2,1.25 C 26,1.15 50,1.00 68.6,0.55 C 66.4,1.60 63,2.50 58,3.40 C 49,4.70 39,5.80 28,6.80 C 20,7.60 12,8.30 6.6,8.50 C 3.0,8.50 1.5,6.00 2.2,1.25 Z" fill="rgba(239,230,216,.06)"/> <path d="M 8.5,5.20 C 26,4.20 46,2.90 62,1.50"/> <path d="M 2.4,-0.4 C -9,0.4 -18.6,-3.0 -24.7,-11.4 L -28.2,-5.2 C -20,1.8 -10,6.6 2.2,6.8 Z" fill="rgba(239,230,216,.06)"/> <circle cx="-37" cy="-11" r="11" fill="rgba(239,230,216,.06)"/><circle cx="-37" cy="-11" r="7.4" fill="none"/> </g> <g class="screw"> <circle cx="0" cy="0" r="3.4" fill="none" stroke="#D28E3A" class="au"/> <path class="au" stroke="#D28E3A" d="M -1.7,-1.7 L 1.7,1.7 M 1.7,-1.7 L -1.7,1.7"/> </g>`
-  const THINNING = `<g class="ha"> <path d="M 2.2,-1.25 C 26,-1.15 50,-1.00 68.6,-0.55 C 66.4,-1.60 63,-2.50 58,-3.40 C 49,-4.70 39,-5.80 28,-6.80 C 20,-7.60 12,-8.30 6.6,-8.50 C 3.0,-8.50 1.5,-6.00 2.2,-1.25 Z" fill="rgba(239,230,216,.06)"/> <path d="M 8.5,-5.20 C 26,-4.20 46,-2.90 62,-1.50"/> <path d="M 2.4,0.4 C -8,-0.4 -16.6,3.8 -20.6,11.6 L -24.6,4.8 C -18,-3.2 -9,-7.2 2.2,-6.8 Z" fill="rgba(239,230,216,.06)"/> <circle cx="-33" cy="12" r="11" fill="rgba(239,230,216,.06)"/><circle cx="-33" cy="12" r="7.4" fill="none"/> <path class="au" stroke="#D28E3A" fill="rgba(239,230,216,.06)" d="M -27.2,19.6 C -24.4,23.6 -20.0,25.8 -15.8,24.8 C -17.0,23.4 -17.6,22.2 -17.6,20.8 C -19.8,22.0 -21.8,21.6 -23.0,18.8 Z"/> <path class="au" stroke="#D28E3A" fill="rgba(239,230,216,.06)" d="M -11.4,-0.4 C -9.1,-0.4 -9.1,3.0 -11.4,3.0 C -13.7,3.0 -13.7,-0.4 -11.4,-0.4 Z"/> </g> <g class="hb"> <path d="M 2.4,1.25 L 5.4,1.25 L 8.00,5.2 L 8.00,5.2 L 8.00,0.5 L 9.90,0.5 L 9.90,5.2 L 11.86,5.2 L 11.86,0.5 L 13.76,0.5 L 13.76,5.2 L 15.71,5.2 L 15.71,0.5 L 17.61,0.5 L 17.61,5.2 L 19.57,5.2 L 19.57,0.5 L 21.47,0.5 L 21.47,5.2 L 23.43,5.2 L 23.43,0.5 L 25.33,0.5 L 25.33,5.2 L 27.29,5.2 L 27.29,0.5 L 29.19,0.5 L 29.19,5.2 L 31.14,5.2 L 31.14,0.5 L 33.04,0.5 L 33.04,5.2 L 35.00,5.2 L 35.00,0.5 L 36.90,0.5 L 36.90,5.2 L 38.86,5.2 L 38.86,0.5 L 40.76,0.5 L 40.76,5.2 L 42.71,5.2 L 42.71,0.5 L 44.61,0.5 L 44.61,5.2 L 46.57,5.2 L 46.57,0.5 L 48.47,0.5 L 48.47,5.2 L 50.43,5.2 L 50.43,0.5 L 52.33,0.5 L 52.33,5.2 L 54.29,5.2 L 54.29,0.5 L 56.19,0.5 L 56.19,5.2 L 58.14,5.2 L 58.14,0.5 L 60.04,0.5 L 60.04,5.2 L 62.00,5.2 C 65.0,4.2 67.2,2.4 68.6,0.55 C 66.4,1.6 63,2.5 58,3.4 C 49,4.7 39,5.8 28,6.8 C 20,7.6 12,8.3 6.6,8.5 C 3.0,8.5 1.5,6.0 2.4,1.25 Z" fill="rgba(239,230,216,.06)"/> <path d="M 2.4,-0.4 C -9,0.4 -18.6,-3.0 -24.7,-11.4 L -28.2,-5.2 C -20,1.8 -10,6.6 2.2,6.8 Z" fill="rgba(239,230,216,.06)"/> <circle cx="-37" cy="-11" r="11" fill="rgba(239,230,216,.06)"/><circle cx="-37" cy="-11" r="7.4" fill="none"/> </g> <g class="screw"> <circle cx="0" cy="0" r="3.4" fill="none" stroke="#D28E3A" class="au"/> <path class="au" stroke="#D28E3A" d="M -1.7,-1.7 L 1.7,1.7 M 1.7,-1.7 L -1.7,1.7"/> </g>`
+  const HALF_A = `<g class="ha"> <path class="fl" d="M 2.2,-1.25 C 26,-1.15 50,-1.00 68.6,-0.55 C 66.4,-1.60 63,-2.50 58,-3.40 C 49,-4.70 39,-5.80 28,-6.80 C 20,-7.60 12,-8.30 6.6,-8.50 C 3.0,-8.50 1.5,-6.00 2.2,-1.25 Z"/> <path d="M 8.5,-5.20 C 26,-4.20 46,-2.90 62,-1.50"/> <path class="fl" d="M 2.4,0.4 C -8,-0.4 -16.6,3.8 -20.6,11.6 L -24.6,4.8 C -18,-3.2 -9,-7.2 2.2,-6.8 Z"/> <circle class="fl" cx="-33" cy="12" r="11"/><circle cx="-33" cy="12" r="7.4"/> <path class="fl" d="M -27.2,19.6 C -24.4,23.6 -20.0,25.8 -15.8,24.8 C -17.0,23.4 -17.6,22.2 -17.6,20.8 C -19.8,22.0 -21.8,21.6 -23.0,18.8 Z"/> <path class="fl" d="M -11.4,-0.4 C -9.1,-0.4 -9.1,3.0 -11.4,3.0 C -13.7,3.0 -13.7,-0.4 -11.4,-0.4 Z"/> </g>`
+  const SCREW = `<g class="screw"> <circle cx="0" cy="0" r="3.4"/> <path d="M -1.7,-1.7 L 1.7,1.7 M 1.7,-1.7 L -1.7,1.7"/> </g>`
+  const SHEAR = HALF_A + `<g class="hb"> <path class="fl" d="M 2.2,1.25 C 26,1.15 50,1.00 68.6,0.55 C 66.4,1.60 63,2.50 58,3.40 C 49,4.70 39,5.80 28,6.80 C 20,7.60 12,8.30 6.6,8.50 C 3.0,8.50 1.5,6.00 2.2,1.25 Z"/> <path d="M 8.5,5.20 C 26,4.20 46,2.90 62,1.50"/> <path class="fl" d="M 2.4,-0.4 C -9,0.4 -18.6,-3.0 -24.7,-11.4 L -28.2,-5.2 C -20,1.8 -10,6.6 2.2,6.8 Z"/> <circle class="fl" cx="-37" cy="-11" r="11"/><circle cx="-37" cy="-11" r="7.4"/> </g>` + SCREW
+  const teeth = (() => { let d = 'M 2.4,1.25 L 5.4,1.25 L 8.00,5.2'; for (let x = 8; x < 62; x += 1.955) { const x2 = (x + 1.9).toFixed(2), x3 = (x + 1.955).toFixed(2); d += ` L ${x.toFixed(2)},0.5 L ${x2},0.5 L ${x2},5.2 L ${x3},5.2` } return d + ' L 62.00,5.2 C 65.0,4.2 67.2,2.4 68.6,0.55 C 66.4,1.6 63,2.5 58,3.4 C 49,4.7 39,5.8 28,6.8 C 20,7.6 12,8.3 6.6,8.5 C 3.0,8.5 1.5,6.0 2.4,1.25 Z' })()
+  const THINNING = HALF_A + `<g class="hb"> <path class="fl" d="${teeth}"/> <path class="fl" d="M 2.4,-0.4 C -9,0.4 -18.6,-3.0 -24.7,-11.4 L -28.2,-5.2 C -20,1.8 -10,6.6 2.2,6.8 Z"/> <circle class="fl" cx="-37" cy="-11" r="11"/><circle cx="-37" cy="-11" r="7.4"/> </g>` + SCREW
   function buildCross (c, i) {
     const rtl = c.dataset.dir === 'rtl', thin = c.dataset.tool === 'thinning'
     const d = rtl ? 'M352 52 C 300 24, 260 80, 200 52 S 100 26, 48 52' : 'M48 52 C 100 24, 140 80, 200 52 S 300 26, 352 52'
     c.innerHTML = `<svg viewBox="0 0 400 104"><defs><clipPath id="cp${i}"><rect class="cr" x="${rtl ? 400 : 0}" y="-10" width="0" height="124"/></clipPath></defs><path class="p" d="${d}" fill="none" stroke="none"/><path class="cut${thin ? ' dash' : ''}" d="${d}" clip-path="url(#cp${i})"/><g class="tool sc"><g class="hold">${thin ? THINNING : SHEAR}</g></g></svg>`
-    return { path: c.querySelector('.p'), tool: c.querySelector('.tool'), rect: c.querySelector('.cr'), ha: c.querySelector('.ha'), hb: c.querySelector('.hb'), hold: c.querySelector('.hold'), rtl }
+    return { path: c.querySelector('.p'), tool: c.querySelector('.tool'), rect: c.querySelector('.cr'), ha: c.querySelector('.ha'), hb: c.querySelector('.hb'), rtl }
   }
 
   /* ---- word masks ---- */
@@ -421,13 +465,13 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
       if (n.nodeType === 3) { const frag = document.createDocumentFragment(); n.textContent.split(/(\s+)/).forEach(t => { if (!t) return; if (/^\s+$/.test(t)) frag.appendChild(document.createTextNode(t)); else { const w = document.createElement('span'); w.className = 'w'; const b = document.createElement('b'); b.textContent = t; w.appendChild(b); frag.appendChild(w) } }); n.replaceWith(frag) }
       else if (n.nodeType === 1 && !n.classList.contains('w')) walk(n) }) }
     walk(el)
-    if (!el.dataset.shown) gsap.set(el.querySelectorAll('.w b'), { yPercent: 112, skewY: 4 })
+    if (!el.dataset.shown) gsap.set(el.querySelectorAll('.w b'), { yPercent: 112 })
   }
   function show (el, delay = 0) {
     el.dataset.shown = '1'
     if (reduce) return
     const ws = el.querySelectorAll('.w b')
-    gsap.to(ws, { yPercent: 0, skewY: 0, duration: 1.05, ease: 'expo.out', stagger: Math.min(.06, 1 / ws.length), delay, overwrite: true })
+    gsap.to(ws, { yPercent: 0, duration: .9, ease: 'expo.out', stagger: Math.min(.05, 1 / ws.length), delay, overwrite: true })
   }
 
   function boot () {
@@ -437,20 +481,49 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
     /* ---- ONE CLOCK ---- */
     const lenis = new Lenis({ wrapper: scroller, content, lerp: 0.09, smoothWheel: true, anchors: true })
     lenis.on('scroll', ScrollTrigger.update)
-    const mastwrap = document.getElementById('mastwrap')
-    lenis.on('scroll', e => { mastwrap.classList.toggle('hide', e.direction === 1 && e.scroll > 120) })
     gsap.ticker.add((t) => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0)
 
-    /* ---- EN / ES ---- */
-    const seg = document.getElementById('seg')
+    /* ---- nav: hides after 24px of downward travel, returns after 12px upward; never while the menu is open ---- */
+    const mastwrap = document.getElementById('mastwrap'), menubtn = document.getElementById('menubtn'), sheet = document.getElementById('sheet'), scrim = document.getElementById('scrim')
+    let travel = 0, lastDir = 0
+    lenis.on('scroll', e => {
+      if (mastwrap.classList.contains('open')) return
+      if (e.direction !== lastDir) { travel = 0; lastDir = e.direction }
+      travel += Math.abs(e.velocity)
+      if (e.direction === 1 && e.scroll > 80 && travel > 24) mastwrap.classList.add('hide')
+      if (e.direction === -1 && travel > 12) mastwrap.classList.remove('hide')
+      if (e.scroll < 40) mastwrap.classList.remove('hide')
+    })
+    const links = Array.from(sheet.querySelectorAll('a'))
+    const setMenu = (open) => {
+      mastwrap.classList.toggle('open', open); document.body.classList.toggle('menu-open', open)
+      menubtn.setAttribute('aria-expanded', String(open))
+      if (open) { mastwrap.classList.remove('hide'); lenis.stop(); setTimeout(() => links[0].focus(), 250) } else { lenis.start(); menubtn.focus() }
+    }
+    menubtn.addEventListener('click', () => setMenu(!mastwrap.classList.contains('open')))
+    scrim.addEventListener('click', () => setMenu(false))
+    document.addEventListener('keydown', e => {
+      if (!mastwrap.classList.contains('open')) return
+      if (e.key === 'Escape') { setMenu(false); return }
+      if (e.key === 'Tab') { const f = [menubtn, ...links]; const i = f.indexOf(document.activeElement); const n = e.shiftKey ? (i <= 0 ? f.length - 1 : i - 1) : (i >= f.length - 1 ? 0 : i + 1); e.preventDefault(); f[n].focus() }
+    })
+    links.forEach(a => a.addEventListener('click', e => { e.preventDefault(); const el = document.querySelector(a.getAttribute('href')); setMenu(false); if (el) lenis.scrollTo(el, { offset: -72, duration: 1.2 }) }))
+    document.querySelectorAll('.lt').forEach(el => ScrollTrigger.create({ trigger: el, start: 'top 68px', end: 'bottom 12px', onToggle: s => mastwrap.classList.toggle('lt', s.isActive) }))
+    /* the current section: whichever is crossing 30% of the pane */
+    links.forEach(a => { const el = document.querySelector(a.getAttribute('href')); if (!el) return
+      ScrollTrigger.create({ trigger: el, start: 'top 30%', end: 'bottom 30%', onToggle: s => { if (s.isActive) links.forEach(o => o.setAttribute('aria-current', String(o === a))) } }) })
+
+    /* ---- EN / ES: one button that shows the other language ---- */
+    const lang = document.getElementById('lang')
+    let cur = 'en'
     const setLang = (l) => {
-      seg.classList.toggle('es', l === 'es'); root.lang = l
-      seg.querySelectorAll('button').forEach(b => b.setAttribute('aria-checked', String(b.dataset.l === l)))
+      cur = l; root.lang = l
+      lang.textContent = l === 'en' ? 'ES' : 'EN'; lang.setAttribute('aria-label', l === 'en' ? 'Cambiar a español' : 'Switch to English')
       document.querySelectorAll('[data-en]').forEach(n => { n.innerHTML = n.dataset[l] })
-      document.querySelectorAll('.rv[data-en]').forEach(el => { split(el); if (el.dataset.shown) gsap.set(el.querySelectorAll('.w b'), { yPercent: 0, skewY: 0 }) })
+      document.querySelectorAll('.rv[data-en]').forEach(el => { split(el); if (el.dataset.shown) gsap.set(el.querySelectorAll('.w b'), { yPercent: 0 }) })
       try { localStorage.setItem('cbd-lang', l) } catch {}
     }
-    seg.querySelectorAll('button').forEach(b => b.addEventListener('click', () => setLang(b.dataset.l)))
+    lang.addEventListener('click', () => setLang(cur === 'en' ? 'es' : 'en'))
     let saved = null; try { saved = localStorage.getItem('cbd-lang') } catch {}
     const qs = new URLSearchParams(location.search).get('lang')
     if (qs === 'es' || (!qs && saved === 'es')) setLang('es')
@@ -459,43 +532,46 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
     document.querySelectorAll('.rv').forEach(el => { if (el.closest('.hero')) return
       ScrollTrigger.create({ trigger: el, start: 'top 88%', once: true, onEnter: () => show(el) }) })
 
-    /* ---- preloader ---- */
-    const pre = document.getElementById('pre'), line = document.getElementById('line'), heroimg = document.getElementById('heroimg')
-    const gate = Promise.all([document.fonts ? document.fonts.ready : Promise.resolve(), heroimg.decode ? heroimg.decode().catch(() => {}) : Promise.resolve()])
-    const lift = () => { if (!document.body.contains(pre)) return; pre.classList.add('off'); setTimeout(() => pre.remove(), 700); reveal() }
-    if (reduce) { pre.remove(); document.querySelectorAll('.hero .rv').forEach(el => el.dataset.shown = '1') } else {
-      const L = line.getTotalLength(); line.style.strokeDasharray = L; line.style.strokeDashoffset = L
-      const draw = gsap.to(line, { strokeDashoffset: 0, duration: 1.5, ease: 'expo.inOut' })
-      gate.then(() => { draw.eventCallback('onComplete', lift); if (draw.progress() === 1) lift() })
-      setTimeout(lift, 4000)
+    /* ---- loader: CHOPPED, then BY DIEGO, up through a clip; the same wordmark then flies into the bar ---- */
+    const pre = document.getElementById('pre'), prebg = document.getElementById('prebg'), prewm = document.getElementById('prewm'), wm = document.getElementById('wm'), heroimg = document.getElementById('heroimg')
+    const gate = Promise.all([document.fonts ? document.fonts.ready : Promise.resolve(), heroimg.decode ? heroimg.decode().catch(() => {}) : Promise.resolve(), new Promise(r => setTimeout(r, 380))])
+    let lifted = false
+    const lift = () => {
+      if (lifted) return; lifted = true
+      const a = prewm.getBoundingClientRect(), b = wm.getBoundingClientRect()
+      const s = b.width / a.width
+      gsap.timeline({ onComplete: () => { wm.classList.add('on'); pre.remove() } })
+        .to(prewm, { x: b.left - a.left, y: b.top - a.top, scale: s, duration: .48, ease: 'power3.inOut' }, 0)
+        .to(prebg, { opacity: 0, duration: .48, ease: 'power2.inOut' }, 0)
+        .add(reveal, .08)
+    }
+    if (reduce) { pre.remove(); wm.classList.add('on'); document.querySelectorAll('.hero .rv').forEach(el => el.dataset.shown = '1') } else {
+      gsap.set(prewm.querySelectorAll('.cl b'), { yPercent: 110 })
+      gsap.to(prewm.querySelectorAll('.cl b'), { yPercent: 0, duration: .28, ease: 'power3.out', stagger: .1 })
+      gate.then(lift); setTimeout(lift, 1800)
     }
 
     /* ---- hero ---- */
     function reveal () {
       if (reduce) return
-      gsap.fromTo(heroimg, { scale: 1.12 }, { scale: 1, duration: 2.6, ease: 'expo.out', overwrite: 'auto' })
-      document.querySelectorAll('.hero .rv').forEach((el, i) => show(el, .1 + i * .14))
-      gsap.from('.hero .k, .hero .cta, .cover .tag', { y: 14, duration: 1.1, ease: 'expo.out', stagger: .12, delay: .5, clearProps: 'transform' })
+      gsap.fromTo(heroimg, { scale: 1.035 }, { scale: 1, duration: 1.6, ease: 'power3.out', overwrite: 'auto' })
+      document.querySelectorAll('.hero .rv').forEach((el, i) => show(el, .05 + i * .12))
+      gsap.from('.hero .k, .hero .cta, .cover .tag', { y: 14, opacity: 0, duration: .9, ease: 'expo.out', stagger: .1, delay: .3, clearProps: 'transform,opacity' })
     }
+    /* ---- parallax: one table, one clock; each beat runs top bottom → bottom top, the hero from top top ---- */
+    const drift = (target, from, to, trigger, start = 'top bottom', end = 'bottom top') => gsap.fromTo(target, { y: from }, { y: to, ease: 'none', scrollTrigger: { trigger, start, end, scrub: .65 } })
     if (!reduce) {
-      gsap.to('#plate', { y: 32, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .6 } })
-      gsap.to('#lockup', { y: -12, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .6 } })
+      drift('#plate', -24, 24, '.hero', 'top top'); drift('#lockup', 0, -16, '.hero', 'top top')
+      drift('.proof .stat', 12, -12, '.proof')
+      drift('#fan .p1 img', -36, 36, '#fan'); drift('#fan .p2 img', 32, -32, '#fan'); drift('#shutter img', -20, 20, '#shutter')
+      drift('#island img', -20, 20, '#island'); drift('#toolsh', 12, -12, '.tools')
+      document.querySelectorAll('.pr .fr img').forEach(im => drift(im, -16, 16, im.closest('.pr')))
+      drift('#chairh', 8, -8, '.chair'); drift('#feedh', 8, -8, '.feed')
+      drift('#ringa', -12, 12, '.rate'); drift('#ringb', -12, 12, '.rate')
+      drift('#tagline', 12, -12, '.book')
     }
-    /* the sticky chair: shown after the fold, hidden while the rate card or the booking beat is on screen, or while any
-       headline / card crosses the bottom 132px — decided from live rects on every scroll tick, never from counters */
-    const fab = document.getElementById('fab'), hero = document.querySelector('.hero')
-    const avoidBeats = [document.querySelector('.rate'), document.querySelector('.book')]
-    const avoidEdges = Array.from(document.querySelectorAll('h2.d, .book .tagline, .card, .proof .row3, .body, .place'))
-    const fabSync = () => {
-      const H = scroller.clientHeight, zone = H - 132
-      const past = hero.getBoundingClientRect().bottom < H * .7
-      const onBeat = avoidBeats.some(el => { const r = el.getBoundingClientRect(); return r.top < H * .85 && r.bottom > 0 })
-      const onEdge = avoidEdges.some(el => { const r = el.getBoundingClientRect(); return r.top < H && r.bottom > zone })
-      fab.classList.toggle('on', past && !onBeat && !onEdge)
-    }
-    lenis.on('scroll', fabSync); fabSync()
 
-    /* ---- the crossings: the shear travels the cut line with the scroll, three snips on the way (25/50/75%), the line appears in its wake ---- */
+    /* ---- the crossings: the shear travels the cut line with the scroll, three snips on the way, the line appears in its wake ---- */
     if (!reduce) document.querySelectorAll('.cross').forEach((c, i) => {
       const x = buildCross(c, i)
       gsap.timeline({ scrollTrigger: { trigger: c, start: 'top 98%', end: 'bottom 10%', scrub: .7,
@@ -505,31 +581,23 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
         .fromTo(x.rect, { attr: { x: x.rtl ? 400 : 0, width: 0 } }, { attr: { x: 0, width: 400 }, ease: 'none' }, 0)
     })
 
-    /* ---- proof: the numbers count with the scroll (scrub, no pin) — 0 to the real figure as the card climbs the screen ---- */
+    /* ---- proof: the numbers count with the scroll (scrub, no pin) ---- */
     document.querySelectorAll('.proof .n').forEach(n => { const target = +n.dataset.count, dec = +(n.dataset.dec || 0)
       const fmt = v => v.toFixed(dec)
       if (reduce) { n.textContent = fmt(target); return }
       ScrollTrigger.create({ trigger: n, start: 'top 95%', end: 'top 45%', scrub: .4, onUpdate: st => { n.textContent = fmt(target * gsap.parseEase('power2.out')(st.progress)) } }) })
     if (!reduce) gsap.utils.toArray('.strip a').forEach((a, i) => gsap.from(a, { y: 24, duration: .7, ease: 'expo.out', delay: i * .06, clearProps: 'transform', scrollTrigger: { trigger: '#strip', start: 'top 90%', once: true } }))
-    /* ---- the barber: shutter print; lead/inset counter-drift; tap the inset to trade places ---- */
+    /* ---- the barber: shutter blades open on arrival; tap the inset to trade places ---- */
     if (!reduce) {
-      gsap.timeline({ scrollTrigger: { trigger: '#shutter', start: 'top 88%', end: 'top 28%', scrub: .5 } })
-        .fromTo('#shutter .sh', { scaleY: 1 }, { scaleY: 0, ease: 'none' }, 0)
-        .fromTo('#shutter img', { scale: 1.14 }, { scale: 1, ease: 'none' }, 0)
-      gsap.timeline({ scrollTrigger: { trigger: '#fan', start: 'top 92%', end: 'top 30%', scrub: .5 } })
-        .fromTo('#fan .p1 img', { scale: 1.12 }, { scale: 1, ease: 'none' }, 0)
-        .fromTo('#fan .p2', { x: -40, y: 28, rotation: -3 }, { x: 0, y: 0, rotation: 0, ease: 'none' }, 0)
-      gsap.to('#fan .p1 img', { yPercent: -6, ease: 'none', scrollTrigger: { trigger: '#fan', start: 'top bottom', end: 'bottom top', scrub: .6 } })
-      gsap.to('#fan .p2 img', { yPercent: 6, ease: 'none', scrollTrigger: { trigger: '#fan', start: 'top bottom', end: 'bottom top', scrub: .6 } })
-      gsap.fromTo('#island img', { scale: 1.1, yPercent: -4 }, { scale: 1, yPercent: 4, ease: 'none', scrollTrigger: { trigger: '#island', start: 'top bottom', end: 'bottom top', scrub: .6 } })
-      gsap.utils.toArray('.card').forEach((cd, i) => gsap.from(cd, { y: 20, scale: .985, duration: .48, ease: 'expo.out', delay: i * .1, clearProps: 'transform', scrollTrigger: { trigger: cd, start: 'top 90%', once: true } }))
+      gsap.fromTo('#shutter .sh', { scaleY: 1 }, { scaleY: 0, ease: 'none', scrollTrigger: { trigger: '#shutter', start: 'top 88%', end: 'top 28%', scrub: .5 } })
+      gsap.fromTo('#fan .p2', { x: -16, rotation: -2 }, { x: 0, rotation: 0, ease: 'none', scrollTrigger: { trigger: '#fan', start: 'top 92%', end: 'top 30%', scrub: .5 } })
     }
     {
       const p1 = document.querySelector('#fan .p1'), p2 = document.querySelector('#fan .p2'); let busy = false
       p2.addEventListener('click', () => {
         if (busy) return; busy = true
         const a = p1.querySelector('img'), b = p2.querySelector('img'), r1 = p1.getBoundingClientRect(), r2 = p2.getBoundingClientRect()
-        const c1 = a.cloneNode(), c2 = b.cloneNode(); c1.className = c2.className = 'fly'; c1.style.transform = c2.style.transform = 'none'
+        const c1 = a.cloneNode(), c2 = b.cloneNode(); c1.className = c2.className = 'fly'; c1.style.transform = c2.style.transform = 'none'; c1.style.position = c2.style.position = 'fixed'
         gsap.set(c1, { left: r1.left, top: r1.top, width: r1.width, height: r1.height }); gsap.set(c2, { left: r2.left, top: r2.top, width: r2.width, height: r2.height })
         document.body.append(c1, c2); a.style.visibility = b.style.visibility = 'hidden'
         const done = () => { [a.src, b.src] = [b.src, a.src]; [a.alt, b.alt] = [b.alt, a.alt]
@@ -541,22 +609,22 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
       })
     }
 
-    /* ---- the work: full-page prints — each settles from scale 1.045 / y 20 / clip 3% as it arrives; the opener only breathes ---- */
+    /* ---- the work: full-page prints — each settles from clip 3% as it arrives; the opener only breathes ---- */
     const prints = gsap.utils.toArray('.pr')
     if (!reduce) prints.forEach((p) => {
       const fr = p.querySelector('.fr'), im = p.querySelector('img'), full = p.classList.contains('full')
       gsap.timeline({ scrollTrigger: { trigger: p, start: 'top 95%', end: 'top 15%', scrub: .5 } })
-        .fromTo(fr, { clipPath: full ? 'inset(0)' : 'inset(3% round 24px)', y: full ? 0 : 20 }, { clipPath: full ? 'inset(0)' : 'inset(0% round 24px)', y: 0, ease: 'none' }, 0)
+        .fromTo(fr, { clipPath: full ? 'inset(0)' : 'inset(3% round 20px)' }, { clipPath: full ? 'inset(0)' : 'inset(0% round 20px)', ease: 'none' }, 0)
         .fromTo(im, { scale: full ? 1.025 : 1.045 }, { scale: 1, ease: 'none' }, 0)
     })
     /* the lightbox: the tapped print flies to the frame and back */
-    const lb = document.getElementById('lb'), lbimg = document.getElementById('lbimg'), lbcap = document.getElementById('lbcap'), lbfr = document.getElementById('lbfr'), lbtag = document.getElementById('lbtag')
+    const lb = document.getElementById('lb'), lbimg = document.getElementById('lbimg'), lbcap = document.getElementById('lbcap'), lbfr = document.getElementById('lbfr')
     let home = null, fly = null
     const rect = el => { const r = el.getBoundingClientRect(); return { left: r.left, top: r.top, width: r.width, height: r.height } }
     prints.forEach(p => p.addEventListener('click', () => {
       if (fly) return
       const src = p.querySelector('.fr'); home = rect(src)
-      lbimg.src = p.dataset.src; lbimg.alt = p.querySelector('img').alt; lbcap.textContent = p.querySelector('.tag span').textContent; lbtag.querySelector('i').textContent = p.querySelector('.tag i').textContent; lbfr.classList.toggle('full', !!p.dataset.full)
+      lbimg.src = p.dataset.src; lbimg.alt = p.querySelector('img').alt; lbcap.textContent = p.querySelector('.tag span').textContent; lbfr.classList.toggle('full', !!p.dataset.full)
       document.body.classList.add('lb-open'); lenis.stop()
       if (reduce) { lb.classList.add('on'); return }
       lb.style.opacity = '0'; lb.style.pointerEvents = 'auto'; const to = rect(lbfr)
@@ -575,16 +643,14 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
     }
     lb.addEventListener('click', closeLb); document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb() })
 
-    /* ---- the chair: the quote in the eye band is sharp; the long review lights word by word, done before the eye band ---- */
+    /* ---- the chair: the quote in the eye band is sharp; the long review lights word by word ---- */
     gsap.utils.toArray('.q').forEach(q => ScrollTrigger.create({ trigger: q, start: 'top 65%', end: 'bottom 35%', onToggle: s => q.classList.toggle('on', s.isActive) }))
-    const read = document.getElementById('read'), who = null
-    const words = read.firstChild.textContent.trim().split(' '); read.firstChild.remove()
+    const read = document.getElementById('read')
+    const words = read.textContent.trim().split(' '); read.textContent = ''
     const spans = words.map(w => { const s = document.createElement('span'); s.textContent = w + ' '; read.appendChild(s); return s })
     ScrollTrigger.create({ trigger: read, start: 'top 80%', end: 'bottom 35%', scrub: .4, onUpdate: st => { const n = Math.round(st.progress * spans.length); spans.forEach((s, i) => s.classList.toggle('lit', i < n)) } })
 
     /* ---- the rate card ---- */
-    document.querySelectorAll('.rw .p .dd b').forEach(b => { b.innerHTML = b.textContent.replace('$', '<i class="cur">$</i>') })
-    document.querySelectorAll('.rw .p .dd b').forEach(b => { b.innerHTML = b.textContent.replace('$', '<i class="cur">$</i>') })   // Bodoni's $ is a full-height glyph; shrink and raise it so it never touches the numeral
     const rows = gsap.utils.toArray('.rw')
     rows.forEach((r, i) => ScrollTrigger.create({ trigger: r, start: 'top 94%', once: true,
       onEnter: () => { if (reduce) return
@@ -602,7 +668,7 @@ footer{padding:26px 22px 34px;border-top:1px solid var(--hair);display:flex;just
       s.src = 'https://booksy.com/widget/code.js?id=1668896&country=us&lang=en&mode=inline'; s.async = true
       w.appendChild(s)
     }
-    document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => { const el = document.querySelector(a.getAttribute('href')); if (el) { e.preventDefault(); lenis.scrollTo(el, { offset: -56 }) } }))
+    document.querySelectorAll('a[href^="#"]:not(.sheet a)').forEach(a => a.addEventListener('click', e => { const el = document.querySelector(a.getAttribute('href')); if (el) { e.preventDefault(); lenis.scrollTo(el, { offset: -72 }) } }))
     ScrollTrigger.refresh()
   }
   waitVh()
