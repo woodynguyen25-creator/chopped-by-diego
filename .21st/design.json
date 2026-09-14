@@ -296,6 +296,41 @@
       "date": "2026-09-13",
       "id": "Q36",
       "decision": "Desktop is deliberate: at >=900px the phone column sits hairlined in a radial darkroom glow with the Book pill centred under it (juries judge on desktop; the column is the composition)"
+    },
+    {
+      "date": "2026-09-14",
+      "id": "Q37",
+      "decision": "Woody 9/14: the walnut darkroom reads 'a little cheap' — repalette to blacks/whites/greys off his own Instagram price-list graphic, with more white; the photographs supply the colour, gold dropped from the interface (Astra v7 spec)"
+    },
+    {
+      "date": "2026-09-14",
+      "id": "Q38",
+      "decision": "Display face: Bodoni Moda + Azeret Mono replaced by Archivo variable — heavy extended caps (wdth 112, 800–900) for headings and light tracked caps (350, .06em) for service names, matching the price list's two type voices; no italics"
+    },
+    {
+      "date": "2026-09-14",
+      "id": "Q39",
+      "decision": "Two beats flip to white (#F1F2F0): proof and reviews, joined by 32px seams; everything else stays on the gradient ground in bands (110°, reversed across tools–gallery)"
+    },
+    {
+      "date": "2026-09-14",
+      "id": "Q40",
+      "decision": "Nav: a 56px glass bar with wordmark, ES/EN cycling button, menu and Book, opening an opaque five-row sheet (Work · Diego · Reviews · Prices · Visit) with aria-current; the sticky Book pill is removed (21st 16369 morph mechanism, rebuilt)"
+    },
+    {
+      "date": "2026-09-14",
+      "id": "Q41",
+      "decision": "Loader: the squiggle is replaced by CHOPPED / BY DIEGO rising through a clip, gated on fonts + hero decode, and the same wordmark flies into its bar position — no cut, no duplicate logo (21st 2556 exit mechanism)"
+    },
+    {
+      "date": "2026-09-14",
+      "id": "Q42",
+      "decision": "Parallax by table, one clock, biography deepest (lead −36→36 vs inset 32→−32); every clipped photo overscanned by its travel; captions are plain caps text, never a pill on something you can't tap"
+    },
+    {
+      "date": "2026-09-14",
+      "id": "Q43",
+      "decision": "Kept against Astra's diagnosis: the two shear crossings (Woody's v5 ask), redrawn monochrome — Woody's call to cut them if 'cleaner' still wins"
     }
   ],
   "evidence": [
@@ -314,6 +349,10 @@
     {
       "fact": "component mechanics",
       "source": "21st.dev — Motion Button (26738), Dot Border Button (25637), Variable Font Hover Hero (18647), Text Reveal Mask (19257), Horizontal Feature Reveal (26062)"
+    },
+    {
+      "fact": "v7 spec + review",
+      "source": "../ASTRA-V7-SPEC-2026-09-14.md · ../astra-v7-review.md"
     }
   ],
   "generatedAt": "2026-09-11T23:15:00.000Z"
