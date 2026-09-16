@@ -331,6 +331,26 @@
       "date": "2026-09-14",
       "id": "Q43",
       "decision": "Kept against Astra's diagnosis: the two shear crossings (Woody's v5 ask), redrawn monochrome — Woody's call to cut them if 'cleaner' still wins"
+    },
+    {
+      "date": "2026-09-15",
+      "id": "Q44",
+      "decision": "v8 demo cut: seams removed (hard cuts into the white beats), name 48px, proof numbers static and composed 1.15/1/.9, gallery prints 4:5 with captions below and the event print alone full-page, price list without gloss, reviews as a print list, booking button full-row — Astra's full-site refinement (ASTRA-V8-SPEC)"
+    },
+    {
+      "date": "2026-09-15",
+      "id": "Q45",
+      "decision": "The biography pair leads with the edge-work photo; the repeated hero client is the 132px framed inset on the right (Astra: prioritise the different photograph)"
+    },
+    {
+      "date": "2026-09-15",
+      "id": "Q46",
+      "decision": "Lightbox: drag down or up to dismiss (21st 11979 gesture), focus moves to the close button and returns to the print; hidden layers (sheet, collapsed rows, lightbox) are inert"
+    },
+    {
+      "date": "2026-09-15",
+      "id": "Q47",
+      "decision": "Head carries canonical, Open Graph, Twitter card and HairSalon JSON-LD with hours, price range and area served — never a street address (standing rule)"
     }
   ],
   "evidence": [
@@ -353,6 +373,10 @@
     {
       "fact": "v7 spec + review",
       "source": "../ASTRA-V7-SPEC-2026-09-14.md · ../astra-v7-review.md"
+    },
+    {
+      "fact": "v8 spec",
+      "source": "../ASTRA-V8-SPEC-2026-09-15.md"
     }
   ],
   "generatedAt": "2026-09-11T23:15:00.000Z"

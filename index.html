@@ -3,8 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Chopped by Diego</title>
-<meta name="description" content="Diego Sandoval — fades, tapers and freehand designs in Northwest Houston. 4.9 on Booksy across 54 confirmed clients. See open times and book a chair.">
+<title>Chopped by Diego — Barber in Northwest Houston</title>
+<meta name="description" content="Diego Sandoval — fades, tapers and freehand designs in Northwest Houston, by appointment. See the work, the price list and book a chair on Booksy.">
+<link rel="canonical" href="https://woodynguyen25-creator.github.io/chopped-by-diego/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Chopped by Diego — Barber in Northwest Houston">
+<meta property="og:description" content="Fades, tapers and freehand designs. Appointments on Booksy.">
+<meta property="og:url" content="https://woodynguyen25-creator.github.io/chopped-by-diego/">
+<meta property="og:image" content="https://woodynguyen25-creator.github.io/chopped-by-diego/assets/hero-02.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HairSalon","name":"Chopped by Diego","url":"https://woodynguyen25-creator.github.io/chopped-by-diego/","image":"https://woodynguyen25-creator.github.io/chopped-by-diego/assets/hero-02.jpg","areaServed":"Northwest Houston, TX 77064","priceRange":"$20–$60","sameAs":["https://www.instagram.com/choppedbydiego/","https://choppedbydiego33.booksy.com"],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"16:00","closes":"21:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"10:00","closes":"18:00"}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..600&display=swap" rel="stylesheet">
@@ -33,7 +41,7 @@ html,body{height:var(--vh-px);overflow:hidden;background:var(--g0)}
 body{color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 #scroll{position:relative;height:var(--vh-px);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
 #root{position:relative;max-width:520px;margin:0 auto;background:var(--g0)}
-.grain{position:absolute;inset:0;pointer-events:none;z-index:5;opacity:.05;background-image:radial-gradient(rgba(255,255,255,.9) .6px,transparent .7px);background-size:3px 3px;mix-blend-mode:overlay}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:5;opacity:.05;background-image:radial-gradient(rgba(255,255,255,.9) .6px,transparent .7px);background-size:3px 3px;mix-blend-mode:overlay}
 img{display:block;max-width:100%}
 a{color:inherit}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
@@ -43,7 +51,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .band{position:relative;background:linear-gradient(110deg,var(--g0) 0%,var(--g1) 100%)}
 .band.rev{background:linear-gradient(250deg,var(--g0) 0%,var(--g1) 100%)}
 .lt{position:relative;z-index:1;background:var(--lt);color:var(--lt-ink)}
-.seam{height:32px;pointer-events:none}
+.seam{height:0;pointer-events:none}
 .seam.in{background:linear-gradient(180deg,#111213,var(--lt))}      /* dark band → light beat */
 .seam.out{background:linear-gradient(180deg,var(--lt),#111213)}     /* light beat → dark band */
 /* type — Archivo's width axis does the price list's work: heavy extended caps up top, light tracked caps for the small stuff */
@@ -59,7 +67,7 @@ h2.d{font-size:34px;line-height:35px}
 section{padding:var(--beat) var(--gut) 0;scroll-margin-top:80px}
 /* the photo caption: a light pill, words only */
 .tag{position:absolute;left:16px;bottom:16px;z-index:2;display:block;font-family:var(--disp);font-weight:500;font-size:11px;line-height:16px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;color:var(--ink);text-shadow:0 1px 2px rgba(0,0,0,.5)}
-.tag.g-pill{background:none;border:0;box-shadow:none;border-radius:0;padding:0;backdrop-filter:none;-webkit-backdrop-filter:none;color:var(--ink)}
+.tag{padding:5px 8px;border-radius:5px;background:rgba(9,9,9,.5);text-shadow:none}
 /* every photograph gets the same grade so it sits on grey instead of fighting it */
 .plate img,.shutter img,.fan img,.island img,.pr img,.strip img,.lb img{filter:var(--grade)}
 
@@ -75,7 +83,8 @@ section{padding:var(--beat) var(--gut) 0;scroll-margin-top:80px}
 /* ============ nav — a floating glass bar holding the wordmark, language, menu and Book; the menu is a sheet under the bar ============ */
 .mastwrap{position:sticky;top:0;z-index:40;padding:12px 12px 0;pointer-events:none;transition:transform .22s cubic-bezier(.33,1,.68,1)}
 .mastwrap.hide{transform:translateY(-140%)}
-.mastwrap.lt .mast{background:rgba(255,255,255,.72);color:var(--lt-ink);border-color:rgba(0,0,0,.10);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 6px 20px rgba(0,0,0,.07)}
+.mast.g-bar{background:rgba(18,20,22,.82);border-color:rgba(255,255,255,.14);box-shadow:0 4px 16px rgba(0,0,0,.13);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.mastwrap.lt .mast{background:rgba(255,255,255,.92);color:var(--lt-ink);border-color:rgba(0,0,0,.10);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 6px 20px rgba(0,0,0,.07)}
 .mastwrap.lt .mast .wm,.mastwrap.lt .ctl .lang{color:var(--lt-ink)} .mastwrap.lt .ctl .menu i{background:var(--lt-ink)} .mastwrap.lt .ctl .bk{background:var(--lt-ink);color:var(--ink)}
 .mastwrap.open .mast{background:transparent;border-color:transparent;box-shadow:none;color:var(--ink)} .mastwrap.open .mast .wm,.mastwrap.open .ctl .lang{color:var(--ink)} .mastwrap.open .ctl .menu i{background:var(--ink)} .mastwrap.open .ctl .bk{background:var(--ink);color:var(--g0)}
 .mast{pointer-events:auto;display:flex;justify-content:space-between;align-items:center;height:56px;padding:0 6px 0 16px;border-radius:var(--r-bar);position:relative;z-index:2}
@@ -92,8 +101,8 @@ section{padding:var(--beat) var(--gut) 0;scroll-margin-top:80px}
 .ctl .bk{display:inline-flex;align-items:center;justify-content:center;min-width:64px;height:44px;padding:0 16px;border-radius:999px;background:var(--ink);color:var(--g0);text-decoration:none;font-family:var(--disp);font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;transition:transform .35s var(--apple)}
 .ctl .bk:active{transform:scale(.96)}
 /* the sheet: opaque, under the bar, rows fade in staggered once the container has grown (21st 16369's morph, on our clock) */
-.sheet{pointer-events:auto;position:absolute;left:12px;right:12px;top:12px;padding-top:56px;border-radius:var(--r-bar);background:#111213;border:1px solid rgba(255,255,255,.12);box-shadow:0 20px 50px rgba(0,0,0,.45);clip-path:inset(0 0 100% 0 round var(--r-bar));transition:clip-path .55s var(--apple);z-index:1}
-.open .sheet{clip-path:inset(0 0 0 0 round var(--r-bar))}
+.sheet{pointer-events:auto;position:absolute;left:12px;right:12px;top:12px;padding-top:56px;border-radius:var(--r-bar);background:#111213;border:1px solid rgba(255,255,255,.12);box-shadow:0 20px 50px rgba(0,0,0,.45);clip-path:inset(0 0 100% 0 round var(--r-bar));visibility:hidden;transition:clip-path .55s var(--apple),visibility 0s .55s;z-index:1}
+.open .sheet{clip-path:inset(0 0 0 0 round var(--r-bar));visibility:visible;transition-delay:0s}
 .sheet a{display:flex;align-items:center;justify-content:space-between;height:56px;padding:0 20px;font-family:var(--disp);font-weight:700;font-size:16px;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);text-decoration:none;opacity:0;transform:translateY(8px);transition:opacity .3s var(--ease),transform .5s var(--ease)}
 .sheet a+a{border-top:1px solid rgba(255,255,255,.08)}
 .sheet a span{position:relative;padding-bottom:4px}
@@ -110,15 +119,16 @@ section{padding:var(--beat) var(--gut) 0;scroll-margin-top:80px}
 .hero{margin-top:-68px;padding:0 var(--gut)}
 .cover{margin:0 calc(var(--gut) * -1);position:relative;height:calc(var(--vh) * 94);min-height:580px;overflow:hidden;background:var(--g0)}
 .plate{position:absolute;left:0;right:0;top:-24px;bottom:-24px;will-change:transform}
-.plate img{width:100%;height:100%;object-fit:cover;object-position:55% 30%;transform-origin:50% 40%;will-change:transform}
+.plate img{width:100%;height:100%;object-fit:cover;object-position:55% 30%;transform-origin:50% 40%}
 .cover:before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(9,9,9,.36) 0%,rgba(9,9,9,0) 26%,rgba(9,9,9,.34) 56%,rgba(9,9,9,.96) 100%)}
-.lockup{position:absolute;left:var(--gut);right:var(--gut);bottom:66px;z-index:2;will-change:transform}
-.lockup .k{display:flex;gap:10px;align-items:center;margin-bottom:16px}
+.lockup{position:absolute;left:var(--gut);right:var(--gut);bottom:64px;z-index:2}
+.lockup .k{display:flex;gap:10px;align-items:center;margin-bottom:12px;font-size:10px;letter-spacing:.1em}
 .lockup .k i{width:22px;height:1px;background:var(--ink)}
-.name{font-size:clamp(40px,11.6vw,46px);line-height:.98;letter-spacing:-.035em;font-weight:900;text-shadow:0 2px 24px rgba(0,0,0,.45)}
+.name{font-size:48px;line-height:.94;font-variation-settings:"wdth" 112;letter-spacing:-.035em;font-weight:900;text-shadow:0 2px 24px rgba(0,0,0,.45)}
+@media (max-width:359px){.name{font-size:40px} .proof .stat .n{font-size:36px;line-height:38px} .proof .stat:first-child .n{font-size:40px} .proof .stat{padding-right:8px} .proof .stat+.stat{padding-left:10px}}
 .name span{display:block}
-.quote{margin-top:16px;font-family:var(--disp);font-weight:300;font-size:20px;line-height:1.3;letter-spacing:-.005em;max-width:24ch;text-wrap:balance;color:var(--ink)}
-.cover .cta{margin-top:24px}
+.quote{margin-top:18px;font-family:var(--disp);font-weight:300;font-size:18px;line-height:25px;letter-spacing:-.005em;max-width:25ch;text-wrap:balance;color:var(--ink)}
+.cover .cta{margin-top:22px}
 .cover .tag{left:var(--gut);bottom:14px}
 /* buttons — the iOS pill, solid ink */
 .btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:14px 24px;border-radius:999px;background:var(--ink);color:var(--g0);text-decoration:none;font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;transition:transform .35s var(--apple),background .35s var(--apple);box-shadow:0 10px 26px rgba(0,0,0,.3)}
@@ -137,50 +147,52 @@ section{padding:var(--beat) var(--gut) 0;scroll-margin-top:80px}
 .cross + section{padding-top:calc(var(--beat) * .3)}
 
 /* ============ 1b · proof — a light beat: the numbers at display scale on his white ============ */
-.proof{padding-top:22px;padding-bottom:calc(var(--beat) * .5)}
-.proof .row3{display:grid;grid-template-columns:1fr 1fr 1fr;margin-top:4px}
-.proof .stat{display:grid;grid-template-rows:auto auto;row-gap:12px;padding:0 12px 0 0;align-content:start;will-change:transform}
+.proof{padding-top:36px;padding-bottom:40px}
+.proof .row3{display:grid;grid-template-columns:1.15fr 1fr .9fr;margin-top:4px}
+.proof .stat{display:grid;grid-template-rows:auto auto;row-gap:10px;padding:0 12px 0 0;align-content:start}
 .proof .stat+.stat{padding-left:14px;box-shadow:inset 1px 0 0 var(--lt-line)}
-.proof .stat .n{font-family:var(--disp);font-weight:800;font-variation-settings:"wdth" 112;font-size:44px;line-height:46px;letter-spacing:-.03em;font-variant-numeric:tabular-nums lining-nums;color:var(--lt-ink)}
+.proof .stat .n{font-family:var(--disp);font-weight:800;font-variation-settings:"wdth" 112;font-size:42px;line-height:46px;letter-spacing:-.03em;font-variant-numeric:tabular-nums lining-nums;color:var(--lt-ink)}
+.proof .stat:first-child .n{font-size:48px}
 .proof .stat .l{min-height:2.7em;font-size:11px;line-height:15px}
-.proof .facts{margin-top:26px;padding-top:16px;border-top:1px solid var(--lt-line);line-height:2;display:flex;flex-wrap:wrap;column-gap:4px}
+.proof .facts{margin-top:24px;padding-top:14px;border-top:1px solid var(--lt-line);font-size:10px;line-height:18px;display:flex;flex-wrap:wrap;column-gap:4px;row-gap:4px}
+.proof .facts span:last-child{flex-basis:100%} .proof .facts i:last-of-type{display:none}
 .proof .facts span{white-space:nowrap}
 .proof .facts i{margin:0 6px;font-style:normal}
 
 /* ============ 2 · the barber — deepest depth on the page ============ */
 .shutter{position:relative;margin:44px calc(var(--gut) * -1) 0;aspect-ratio:4/5;overflow:hidden;background:var(--g0)}
-.shutter img{position:absolute;left:0;top:-20px;width:100%;height:calc(100% + 40px);object-fit:cover;object-position:center 30%;will-change:transform}
-.sh{position:absolute;left:0;right:0;height:50.5%;background:var(--g0);will-change:transform;z-index:1}
+.shutter img{position:absolute;left:0;top:-20px;width:100%;height:calc(100% + 40px);object-fit:cover;object-position:center 30%}
+.sh{position:absolute;left:0;right:0;height:50.5%;background:var(--g0);z-index:1}
 .sh.t{top:0;transform-origin:50% 0} .sh.b{bottom:0;transform-origin:50% 100%}
 .sh:after{content:'';position:absolute;left:0;right:0;height:1px;background:rgba(255,255,255,.4)}
 .sh.t:after{bottom:0} .sh.b:after{top:0}
 .shutter .tag{left:var(--gut)}
-.fan{position:relative;margin:64px 0 0;padding-bottom:40px}
-.fan figure{position:relative;overflow:hidden;background:var(--g0);border-radius:var(--r-print);will-change:transform}
-.fan figure img{position:absolute;left:0;top:-36px;width:100%;height:calc(100% + 72px);object-fit:cover;will-change:transform}
+.fan{position:relative;margin:48px 0 0;padding-bottom:28px}
+.fan figure{position:relative;overflow:hidden;background:var(--g0);border-radius:var(--r-print)}
+.fan figure img{position:absolute;left:0;top:-36px;width:100%;height:calc(100% + 72px);object-fit:cover}
 .fan .p1{width:100%;aspect-ratio:4/5}
-.fan .p2{position:absolute;left:0;bottom:0;width:156px;aspect-ratio:4/5;box-shadow:0 22px 44px rgba(0,0,0,.5),0 0 0 3px #111213;z-index:2;cursor:pointer}
+.fan .p2{position:absolute;left:auto;right:0;bottom:0;width:132px;aspect-ratio:4/5;border-radius:14px;box-shadow:0 12px 24px rgba(0,0,0,.33),0 0 0 3px #111213;z-index:2;cursor:pointer}
 .fan .p2 .tag{left:12px;bottom:12px}
 
 /* ============ 2b · the tools ============ */
 .island{position:relative;margin:44px calc(var(--gut) * -1) 0;aspect-ratio:3/4;overflow:hidden;background:var(--g0)}
-.island img{position:absolute;left:0;top:-20px;width:100%;height:calc(100% + 40px);object-fit:cover;object-position:50% 40%;will-change:transform}
+.island img{position:absolute;left:0;top:-20px;width:100%;height:calc(100% + 40px);object-fit:cover;object-position:50% 40%}
 .island .tag{left:var(--gut)}
 
 /* ============ 3 · the work — full-page prints ============ */
-.lede{margin-top:18px;font-family:var(--disp);font-weight:300;font-size:20px;line-height:1.3;max-width:26ch;color:var(--ink)}
 .prints{margin:44px calc(var(--gut) * -1) 0}
-.pr{position:relative;display:block;width:100%;padding:0 12px;margin-top:24px;text-align:left}
-.pr .fr{position:relative;height:calc(var(--vh) * 88.5);overflow:hidden;background:var(--g0);border-radius:var(--r-print);will-change:clip-path,transform;transform-origin:50% 100%}
-.pr .fr img{position:absolute;left:0;top:-16px;width:100%;height:calc(100% + 32px);object-fit:cover;will-change:transform}
+.pr{position:relative;display:block;width:100%;padding:0 20px;margin-top:36px;text-align:left}
+.pr .fr{position:relative;height:auto;aspect-ratio:4/5;overflow:hidden;background:var(--g0);border-radius:16px;transform-origin:50% 100%}
+.pr .fr img{position:absolute;left:0;top:-16px;width:100%;height:calc(100% + 32px);object-fit:cover}
 .pr.full{padding:0;margin-top:0}
-.pr.full .fr{height:var(--vh-px);border-radius:0}
+.pr.full .fr{height:var(--vh-px);aspect-ratio:auto;border-radius:0}
 .pr.full .fr img{object-position:50% 45%}
-.pr .tag{left:28px;bottom:24px}
+.pr:not(.full) .tag{position:static;display:block;margin-top:12px;padding:0;border-radius:0;background:none;white-space:normal;font-size:10px;line-height:15px;letter-spacing:.07em;color:var(--ink-2)}
 .pr.full .tag{left:16px;bottom:16px}
 /* the lightbox */
-.lb{position:fixed;top:0;left:0;width:100%;height:var(--vh-px);z-index:70;background:rgba(9,9,9,.86);backdrop-filter:blur(26px) saturate(1.1);-webkit-backdrop-filter:blur(26px) saturate(1.1);display:grid;place-items:center;padding:12px;opacity:0;pointer-events:none;transition:opacity .45s var(--apple)}
-.lb.on{opacity:1;pointer-events:auto}
+.lb{position:fixed;top:0;left:0;width:100%;height:var(--vh-px);z-index:70;background:rgba(9,9,9,.86);backdrop-filter:blur(26px) saturate(1.1);-webkit-backdrop-filter:blur(26px) saturate(1.1);display:grid;place-items:center;padding:12px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .45s var(--apple),visibility 0s .45s}
+.lb.on{opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s}
+.lb figure{touch-action:none;will-change:transform}
 .lb .x{position:absolute;top:max(16px,env(safe-area-inset-top));right:16px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center}
 .lb .x i{position:absolute;width:16px;height:1.5px;border-radius:1px;background:var(--lt-ink);transform:rotate(45deg)} .lb .x i+i{transform:rotate(-45deg)}
 .lb figure{width:100%;max-width:520px;opacity:0;transition:opacity .2s;position:relative}
@@ -191,28 +203,29 @@ section{padding:var(--beat) var(--gut) 0;scroll-margin-top:80px}
 .fly{position:fixed;z-index:72;object-fit:cover;border-radius:var(--r-print);pointer-events:none;will-change:transform,width,height;filter:var(--grade)}
 
 /* ============ 4 · the chair — a light beat: the reviews read like print ============ */
-.chair{padding-top:32px}
+.chair{padding-top:44px;padding-bottom:40px}
 .score{display:flex;align-items:flex-end;gap:14px;margin:0 0 22px}
-.score .n{font-family:var(--disp);font-weight:800;font-variation-settings:"wdth" 112;font-size:72px;line-height:.88;letter-spacing:-.03em;color:var(--lt-ink);font-variant-numeric:tabular-nums}
-.score .src{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;font-family:var(--disp);font-weight:500;font-size:12px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;margin-bottom:4px}
-.quotes{margin-top:24px;border-top:1px solid var(--lt-line)}
-.q{display:grid;grid-template-columns:44px 1fr;column-gap:14px;align-items:start;padding:22px 0;border-bottom:1px solid var(--lt-line);transition:filter .35s ease,opacity .35s ease;filter:blur(.8px);opacity:.7}
-.q.on{filter:blur(0);opacity:1}
-.q .t{font-family:var(--disp);font-weight:400;font-size:20px;line-height:26px;letter-spacing:-.01em;color:var(--lt-ink);text-wrap:balance}
+.score .n{font-family:var(--disp);font-weight:800;font-variation-settings:"wdth" 112;font-size:68px;line-height:.88;letter-spacing:-.03em;color:var(--lt-ink);font-variant-numeric:tabular-nums}
+.score .src{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0;background:none;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;font-family:var(--disp);font-weight:500;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;margin-bottom:4px}
+.pull{margin-top:28px;font-family:var(--disp);font-weight:800;font-variation-settings:"wdth" 106;font-size:34px;line-height:36px;letter-spacing:-.025em;text-transform:uppercase;color:var(--lt-ink);text-wrap:balance;max-width:11ch}
+.pullwho{margin-top:12px}
+.quotes{margin-top:22px;border-top:1px solid var(--lt-line)}
+.q{display:grid;grid-template-columns:32px minmax(0,1fr);column-gap:14px;align-items:start;padding:24px 0;border-bottom:1px solid var(--lt-line)}
+.q .t{font-family:var(--disp);font-weight:400;font-size:19px;line-height:26px;letter-spacing:-.01em;color:var(--lt-ink);text-wrap:pretty}
 .q .who{grid-column:2;display:block;margin-top:8px}
-.av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-family:var(--disp);font-size:14px;font-weight:700;color:var(--lt-ink);border:1px solid rgba(0,0,0,.28);margin-top:2px}
-.read{display:grid;grid-template-columns:44px 1fr;column-gap:14px;padding:22px 0 0;font-weight:400;font-size:17px;line-height:26px;letter-spacing:-.003em;font-variation-settings:"opsz" 24,"wdth" 96}
-.read span{color:rgba(17,18,19,.62);transition:color .25s ease}
-.read span.lit{color:var(--lt-ink)}
+.av{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-family:var(--disp);font-size:12px;font-weight:700;color:var(--lt-ink);border:1px solid rgba(0,0,0,.28);margin-top:2px}
+.read{display:grid;grid-template-columns:32px minmax(0,1fr);column-gap:14px;padding:22px 0 0;font-weight:400;font-size:17px;line-height:26px;letter-spacing:-.003em;font-variation-settings:"opsz" 24,"wdth" 96}
+#read span{color:rgba(17,18,19,.78);transition:color .25s ease}
+#read span.lit{color:var(--lt-ink)}
 .read .who{grid-column:2;display:block;margin-top:12px}
 
 /* ============ 4b · the feed ============ */
 .feed{padding-top:calc(var(--beat) * .6)}
 .feed .head{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
-.feed .head a{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;font-family:var(--disp);font-weight:500;font-size:12px;letter-spacing:.04em;text-decoration:none;white-space:nowrap}
-.strip{display:flex;gap:10px;margin:22px calc(var(--gut) * -1) 0;padding:0 var(--gut) 8px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 94%,transparent);mask-image:linear-gradient(90deg,#000 94%,transparent)}
+.feed .head a{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;font-family:var(--disp);font-weight:500;font-size:12px;letter-spacing:.04em;text-decoration:none;white-space:nowrap}
+.strip{display:flex;gap:10px;margin:22px calc(var(--gut) * -1) 0;padding:0 var(--gut) 8px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-padding-inline:var(--gut);overscroll-behavior-x:contain}
 .strip::-webkit-scrollbar{display:none}
-.strip a{flex:0 0 74%;aspect-ratio:4/5;scroll-snap-align:start;border-radius:var(--r-print);overflow:hidden;background:var(--g0);position:relative;will-change:transform}
+.strip a{flex:0 0 74%;aspect-ratio:4/5;scroll-snap-align:start;border-radius:var(--r-print);overflow:hidden;background:var(--g0);position:relative}
 .strip a img{width:100%;height:100%;object-fit:cover}
 .strip a:after{content:'';position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
 .strip a .ig{position:absolute;left:12px;bottom:12px;width:32px;height:32px;display:grid;place-items:center;border-radius:50%}
@@ -220,27 +233,29 @@ section{padding:var(--beat) var(--gut) 0;scroll-margin-top:80px}
 
 /* ============ 5 · the rate card — his sheet: names left, a rule, prices right; two hairline circles behind ============ */
 .rate{position:relative;overflow:hidden}
-.rate .ring{position:absolute;width:320px;height:320px;border-radius:50%;border:1px solid rgba(255,255,255,.05);pointer-events:none;will-change:transform}
+.rate .ring{position:absolute;width:320px;height:320px;border-radius:50%;border:1px solid rgba(255,255,255,.05);pointer-events:none}
 .rate .ring.a{right:-120px;top:40px} .rate .ring.b{left:-160px;bottom:-40px}
 .rate .hint{margin-top:14px}
 .rows{position:relative;margin-top:30px;overflow:hidden}
+.rows.g-card{background:rgba(255,255,255,.025);border-radius:12px;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
 .rw{position:relative;transition:background .45s var(--apple)}
 .rw+.rw{box-shadow:inset 0 1px 0 rgba(255,255,255,.1)}
-.rw.open{background:rgba(255,255,255,.09);box-shadow:inset 2px 0 0 var(--ink)}
-.rw button{display:grid;grid-template-columns:1fr 72px 40px;align-items:center;width:100%;padding:16px 4px 16px 20px;text-align:left;-webkit-tap-highlight-color:transparent}
-.rw .svc{font-family:var(--disp);font-weight:350;font-size:15px;line-height:20px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);padding-right:12px}
+.rw.open{background:rgba(255,255,255,.045);box-shadow:inset 1px 0 0 var(--ink)}
+.rw button{display:grid;grid-template-columns:minmax(0,1fr) 72px 36px;align-items:center;width:100%;padding:15px 8px 15px 16px;text-align:left;-webkit-tap-highlight-color:transparent}
+.rw .svc{font-family:var(--disp);font-weight:350;font-size:14px;line-height:20px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);padding-right:8px}
 .rw .svc small{display:block;font-family:var(--disp);font-weight:500;font-size:11px;line-height:16px;letter-spacing:.06em;color:var(--ink-2);margin-top:4px;text-transform:none}
 .rw .p{font-family:var(--disp);font-weight:500;font-size:28px;line-height:32px;letter-spacing:-.02em;color:var(--ink);font-variant-numeric:tabular-nums lining-nums;border-left:1px solid var(--line);padding-left:14px;height:44px;display:flex;align-items:center}
 .rw .p .dd{display:inline-block;overflow:hidden;height:32px;line-height:32px}
 .rw .p .dd b{display:block;font-weight:500}
-.rw .pl{position:relative;width:40px;height:44px;transition:transform .45s var(--apple)}
+.rw .pl{position:relative;width:36px;height:44px;transition:transform .45s var(--apple)}
 .rw .pl:before,.rw .pl:after{content:'';position:absolute;left:50%;top:50%;width:14px;height:1.5px;border-radius:1px;background:var(--ink-2);transform:translate(-50%,-50%)}
 .rw .pl:after{transform:translate(-50%,-50%) rotate(90deg)}
 .rw.open .pl{transform:rotate(45deg)}
 .rw.open .pl:before,.rw.open .pl:after{background:var(--ink)}
 .rw .more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--apple)}
 .rw.open .more{grid-template-rows:1fr}
-.rw .more>div{overflow:hidden}
+.rw .more>div{overflow:hidden;visibility:hidden;transition:visibility 0s .5s}
+.rw.open .more>div{visibility:visible;transition-delay:0s}
 .rw .more p{padding:0 20px 16px;font-weight:400;font-size:15px;line-height:1.55;color:var(--ink);opacity:.85;max-width:32ch}
 .rw .more a{display:inline-flex;align-items:center;gap:8px;margin:0 20px 18px;min-height:44px;font-family:var(--disp);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);text-decoration:none}
 .rw .more a:after{content:'';width:7px;height:7px;border-top:1.5px solid var(--ink);border-right:1.5px solid var(--ink);transform:rotate(45deg);margin-left:2px}
@@ -249,9 +264,11 @@ section{padding:var(--beat) var(--gut) 0;scroll-margin-top:80px}
 .place p{font-weight:400;font-size:15px;line-height:1.5;color:var(--ink)}
 
 /* ============ 6 · book ============ */
-.book{position:relative;padding-bottom:40px}
-.book .tagline{position:relative;font-size:29px;line-height:31px;font-variation-settings:"wdth" 106;will-change:transform}
-.book .cta{position:relative;margin-top:30px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.book{position:relative;padding-top:80px;padding-bottom:48px}
+.book .tagline{position:relative;font-size:28px;line-height:31px;font-variation-settings:"wdth" 106}
+.book .cta{position:relative;margin-top:28px;display:grid;grid-template-columns:1fr;gap:8px}
+.book .cta .btn{width:100%;min-height:56px}
+.book .cta .btn.ghost{justify-self:start;width:auto;min-height:44px;padding:10px 0;background:none;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;text-decoration:underline;text-underline-offset:6px}
 .widget{margin-top:30px;border-radius:var(--r-card);overflow:hidden;min-height:120px;position:relative}
 .widget:empty{display:none}
 .book .note{margin-top:18px;line-height:1.9}
@@ -259,19 +276,20 @@ footer{padding:26px var(--gut) 34px;border-top:1px solid var(--line);display:fle
 
 /* desktop is deliberate: the phone column sits hairlined on his grey */
 @media (min-width:900px){
-  body{background:#131415}
-  #scroll{background:radial-gradient(70% 60% at 50% 40%,rgba(48,50,52,.5),rgba(19,20,21,0) 70%)}
-  #root{box-shadow:0 0 0 1px rgba(255,255,255,.08),0 40px 120px rgba(0,0,0,.6)}
+  body{background:#151617}
+  #scroll{background:#151617}
+  #root{max-width:560px;--gut:28px;--beat:112px;box-shadow:0 0 0 1px rgba(255,255,255,.08)}
+  .cover{height:min(860px,var(--vh-px));min-height:680px}
 }
 @media (prefers-reduced-motion:reduce){
-  #pre{display:none} .mast .wm{visibility:visible} .q{filter:none;opacity:1} .read span{color:var(--lt-ink)} .cross{display:none} .sh{display:none} .mastwrap{transition:none}
-  .sheet,.sheet a{transition:none}
+  *,*:before,*:after{transition-duration:.01ms!important;animation-duration:.01ms!important}
+  #pre{display:none} .mast .wm{visibility:visible} #read span{color:var(--lt-ink)} .sh{display:none}
 }
 </style>
 </head>
 <body>
+<div class="grain" aria-hidden="true"></div>
 <div id="scroll">
-<div class="grain"></div>
 <div id="pre" aria-hidden="true"><div class="bg" id="prebg"></div><div class="wm" id="prewm"><span class="cl"><b>Chopped</b></span><span class="cl"><b>by Diego</b></span></div></div>
 <div id="root">
 
@@ -306,7 +324,7 @@ footer{padding:26px var(--gut) 34px;border-top:1px solid var(--line);display:fle
       <p class="quote rv">“Being a barber isn’t just cutting hair.”</p>
       <div class="cta"><a class="btn" href="#book"><span data-en="Book a chair" data-es="Reservar silla">Book a chair</span></a></div>
     </div>
-    <figcaption class="tag g-pill"><span data-en="In the chair · by appointment" data-es="En la silla · con cita">In the chair · by appointment</span></figcaption>
+    <figcaption class="tag"><span data-en="In the chair · by appointment" data-es="En la silla · con cita">In the chair · by appointment</span></figcaption>
   </figure>
 </section>
 <div class="seam in"></div>
@@ -315,9 +333,9 @@ footer{padding:26px var(--gut) 34px;border-top:1px solid var(--line);display:fle
 <!-- 1b · proof — the numbers a reel viewer wants before the story, on his white -->
 <section class="proof lt" id="proof">
   <div class="row3">
-    <div class="stat"><span class="n" data-count="4.9" data-dec="1">0.0</span><span class="l lab" data-en="Booksy<br>rating" data-es="Calificación<br>Booksy">Booksy<br>rating</span></div>
-    <div class="stat"><span class="n" data-count="54">0</span><span class="l lab" data-en="Booksy<br>reviews" data-es="Reseñas<br>Booksy">Booksy<br>reviews</span></div>
-    <div class="stat"><span class="n" data-count="17">0</span><span class="l lab" data-en="Licensed<br>at 17" data-es="Licencia<br>a los 17">Licensed<br>at 17</span></div>
+    <div class="stat"><span class="n">4.9</span><span class="l lab" data-en="Booksy<br>rating" data-es="Calificación<br>Booksy">Booksy<br>rating</span></div>
+    <div class="stat"><span class="n">54</span><span class="l lab" data-en="Booksy<br>reviews" data-es="Reseñas<br>Booksy">Booksy<br>reviews</span></div>
+    <div class="stat"><span class="n">17</span><span class="l lab" data-en="Licensed<br>at 17" data-es="Licencia<br>a los 17">Licensed<br>at 17</span></div>
   </div>
   <p class="facts lab"><span data-en="Northwest Houston · 77064" data-es="Noroeste de Houston · 77064">Northwest Houston · 77064</span><i>·</i><span data-en="EN / ES" data-es="ES / EN">EN / ES</span><i>·</i><span data-en="Appointments only" data-es="Solo con cita">Appointments only</span></p>
 </section>
@@ -334,11 +352,11 @@ footer{padding:26px var(--gut) 34px;border-top:1px solid var(--line);display:fle
   <figure class="shutter" id="shutter">
     <img src="assets/island-07.jpg" width="1080" height="1440" alt="Diego working over the shoulder in the room" loading="lazy" decoding="async">
     <div class="sh t"></div><div class="sh b"></div>
-    <figcaption class="tag g-pill"><span data-en="In the room" data-es="En la sala">In the room</span></figcaption>
+    <figcaption class="tag"><span data-en="In the room" data-es="En la sala">In the room</span></figcaption>
   </figure>
   <div class="fan" id="fan">
-    <figure class="p1"><img src="assets/b-02-hands.jpg" width="720" height="900" alt="Gloved hands finishing a cut, client in the chair" loading="lazy" decoding="async"><figcaption class="tag g-pill"><span data-en="In the shop" data-es="En el shop">In the shop</span></figcaption></figure>
-    <figure class="p2" title="Tap to swap"><img src="assets/b-09-edge.jpg" width="720" height="900" alt="Diego edging a line-up" loading="lazy" decoding="async"><figcaption class="tag g-pill"><span data-en="Edge work" data-es="Perfilado">Edge work</span></figcaption></figure>
+    <figure class="p1"><img src="assets/b-09-edge.jpg" width="720" height="900" alt="Diego edging a line-up" loading="lazy" decoding="async"><figcaption class="tag"><span data-en="Edge work" data-es="Perfilado">Edge work</span></figcaption></figure>
+    <figure class="p2" id="inset" role="button" tabindex="0" aria-label="Swap the two photographs"><img src="assets/b-02-hands.jpg" width="720" height="900" alt="Gloved hands finishing a cut, client in the chair" loading="lazy" decoding="async"><figcaption class="tag"><span data-en="In the shop" data-es="En el shop">In the shop</span></figcaption></figure>
   </div>
 </section>
 </div>
@@ -347,30 +365,31 @@ footer{padding:26px var(--gut) 34px;border-top:1px solid var(--line);display:fle
 <!-- 2b · the tools -->
 <section class="tools" id="tools">
   <h2 class="d rv" id="toolsh" data-en="The tools don’t make the fade" data-es="Las herramientas no hacen el fade">The tools don’t make the fade</h2>
-  <figure class="island" id="island"><img src="assets/tools-05.jpg" width="1080" height="1440" alt="Diego holding his gold Black Ice clipper toward the camera" loading="lazy" decoding="async"><figcaption class="tag g-pill"><span data-en="Black Ice FX, gold · shot in shop" data-es="Black Ice FX, dorado · en el shop">Black Ice FX, gold · shot in shop</span></figcaption></figure>
+  <figure class="island" id="island"><img src="assets/tools-05.jpg" width="1080" height="1440" alt="Diego holding his gold Black Ice clipper toward the camera" loading="lazy" decoding="async"><figcaption class="tag"><span data-en="The gold Black Ice" data-es="La Black Ice dorada">The gold Black Ice</span></figcaption></figure>
 </section>
 
 <!-- 3 · the work -->
 <section class="work" id="work">
   <h2 class="d rv" data-en="Fades, tapers, freehand" data-es="Fades, tapers, a mano">Fades, tapers, freehand</h2>
   <div class="prints" id="prints">
-    <button class="pr full" type="button" data-src="assets/g-03-event-full.jpg" data-full="1"><div class="fr"><img src="assets/g-03-event-full.jpg" width="1080" height="1350" alt="Diego cutting on the floor at a Houston barber event, crowd behind him" loading="lazy" decoding="async"></div><span class="tag g-pill"><span data-en="On the floor · Houston" data-es="En el evento · Houston">On the floor · Houston</span></span></button>
-    <button class="pr" type="button" data-src="assets/g-10-ornamental-nape-design.jpg"><div class="fr"><img src="assets/g-10-ornamental-nape-design.jpg" width="1080" height="1350" alt="Ornamental freehand design carved into the nape" loading="lazy" decoding="async"></div><span class="tag g-pill"><span data-en="Ornamental nape, freehand · 60 min" data-es="Nuca ornamental, a mano · 60 min">Ornamental nape, freehand · 60 min</span></span></button>
-    <button class="pr" type="button" data-src="assets/g-06-freehand-design-white.jpg"><div class="fr"><img src="assets/g-06-freehand-design-white.jpg" width="1080" height="1350" alt="White line-work design drawn to the head" loading="lazy" decoding="async"></div><span class="tag g-pill"><span data-en="Line work, drawn to the head · 60 min" data-es="Líneas dibujadas a la cabeza · 60 min">Line work, drawn to the head · 60 min</span></span></button>
-    <button class="pr" type="button" data-src="assets/g-04-skinfade-beige-wall.jpg"><div class="fr"><img src="assets/g-04-skinfade-beige-wall.jpg" width="1080" height="1350" alt="Skin fade with a hard line-up" loading="lazy" decoding="async"></div><span class="tag g-pill"><span data-en="Skin fade, hard line · 45 min" data-es="Skin fade, línea marcada · 45 min">Skin fade, hard line · 45 min</span></span></button>
-    <button class="pr" type="button" data-src="assets/g-08-curly-hightop-staircase.jpg"><div class="fr"><img src="assets/g-08-curly-hightop-staircase.jpg" width="1080" height="1350" alt="Curly high top with a clean taper" loading="lazy" decoding="async"></div><span class="tag g-pill"><span data-en="Curly top, clean taper · 45 min" data-es="Rizado arriba, taper limpio · 45 min">Curly top, clean taper · 45 min</span></span></button>
+    <button class="pr full" type="button" data-src="assets/g-03-event-full.jpg" data-full="1"><div class="fr"><img src="assets/g-03-event-full.jpg" width="1080" height="1350" alt="Diego cutting on the floor at a Houston barber event, crowd behind him" loading="lazy" decoding="async"></div><span class="tag"><span data-en="On the floor · Houston" data-es="En el evento · Houston">On the floor · Houston</span></span></button>
+    <button class="pr" type="button" data-src="assets/g-10-ornamental-nape-design.jpg"><div class="fr"><img src="assets/g-10-ornamental-nape-design.jpg" width="1080" height="1350" alt="Ornamental freehand design carved into the nape" loading="lazy" decoding="async"></div><span class="tag"><span data-en="Ornamental nape, freehand · 60 min" data-es="Nuca ornamental, a mano · 60 min">Ornamental nape, freehand · 60 min</span></span></button>
+    <button class="pr" type="button" data-src="assets/g-06-freehand-design-white.jpg"><div class="fr"><img src="assets/g-06-freehand-design-white.jpg" width="1080" height="1350" alt="White line-work design drawn to the head" loading="lazy" decoding="async"></div><span class="tag"><span data-en="Line work, drawn to the head · 60 min" data-es="Líneas dibujadas a la cabeza · 60 min">Line work, drawn to the head · 60 min</span></span></button>
+    <button class="pr" type="button" data-src="assets/g-04-skinfade-beige-wall.jpg"><div class="fr"><img src="assets/g-04-skinfade-beige-wall.jpg" width="1080" height="1350" alt="Skin fade with a hard line-up" loading="lazy" decoding="async"></div><span class="tag"><span data-en="Skin fade, hard line · 45 min" data-es="Skin fade, línea marcada · 45 min">Skin fade, hard line · 45 min</span></span></button>
+    <button class="pr" type="button" data-src="assets/g-08-curly-hightop-staircase.jpg"><div class="fr"><img src="assets/g-08-curly-hightop-staircase.jpg" width="1080" height="1350" alt="Curly high top with a clean taper" loading="lazy" decoding="async"></div><span class="tag"><span data-en="Curly top, clean taper · 45 min" data-es="Rizado arriba, taper limpio · 45 min">Curly top, clean taper · 45 min</span></span></button>
   </div>
 </section>
 <div class="seam in"></div>
 </div>
-<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo"><button class="x g-pill" type="button" aria-label="Close"><i></i><i></i></button><figure><div class="fr" id="lbfr"><img id="lbimg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></div><span class="tag g-pill" id="lbtag"><span id="lbcap"></span></span></figure></div>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo"><button class="x g-pill" type="button" aria-label="Close"><i></i><i></i></button><figure><div class="fr" id="lbfr"><img id="lbimg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></div><span class="tag" id="lbtag"><span id="lbcap"></span></span></figure></div>
 
 <!-- 4 · the chair — on his white -->
 <section class="chair lt" id="chair">
   <div class="score"><span class="n" id="scoren">4.9</span><a class="src g-pill" href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener"><span data-en="54 reviews" data-es="54 reseñas">54 reviews</span><span>·</span><span>Booksy</span></a></div>
   <h2 class="d rv" id="chairh" data-en="What people say" data-es="Lo que dicen">What people say</h2>
+  <blockquote class="pull rv" data-en="“The LeBron of cutting hair.”" data-es="“El LeBron del corte de pelo.”">“The LeBron of cutting hair.”</blockquote>
+  <p class="who lab pullwho">Jaspur · Booksy</p>
   <div class="quotes" id="quotes">
-    <div class="q"><span class="av">J</span><span class="t">“The LeBron of cutting hair.”</span><span class="who lab">Jaspur · Booksy</span></div>
     <div class="q"><span class="av">A</span><span class="t">“Best cuts in the Nawfwest.”</span><span class="who lab">Andrew · Booksy</span></div>
     <div class="q"><span class="av">C</span><span class="t">“Bro, made me look younger.”</span><span class="who lab">Cesar · Booksy</span></div>
   </div>
@@ -381,14 +400,14 @@ footer{padding:26px var(--gut) 34px;border-top:1px solid var(--line);display:fle
 <div class="seam out"></div>
 <!-- 4b · the feed -->
 <section class="feed" id="feed">
-  <div class="head"><h2 class="d rv" id="feedh" data-en="From the feed" data-es="Del feed">From the feed</h2><a class="g-pill" href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener">@choppedbydiego</a></div>
+  <div class="head"><h2 class="d rv" id="feedh" data-en="On Instagram" data-es="En Instagram">On Instagram</h2><a class="g-pill" href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener">@choppedbydiego</a></div>
   <div class="strip" id="strip">
-    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-1.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#111213" stroke="none"/></svg></span></a>
-    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-2.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#111213" stroke="none"/></svg></span></a>
-    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-3.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#111213" stroke="none"/></svg></span></a>
-    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-4.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#111213" stroke="none"/></svg></span></a>
-    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-5.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#111213" stroke="none"/></svg></span></a>
-    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-6.jpg" width="480" height="600" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#111213" stroke="none"/></svg></span></a>
+    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-1.jpg" width="720" height="900" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#111213" stroke="none"/></svg></span></a>
+    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-2.jpg" width="720" height="900" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#111213" stroke="none"/></svg></span></a>
+    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-3.jpg" width="720" height="900" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#111213" stroke="none"/></svg></span></a>
+    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-4.jpg" width="720" height="900" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#111213" stroke="none"/></svg></span></a>
+    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-5.jpg" width="720" height="900" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#111213" stroke="none"/></svg></span></a>
+    <a href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener"><img src="assets/ig-6.jpg" width="720" height="900" alt="From Diego's Instagram" loading="lazy" decoding="async"><span class="ig g-pill"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="#111213" stroke="none"/></svg></span></a>
   </div>
 </section>
 
@@ -400,12 +419,12 @@ footer{padding:26px var(--gut) 34px;border-top:1px solid var(--line);display:fle
   <h2 class="d rv" data-en="Price list" data-es="Lista de precios">Price list</h2>
   <p class="hint lab"><span data-en="Tap a row · chair time shown" data-es="Toca una fila · tiempo en la silla">Tap a row · chair time shown</span></p>
   <div class="rows g-card">
-  <div class="rw"><button type="button" aria-expanded="false"><span class="svc"><span data-en="Line up" data-es="Perfilado">Line up</span><small>30 min</small></span><span class="p"><span class="dd"><b>$20</b></span></span><span class="pl"></span></button><div class="more"><div><p data-en="Edges and the neckline, cleaned up sharp." data-es="Bordes y nuca, bien perfilados.">Edges and the neckline, cleaned up sharp.</p><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="Book this on Booksy" data-es="Reservar en Booksy">Book this on Booksy</a></div></div></div>
-  <div class="rw"><button type="button" aria-expanded="false"><span class="svc"><span data-en="Haircut" data-es="Corte">Haircut</span><small>45 min</small></span><span class="p"><span class="dd"><b>$30</b></span></span><span class="pl"></span></button><div class="more"><div><p data-en="Fade or taper, cut to how you wear it." data-es="Fade o taper, cortado como lo usas.">Fade or taper, cut to how you wear it.</p><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="Book this on Booksy" data-es="Reservar en Booksy">Book this on Booksy</a></div></div></div>
-  <div class="rw"><button type="button" aria-expanded="false"><span class="svc"><span data-en="Haircut + design" data-es="Corte + diseño">Haircut + design</span><small>60 min · <span data-en="freehand" data-es="a mano alzada">freehand</span></small></span><span class="p"><span class="dd"><b>$30</b></span></span><span class="pl"></span></button><div class="more"><div><p data-en="Freehand line work, drawn to the head." data-es="Líneas a mano alzada, dibujadas a la cabeza.">Freehand line work, drawn to the head.</p><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="Book this on Booksy" data-es="Reservar en Booksy">Book this on Booksy</a></div></div></div>
-  <div class="rw"><button type="button" aria-expanded="false"><span class="svc"><span data-en="Haircut &amp; beard" data-es="Corte y barba">Haircut &amp; beard</span><small>60 min</small></span><span class="p"><span class="dd"><b>$35</b></span></span><span class="pl"></span></button><div class="more"><div><p data-en="The cut, plus the beard shaped and lined." data-es="El corte, más la barba perfilada.">The cut, plus the beard shaped and lined.</p><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="Book this on Booksy" data-es="Reservar en Booksy">Book this on Booksy</a></div></div></div>
-  <div class="rw"><button type="button" aria-expanded="false"><span class="svc"><span data-en="Kids, 8 &amp; under" data-es="Niños, 8 o menos">Kids, 8 &amp; under</span><small>45 min</small></span><span class="p"><span class="dd"><b>$25</b></span></span><span class="pl"></span></button><div class="more"><div><p data-en="Same care, smaller chair." data-es="El mismo cuidado, silla más chica.">Same care, smaller chair.</p><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="Book this on Booksy" data-es="Reservar en Booksy">Book this on Booksy</a></div></div></div>
-  <div class="rw"><button type="button" aria-expanded="false"><span class="svc"><span data-en="House call" data-es="A domicilio">House call</span><small>2 hrs · NW Houston</small></span><span class="p"><span class="dd"><b>$60</b></span></span><span class="pl"></span></button><div class="more"><div><p data-en="Diego comes to you, Northwest Houston." data-es="Diego va a ti, noroeste de Houston.">Diego comes to you, Northwest Houston.</p><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="Book this on Booksy" data-es="Reservar en Booksy">Book this on Booksy</a></div></div></div>
+  <div class="rw"><button type="button" aria-expanded="false" aria-controls="more1"><span class="svc"><span data-en="Line up" data-es="Perfilado">Line up</span><small>30 min</small></span><span class="p"><span class="dd"><b>$20</b></span></span><span class="pl"></span></button><div class="more" id="more1"><div><p data-en="Edges and the neckline, cleaned up sharp." data-es="Bordes y nuca, bien perfilados.">Edges and the neckline, cleaned up sharp.</p><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="Book this on Booksy" data-es="Reservar en Booksy">Book this on Booksy</a></div></div></div>
+  <div class="rw"><button type="button" aria-expanded="false" aria-controls="more2"><span class="svc"><span data-en="Haircut" data-es="Corte">Haircut</span><small>45 min</small></span><span class="p"><span class="dd"><b>$30</b></span></span><span class="pl"></span></button><div class="more" id="more2"><div><p data-en="Fade or taper, cut to how you wear it." data-es="Fade o taper, cortado como lo usas.">Fade or taper, cut to how you wear it.</p><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="Book this on Booksy" data-es="Reservar en Booksy">Book this on Booksy</a></div></div></div>
+  <div class="rw"><button type="button" aria-expanded="false" aria-controls="more3"><span class="svc"><span data-en="Haircut + design" data-es="Corte + diseño">Haircut + design</span><small>60 min · <span data-en="freehand" data-es="a mano alzada">freehand</span></small></span><span class="p"><span class="dd"><b>$30</b></span></span><span class="pl"></span></button><div class="more" id="more3"><div><p data-en="Freehand line work, drawn to the head." data-es="Líneas a mano alzada, dibujadas a la cabeza.">Freehand line work, drawn to the head.</p><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="Book this on Booksy" data-es="Reservar en Booksy">Book this on Booksy</a></div></div></div>
+  <div class="rw"><button type="button" aria-expanded="false" aria-controls="more4"><span class="svc"><span data-en="Haircut &amp; beard" data-es="Corte y barba">Haircut &amp; beard</span><small>60 min</small></span><span class="p"><span class="dd"><b>$35</b></span></span><span class="pl"></span></button><div class="more" id="more4"><div><p data-en="The cut, plus the beard shaped and lined." data-es="El corte, más la barba perfilada.">The cut, plus the beard shaped and lined.</p><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="Book this on Booksy" data-es="Reservar en Booksy">Book this on Booksy</a></div></div></div>
+  <div class="rw"><button type="button" aria-expanded="false" aria-controls="more5"><span class="svc"><span data-en="Kids, 8 &amp; under" data-es="Niños, 8 o menos">Kids, 8 &amp; under</span><small>45 min</small></span><span class="p"><span class="dd"><b>$25</b></span></span><span class="pl"></span></button><div class="more" id="more5"><div><p data-en="Same care, smaller chair." data-es="El mismo cuidado, silla más chica.">Same care, smaller chair.</p><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="Book this on Booksy" data-es="Reservar en Booksy">Book this on Booksy</a></div></div></div>
+  <div class="rw"><button type="button" aria-expanded="false" aria-controls="more6"><span class="svc"><span data-en="House call" data-es="A domicilio">House call</span><small>2 hrs · NW Houston</small></span><span class="p"><span class="dd"><b>$60</b></span></span><span class="pl"></span></button><div class="more" id="more6"><div><p data-en="Diego comes to you, Northwest Houston." data-es="Diego va a ti, noroeste de Houston.">Diego comes to you, Northwest Houston.</p><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="Book this on Booksy" data-es="Reservar en Booksy">Book this on Booksy</a></div></div></div>
   </div>
   <div class="place">
     <div><span class="k lab" data-en="Where" data-es="Dónde">Where</span><p data-en="Northwest Houston, 77064. Appointments only — the address comes with your booking." data-es="Noroeste de Houston, 77064. Solo con cita — la dirección llega con tu reserva.">Northwest Houston, 77064. Appointments only — the address comes with your booking.</p></div>
@@ -471,7 +490,7 @@ footer{padding:26px var(--gut) 34px;border-top:1px solid var(--line);display:fle
     el.dataset.shown = '1'
     if (reduce) return
     const ws = el.querySelectorAll('.w b')
-    gsap.to(ws, { yPercent: 0, duration: .9, ease: 'expo.out', stagger: Math.min(.05, 1 / ws.length), delay, overwrite: true })
+    gsap.to(ws, { yPercent: 0, duration: .65, ease: 'power3.out', stagger: Math.min(.025, .32 / Math.max(1, ws.length)), delay, overwrite: true })
   }
 
   function boot () {
@@ -479,7 +498,9 @@ footer{padding:26px var(--gut) 34px;border-top:1px solid var(--line);display:fle
     ScrollTrigger.defaults({ scroller })
 
     /* ---- ONE CLOCK ---- */
-    const lenis = new Lenis({ wrapper: scroller, content, lerp: 0.09, smoothWheel: true, anchors: true })
+    const lenis = new Lenis({ wrapper: scroller, content, lerp: reduce ? 1 : 0.09, smoothWheel: !reduce, anchors: true })
+    /* lenis.stop() leaves native touch scrolling alive; lock the scroller itself while a layer is open */
+    const lock = (on) => { if (on) { lenis.stop(); scroller.style.overflow = 'hidden' } else { lenis.start(); scroller.style.overflow = '' } }
     lenis.on('scroll', ScrollTrigger.update)
     gsap.ticker.add((t) => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0)
 
@@ -494,20 +515,21 @@ footer{padding:26px var(--gut) 34px;border-top:1px solid var(--line);display:fle
       if (e.direction === -1 && travel > 12) mastwrap.classList.remove('hide')
       if (e.scroll < 40) mastwrap.classList.remove('hide')
     })
-    const links = Array.from(sheet.querySelectorAll('a'))
+    const links = Array.from(sheet.querySelectorAll('a')), bk = mastwrap.querySelector('.bk'), langBtn = document.getElementById('lang')
+    sheet.inert = true
     const setMenu = (open) => {
       mastwrap.classList.toggle('open', open); document.body.classList.toggle('menu-open', open)
-      menubtn.setAttribute('aria-expanded', String(open))
-      if (open) { mastwrap.classList.remove('hide'); lenis.stop(); setTimeout(() => links[0].focus(), 250) } else { lenis.start(); menubtn.focus() }
+      menubtn.setAttribute('aria-expanded', String(open)); sheet.inert = !open
+      if (open) { mastwrap.classList.remove('hide'); lock(true); setTimeout(() => links[0].focus(), 250) } else { lock(false); menubtn.focus() }
     }
     menubtn.addEventListener('click', () => setMenu(!mastwrap.classList.contains('open')))
     scrim.addEventListener('click', () => setMenu(false))
     document.addEventListener('keydown', e => {
       if (!mastwrap.classList.contains('open')) return
       if (e.key === 'Escape') { setMenu(false); return }
-      if (e.key === 'Tab') { const f = [menubtn, ...links]; const i = f.indexOf(document.activeElement); const n = e.shiftKey ? (i <= 0 ? f.length - 1 : i - 1) : (i >= f.length - 1 ? 0 : i + 1); e.preventDefault(); f[n].focus() }
+      if (e.key === 'Tab') { const f = [langBtn, menubtn, bk, ...links]; const i = f.indexOf(document.activeElement); const n = e.shiftKey ? (i <= 0 ? f.length - 1 : i - 1) : (i >= f.length - 1 ? 0 : i + 1); e.preventDefault(); f[n].focus() }
     })
-    links.forEach(a => a.addEventListener('click', e => { e.preventDefault(); const el = document.querySelector(a.getAttribute('href')); setMenu(false); if (el) lenis.scrollTo(el, { offset: -72, duration: 1.2 }) }))
+    links.forEach(a => a.addEventListener('click', e => { e.preventDefault(); const el = document.querySelector(a.getAttribute('href')); setMenu(false); if (el) lenis.scrollTo(el, { offset: -72, duration: reduce ? 0 : 1.2, immediate: reduce }) }))
     document.querySelectorAll('.lt').forEach(el => ScrollTrigger.create({ trigger: el, start: 'top 68px', end: 'bottom 12px', onToggle: s => mastwrap.classList.toggle('lt', s.isActive) }))
     /* the current section: whichever is crossing 30% of the pane */
     links.forEach(a => { const el = document.querySelector(a.getAttribute('href')); if (!el) return
@@ -522,6 +544,7 @@ footer{padding:26px var(--gut) 34px;border-top:1px solid var(--line);display:fle
       document.querySelectorAll('[data-en]').forEach(n => { n.innerHTML = n.dataset[l] })
       document.querySelectorAll('.rv[data-en]').forEach(el => { split(el); if (el.dataset.shown) gsap.set(el.querySelectorAll('.w b'), { yPercent: 0 }) })
       try { localStorage.setItem('cbd-lang', l) } catch {}
+      requestAnimationFrame(() => { if (lenis.resize) lenis.resize(); ScrollTrigger.refresh() })
     }
     lang.addEventListener('click', () => setLang(cur === 'en' ? 'es' : 'en'))
     let saved = null; try { saved = localStorage.getItem('cbd-lang') } catch {}
@@ -559,11 +582,11 @@ footer{padding:26px var(--gut) 34px;border-top:1px solid var(--line);display:fle
       gsap.from('.hero .k, .hero .cta, .cover .tag', { y: 14, opacity: 0, duration: .9, ease: 'expo.out', stagger: .1, delay: .3, clearProps: 'transform,opacity' })
     }
     /* ---- parallax: one table, one clock; each beat runs top bottom → bottom top, the hero from top top ---- */
-    const drift = (target, from, to, trigger, start = 'top bottom', end = 'bottom top') => gsap.fromTo(target, { y: from }, { y: to, ease: 'none', scrollTrigger: { trigger, start, end, scrub: .65 } })
+    const drift = (target, from, to, trigger, start = 'top bottom', end = 'bottom top') => gsap.fromTo(target, { y: from }, { y: to, ease: 'none', scrollTrigger: { trigger, start, end, scrub: .3 } })
     if (!reduce) {
       drift('#plate', -24, 24, '.hero', 'top top'); drift('#lockup', 0, -16, '.hero', 'top top')
       drift('.proof .stat', 12, -12, '.proof')
-      drift('#fan .p1 img', -36, 36, '#fan'); drift('#fan .p2 img', 32, -32, '#fan'); drift('#shutter img', -20, 20, '#shutter')
+      drift('#fan .p1 img', -18, 18, '#fan'); drift('#fan .p2 img', 12, -12, '#fan'); drift('#shutter img', -20, 20, '#shutter')
       drift('#island img', -20, 20, '#island'); drift('#toolsh', 12, -12, '.tools')
       document.querySelectorAll('.pr .fr img').forEach(im => drift(im, -16, 16, im.closest('.pr')))
       drift('#chairh', 8, -8, '.chair'); drift('#feedh', 8, -8, '.feed')
@@ -572,8 +595,9 @@ footer{padding:26px var(--gut) 34px;border-top:1px solid var(--line);display:fle
     }
 
     /* ---- the crossings: the shear travels the cut line with the scroll, three snips on the way, the line appears in its wake ---- */
-    if (!reduce) document.querySelectorAll('.cross').forEach((c, i) => {
+    document.querySelectorAll('.cross').forEach((c, i) => {
       const x = buildCross(c, i)
+      if (reduce) { const L = x.path.getTotalLength(), e = x.path.getPointAtLength(L); x.tool.setAttribute('transform', `translate(${e.x} ${e.y})${x.rtl ? ' rotate(180)' : ''}`); x.rect.setAttribute('x', 0); x.rect.setAttribute('width', 400); return }
       gsap.timeline({ scrollTrigger: { trigger: c, start: 'top 98%', end: 'bottom 10%', scrub: .7,
         onUpdate: st => { const p = st.progress; const a = 13 * Math.abs(Math.sin(p * Math.PI * 3)) + 2
           if (x.ha && x.hb) { x.ha.setAttribute('transform', `rotate(${-a})`); x.hb.setAttribute('transform', `rotate(${a})`) } } } })
@@ -581,31 +605,27 @@ footer{padding:26px var(--gut) 34px;border-top:1px solid var(--line);display:fle
         .fromTo(x.rect, { attr: { x: x.rtl ? 400 : 0, width: 0 } }, { attr: { x: 0, width: 400 }, ease: 'none' }, 0)
     })
 
-    /* ---- proof: the numbers count with the scroll (scrub, no pin) ---- */
-    document.querySelectorAll('.proof .n').forEach(n => { const target = +n.dataset.count, dec = +(n.dataset.dec || 0)
-      const fmt = v => v.toFixed(dec)
-      if (reduce) { n.textContent = fmt(target); return }
-      ScrollTrigger.create({ trigger: n, start: 'top 95%', end: 'top 45%', scrub: .4, onUpdate: st => { n.textContent = fmt(target * gsap.parseEase('power2.out')(st.progress)) } }) })
     if (!reduce) gsap.utils.toArray('.strip a').forEach((a, i) => gsap.from(a, { y: 24, duration: .7, ease: 'expo.out', delay: i * .06, clearProps: 'transform', scrollTrigger: { trigger: '#strip', start: 'top 90%', once: true } }))
     /* ---- the barber: shutter blades open on arrival; tap the inset to trade places ---- */
     if (!reduce) {
       gsap.fromTo('#shutter .sh', { scaleY: 1 }, { scaleY: 0, ease: 'none', scrollTrigger: { trigger: '#shutter', start: 'top 88%', end: 'top 28%', scrub: .5 } })
-      gsap.fromTo('#fan .p2', { x: -16, rotation: -2 }, { x: 0, rotation: 0, ease: 'none', scrollTrigger: { trigger: '#fan', start: 'top 92%', end: 'top 30%', scrub: .5 } })
+      gsap.fromTo('#fan .p2', { x: 16, rotation: 2 }, { x: 0, rotation: 0, ease: 'none', scrollTrigger: { trigger: '#fan', start: 'top 92%', end: 'top 30%', scrub: .5 } })
     }
     {
       const p1 = document.querySelector('#fan .p1'), p2 = document.querySelector('#fan .p2'); let busy = false
+      p2.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); p2.click() } })
       p2.addEventListener('click', () => {
         if (busy) return; busy = true
         const a = p1.querySelector('img'), b = p2.querySelector('img'), r1 = p1.getBoundingClientRect(), r2 = p2.getBoundingClientRect()
         const c1 = a.cloneNode(), c2 = b.cloneNode(); c1.className = c2.className = 'fly'; c1.style.transform = c2.style.transform = 'none'; c1.style.position = c2.style.position = 'fixed'
-        gsap.set(c1, { left: r1.left, top: r1.top, width: r1.width, height: r1.height }); gsap.set(c2, { left: r2.left, top: r2.top, width: r2.width, height: r2.height })
+        gsap.set(c1, { left: r1.left, top: r1.top, width: r1.width, height: r1.height, transformOrigin: '0 0' }); gsap.set(c2, { left: r2.left, top: r2.top, width: r2.width, height: r2.height, transformOrigin: '0 0' })
         document.body.append(c1, c2); a.style.visibility = b.style.visibility = 'hidden'
         const done = () => { [a.src, b.src] = [b.src, a.src]; [a.alt, b.alt] = [b.alt, a.alt]
           const t1 = p1.querySelector('.tag'), t2 = p2.querySelector('.tag'); const h = t1.innerHTML; t1.innerHTML = t2.innerHTML; t2.innerHTML = h
           a.style.visibility = b.style.visibility = ''; c1.remove(); c2.remove(); busy = false }
         if (reduce) { done(); return }
-        gsap.to(c1, { left: r2.left, top: r2.top, width: r2.width, height: r2.height, duration: .48, ease: 'expo.out' })
-        gsap.to(c2, { left: r1.left, top: r1.top, width: r1.width, height: r1.height, duration: .48, ease: 'expo.out', onComplete: done })
+        gsap.to(c1, { x: r2.left - r1.left, y: r2.top - r1.top, scale: r2.width / r1.width, duration: .48, ease: 'expo.out' })
+        gsap.to(c2, { x: r1.left - r2.left, y: r1.top - r2.top, scale: r1.width / r2.width, duration: .48, ease: 'expo.out', onComplete: done })
       })
     }
 
@@ -613,38 +633,46 @@ footer{padding:26px var(--gut) 34px;border-top:1px solid var(--line);display:fle
     const prints = gsap.utils.toArray('.pr')
     if (!reduce) prints.forEach((p) => {
       const fr = p.querySelector('.fr'), im = p.querySelector('img'), full = p.classList.contains('full')
-      gsap.timeline({ scrollTrigger: { trigger: p, start: 'top 95%', end: 'top 15%', scrub: .5 } })
-        .fromTo(fr, { clipPath: full ? 'inset(0)' : 'inset(3% round 20px)' }, { clipPath: full ? 'inset(0)' : 'inset(0% round 20px)', ease: 'none' }, 0)
-        .fromTo(im, { scale: full ? 1.025 : 1.045 }, { scale: 1, ease: 'none' }, 0)
+      gsap.timeline({ scrollTrigger: { trigger: p, start: 'top 95%', end: 'top 55%', scrub: .25 } })
+        .fromTo(fr, { clipPath: full ? 'inset(0)' : 'inset(1% round 16px)' }, { clipPath: full ? 'inset(0)' : 'inset(0% round 16px)', ease: 'none' }, 0)
+        .fromTo(im, { scale: full ? 1.025 : 1.018 }, { scale: 1, ease: 'none' }, 0)
     })
     /* the lightbox: the tapped print flies to the frame and back */
     const lb = document.getElementById('lb'), lbimg = document.getElementById('lbimg'), lbcap = document.getElementById('lbcap'), lbfr = document.getElementById('lbfr')
-    let home = null, fly = null
+    let home = null, fly = null, opener = null
+    const lbx = lb.querySelector('.x'), lbfig = lb.querySelector('figure')
+    lb.inert = true
     const rect = el => { const r = el.getBoundingClientRect(); return { left: r.left, top: r.top, width: r.width, height: r.height } }
     prints.forEach(p => p.addEventListener('click', () => {
       if (fly) return
-      const src = p.querySelector('.fr'); home = rect(src)
+      const src = p.querySelector('.fr'); home = rect(src); opener = p
       lbimg.src = p.dataset.src; lbimg.alt = p.querySelector('img').alt; lbcap.textContent = p.querySelector('.tag span').textContent; lbfr.classList.toggle('full', !!p.dataset.full)
-      document.body.classList.add('lb-open'); lenis.stop()
-      if (reduce) { lb.classList.add('on'); return }
-      lb.style.opacity = '0'; lb.style.pointerEvents = 'auto'; const to = rect(lbfr)
+      lock(true); lb.inert = false; gsap.set(lbfig, { y: 0 })
+      if (reduce) { lb.classList.add('on'); requestAnimationFrame(() => lbx.focus({ preventScroll: true })); return }
+      lb.style.opacity = '0'; lb.style.visibility = 'visible'; const to = rect(lbfr)
       fly = document.createElement('img'); fly.className = 'fly'; fly.src = p.dataset.src; fly.alt = ''; document.body.appendChild(fly)
       gsap.set(fly, home)
       gsap.to(lb, { opacity: 1, duration: .42, ease: 'power2.out' })
-      gsap.to(fly, { ...to, duration: .42, ease: 'expo.out', onComplete: () => { lb.classList.add('on'); lb.style.opacity = ''; fly.remove(); fly = null } })
+      gsap.to(fly, { ...to, duration: .42, ease: 'expo.out', onComplete: () => { lb.classList.add('on'); lb.style.opacity = ''; lb.style.visibility = ''; fly.remove(); fly = null; setTimeout(() => { if (lb.classList.contains('on')) lbx.focus({ preventScroll: true }) }, 60) } })
     }))
     const closeLb = () => {
       if (!lb.classList.contains('on') || fly) return
-      document.body.classList.remove('lb-open'); lenis.start()
+      lock(false); lb.inert = true; if (opener) opener.focus()
       if (reduce || !home) { lb.classList.remove('on'); return }
       fly = document.createElement('img'); fly.className = 'fly'; fly.src = lbimg.src; fly.alt = ''; document.body.appendChild(fly)
-      gsap.set(fly, rect(lbfr)); lb.classList.remove('on')
+      gsap.set(fly, rect(lbfr)); lb.classList.remove('on'); gsap.set(lbfig, { y: 0 })
       gsap.to(fly, { ...home, duration: .5, ease: 'expo.out', onComplete: () => { fly.remove(); fly = null } })
     }
-    lb.addEventListener('click', closeLb); document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb() })
+    /* drag the photo down (or up) to dismiss: past 100px or a quick flick closes, otherwise it springs back */
+    { let y0 = null, t0 = 0, dy = 0
+      lbfig.addEventListener('pointerdown', e => { if (!lb.classList.contains('on') || fly) return; y0 = e.clientY; t0 = performance.now(); dy = 0; lbfig.setPointerCapture(e.pointerId) })
+      lbfig.addEventListener('pointermove', e => { if (y0 === null) return; dy = e.clientY - y0; gsap.set(lbfig, { y: dy * .8 }) })
+      const up = e => { if (y0 === null) return; const v = Math.abs(dy) / Math.max(1, performance.now() - t0) * 1000; y0 = null
+        if (Math.abs(dy) > 100 || v > 300) { closeLb() } else if (Math.abs(dy) > 4) { gsap.to(lbfig, { y: 0, duration: .6, ease: 'elastic.out(1,.6)' }) } else { closeLb() } }
+      lbfig.addEventListener('pointerup', up); lbfig.addEventListener('pointercancel', up) }
+    lb.addEventListener('click', e => { if (e.target === lb || e.target === lbx || lbx.contains(e.target)) closeLb() }); document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb() })
 
     /* ---- the chair: the quote in the eye band is sharp; the long review lights word by word ---- */
-    gsap.utils.toArray('.q').forEach(q => ScrollTrigger.create({ trigger: q, start: 'top 65%', end: 'bottom 35%', onToggle: s => q.classList.toggle('on', s.isActive) }))
     const read = document.getElementById('read')
     const words = read.textContent.trim().split(' '); read.textContent = ''
     const spans = words.map(w => { const s = document.createElement('span'); s.textContent = w + ' '; read.appendChild(s); return s })
@@ -655,11 +683,12 @@ footer{padding:26px var(--gut) 34px;border-top:1px solid var(--line);display:fle
     rows.forEach((r, i) => ScrollTrigger.create({ trigger: r, start: 'top 94%', once: true,
       onEnter: () => { if (reduce) return
         gsap.fromTo(r.querySelectorAll('.p .dd b'), { yPercent: 100 }, { yPercent: 0, duration: .6, ease: 'expo.out', delay: .1 + i * .05 }) } }))
+    rows.forEach(r => { r.querySelector('.more').inert = true; r.querySelector('.more').addEventListener('transitionend', e => { if (e.propertyName === 'grid-template-rows') ScrollTrigger.refresh() }) })
     rows.forEach(r => r.querySelector('button').addEventListener('click', () => {
       const open = !r.classList.contains('open')
-      rows.forEach(o => { o.classList.remove('open'); o.querySelector('button').setAttribute('aria-expanded', 'false') })
-      if (open) { r.classList.add('open'); r.querySelector('button').setAttribute('aria-expanded', 'true') }
-      setTimeout(() => ScrollTrigger.refresh(), 600)
+      rows.forEach(o => { o.classList.remove('open'); o.querySelector('button').setAttribute('aria-expanded', 'false'); o.querySelector('.more').inert = true })
+      if (open) { r.classList.add('open'); r.querySelector('button').setAttribute('aria-expanded', 'true'); r.querySelector('.more').inert = false }
+      if (reduce) ScrollTrigger.refresh()
     }))
 
     /* ---- Booksy inline widget top-level only ---- */
@@ -667,8 +696,9 @@ footer{padding:26px var(--gut) 34px;border-top:1px solid var(--line);display:fle
       const w = document.getElementById('booksy'); const s = document.createElement('script')
       s.src = 'https://booksy.com/widget/code.js?id=1668896&country=us&lang=en&mode=inline'; s.async = true
       w.appendChild(s)
+      if (window.ResizeObserver) { let raf = 0; new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => ScrollTrigger.refresh()) }).observe(w) }
     }
-    document.querySelectorAll('a[href^="#"]:not(.sheet a)').forEach(a => a.addEventListener('click', e => { const el = document.querySelector(a.getAttribute('href')); if (el) { e.preventDefault(); lenis.scrollTo(el, { offset: -72 }) } }))
+    document.querySelectorAll('a[href^="#"]:not(.sheet a)').forEach(a => a.addEventListener('click', e => { const el = document.querySelector(a.getAttribute('href')); if (el) { e.preventDefault(); lenis.scrollTo(el, { offset: -72, immediate: reduce }) } }))
     ScrollTrigger.refresh()
   }
   waitVh()
