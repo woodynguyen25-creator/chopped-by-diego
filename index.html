@@ -15,12 +15,14 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HairSalon","name":"Chopped by Diego","url":"https://woodynguyen25-creator.github.io/chopped-by-diego/","image":"https://woodynguyen25-creator.github.io/chopped-by-diego/assets/hero-02.jpg","areaServed":"Northwest Houston, TX 77064","priceRange":"$20–$60","sameAs":["https://www.instagram.com/choppedbydiego/","https://choppedbydiego33.booksy.com"],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"16:00","closes":"21:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"10:00","closes":"18:00"}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..600&family=Newsreader:ital,opsz,wght@1,6..72,300..500&display=swap" rel="stylesheet">
 <style>
 /* ============ v7 — the price-list register: his own graphic, blacks, whites and greys; the photographs supply the colour ============ */
 :root{
   --ink:#F5F5F2; --ink-2:#B2B4B6; --g0:#090909; --g1:#242526; --surface:#303234; --line:rgba(255,255,255,.16);
   --lt:#F1F2F0; --lt-ink:#111213; --lt-2:#606367; --lt-line:rgba(0,0,0,.14);
+  --acc:#5C7D4C; --acc-2:#A9C58F; --acc-lt:#4A6A3C;   /* v10: his cape — the money green; punctuation and two blocks, never a button fill */
+  --serif:'Newsreader',Georgia,'Times New Roman',serif;   /* the quote face design.json recorded in v2; the calligraphic voice */
   --vh:8px; --vh-px:800px;                   /* overwritten by JS from the first non-zero pane height; never a viewport unit */
   --sans:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif;
   --disp:'Archivo','Archivo Black','Arial Black',system-ui,sans-serif;
@@ -49,8 +51,16 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .rw button:focus-visible,.sheet a:focus-visible,.strip a:focus-visible{outline-offset:-3px}
 .lt :focus-visible{outline-color:var(--lt-ink)}
 /* the ground: his gradient, continuous across a band of beats; direction reverses across tools–gallery */
-.band{position:relative;background:linear-gradient(110deg,var(--g0) 0%,var(--g1) 100%)}
-.band.rev{background:linear-gradient(250deg,var(--g0) 0%,var(--g1) 100%)}
+/* v10: colour blocks — each band names its ground; the page's ground (#root) tweens to it as the band crosses 60% of the pane */
+.band{position:relative;background:transparent;--blk:var(--g0)}
+.band.acc{--blk:var(--acc)}
+.band.acc .lab{color:rgba(241,242,240,.78)} .band.acc .body{color:var(--ink)} .band.acc .tag{background:rgba(9,9,9,.5)}
+/* the serif voice: giant section words, the accent word, the two spoken lines */
+.sw{display:flex;align-items:flex-start;gap:14px;margin:0 0 14px;font-family:var(--serif);font-style:italic;font-weight:300;font-variation-settings:"opsz" 72;font-size:92px;line-height:.9;letter-spacing:-.03em;color:var(--ink);white-space:nowrap;will-change:transform}
+.lt .sw{color:var(--lt-ink)}
+.sw .cnt{flex:0 0 auto;width:38px;height:38px;margin-top:12px;border-radius:50%;display:grid;place-items:center;background:var(--acc);color:var(--ink);font-family:var(--disp);font-style:normal;font-weight:600;font-size:13px;letter-spacing:0}
+.big{margin:56px 0 0;padding:0 var(--gut);font-family:var(--disp);font-weight:900;font-variation-settings:"wdth" 112;text-transform:uppercase;line-height:.84;letter-spacing:-.04em;color:var(--ink);font-size:96px;overflow:hidden}
+.big span{display:table;white-space:nowrap}
 .lt{position:relative;z-index:1;background:var(--lt);color:var(--lt-ink)}
 /* type — Archivo's width axis does the price list's work: heavy extended caps up top, light tracked caps for the small stuff */
 .lab{font-family:var(--disp);font-weight:500;font-size:12px;line-height:16px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
@@ -130,7 +140,7 @@ section{padding:var(--beat) var(--gut) 0}
 .name{font-size:48px;line-height:.94;font-variation-settings:"wdth" 112;letter-spacing:-.035em;font-weight:900;text-shadow:0 2px 24px rgba(0,0,0,.45)}
 @media (max-width:359px){.name{font-size:40px} .proof .stat .n{font-size:36px;line-height:38px} .proof .stat:first-child .n{font-size:40px} .proof .stat{padding-right:8px} .proof .stat+.stat{padding-left:10px}}
 .name span{display:block}
-.quote{margin-top:18px;font-family:var(--disp);font-weight:300;font-size:18px;line-height:25px;letter-spacing:-.005em;max-width:25ch;text-wrap:balance;color:var(--ink)}
+.quote{margin-top:18px;font-family:var(--serif);font-style:italic;font-weight:300;font-variation-settings:"opsz" 36;font-size:23px;line-height:29px;letter-spacing:-.01em;max-width:24ch;text-wrap:balance;color:var(--ink)}
 .cover .cta{margin-top:22px}
 .cover .meta{margin-top:14px;font-size:13px;line-height:20px;letter-spacing:.06em;color:var(--ink);opacity:.9;max-width:30ch}
 .cover .tag{left:var(--gut);bottom:14px}
@@ -157,9 +167,9 @@ section{padding:var(--beat) var(--gut) 0}
 
 /* ============ 2 · the barber — deepest depth on the page ============ */
 /* ============ the cut — the signature: the biography photograph opens along one diagonal (8.2°), a drawn edge first ============ */
-.shutter{position:relative;margin:44px calc(var(--gut) * -1) 0;aspect-ratio:4/5;overflow:hidden;background:var(--g0)}
+.shutter{position:relative;margin:44px calc(var(--gut) * -1) 0;aspect-ratio:4/5;overflow:hidden;background:var(--blk,var(--g0))}
 .shutter img{position:absolute;left:0;top:-12px;width:100%;height:calc(100% + 24px);object-fit:cover;object-position:center 30%}
-.sh{position:absolute;inset:0;background:var(--g0);z-index:1;will-change:transform}
+.sh{position:absolute;inset:0;background:var(--blk,var(--g0));z-index:1;will-change:transform}
 .sh.t{clip-path:polygon(0 0,100% 0,100% calc(50% + 28px),0 calc(50% - 28px))}
 .sh.b{clip-path:polygon(0 calc(50% - 28px),100% calc(50% + 28px),100% 100%,0 100%)}
 .shutter .edge{position:absolute;left:0;top:calc(50% - 28px);width:100%;height:1.5px;background:var(--ink);opacity:.9;z-index:2;transform-origin:0 50%;transform:rotate(8.2deg) scaleX(0);pointer-events:none}
@@ -175,7 +185,7 @@ section{padding:var(--beat) var(--gut) 0}
 .fan figure{position:relative;overflow:hidden;background:var(--g0);border-radius:var(--r-print)}
 .fan figure img{position:absolute;left:0;top:-36px;width:100%;height:calc(100% + 72px);object-fit:cover}
 .fan .p1{width:100%;aspect-ratio:4/5}
-.fan .p2{position:absolute;left:auto;right:0;bottom:0;width:132px;aspect-ratio:4/5;border-radius:14px;box-shadow:0 12px 24px rgba(0,0,0,.33),0 0 0 3px #111213;z-index:2;cursor:pointer}
+.fan .p2{position:absolute;left:auto;right:0;bottom:0;width:132px;aspect-ratio:4/5;border-radius:14px;box-shadow:0 12px 24px rgba(0,0,0,.33),0 0 0 3px var(--blk,#111213);z-index:2;cursor:pointer}
 .fan .p2 .tag{left:12px;bottom:12px}
 
 /* ============ 2b · the tools ============ */
@@ -208,10 +218,10 @@ section{padding:var(--beat) var(--gut) 0}
 
 /* ============ 4 · the chair — a light beat: the reviews read like print ============ */
 .chair{padding-top:44px;padding-bottom:40px}
-.score{display:flex;align-items:flex-end;gap:14px;margin:0 0 22px}
+.score{display:flex;align-items:flex-end;gap:14px;margin:6px 0 0}
 .score .n{font-family:var(--disp);font-weight:800;font-variation-settings:"wdth" 112;font-size:68px;line-height:.88;letter-spacing:-.03em;color:var(--lt-ink);font-variant-numeric:tabular-nums}
 .score .src{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0;background:none;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;font-family:var(--disp);font-weight:500;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;margin-bottom:4px}
-.pull{margin-top:28px;font-family:var(--disp);font-weight:800;font-variation-settings:"wdth" 106;font-size:30px;line-height:32px;letter-spacing:-.025em;text-transform:uppercase;color:var(--lt-ink);text-wrap:balance;max-width:14ch}
+.pull{margin-top:24px;font-family:var(--disp);font-weight:800;font-variation-settings:"wdth" 106;font-size:30px;line-height:32px;letter-spacing:-.025em;text-transform:uppercase;color:var(--lt-ink);text-wrap:balance;max-width:14ch}
 .pullwho{margin-top:12px}
 .quotes{margin-top:22px;border-top:1px solid var(--lt-line)}
 .q{display:block;padding:24px 0;border-bottom:1px solid var(--lt-line)}
@@ -236,10 +246,10 @@ section{padding:var(--beat) var(--gut) 0}
 .strip a .ig svg{width:16px;height:16px;fill:none;stroke:var(--lt-ink);stroke-width:1.6;stroke-linecap:round}
 
 /* ============ 5 · the rate card — his sheet: names left, a rule, prices right; two hairline circles behind ============ */
-.rate{position:relative;overflow:hidden}
+.rate{position:relative;overflow:hidden;padding-top:64px}
 .rate .ring{position:absolute;width:320px;height:320px;border-radius:50%;border:1px solid rgba(255,255,255,.05);pointer-events:none}
 .rate .ring.a{right:-120px;top:40px} .rate .ring.b{left:-160px;bottom:-40px}
-.rate .hint{margin-top:14px}
+.rate .hint{margin-top:4px}
 .rows{position:relative;margin-top:30px;overflow:hidden}
 .rows.g-card{background:none;border:0;border-radius:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
 .rw:first-child{border-top:1px solid rgba(255,255,255,.1)} .rw:last-child{border-bottom:1px solid rgba(255,255,255,.1)}
@@ -267,17 +277,20 @@ section{padding:var(--beat) var(--gut) 0}
 .place{margin-top:28px;padding-top:22px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .place .k{display:block;margin-bottom:8px}
 .place p{font-weight:400;font-size:15px;line-height:1.5;color:var(--ink)}
+.hrs{display:grid;grid-template-columns:auto 1fr auto;column-gap:8px;row-gap:6px;align-items:center;font-size:15px;line-height:22px;color:var(--ink)}
+.hrs i{height:1px;background:var(--line);min-width:10px}
+.hrs span:nth-child(3n){text-align:right;font-variant-numeric:tabular-nums}
 
 /* ============ 6 · book ============ */
-.book{position:relative;padding-top:80px;padding-bottom:48px}
-.book .tagline{position:relative;font-size:28px;line-height:31px;font-variation-settings:"wdth" 106}
+.book{position:relative;padding-top:72px;padding-bottom:0}
+.book .tagline{position:relative;font-family:var(--serif);font-style:italic;font-weight:300;font-variation-settings:"opsz" 72;font-size:42px;line-height:1.02;letter-spacing:-.02em;text-wrap:balance;max-width:12ch;color:var(--ink)}
 .book .cta{position:relative;margin-top:28px;display:grid;grid-template-columns:1fr;gap:8px}
 .book .cta .btn{width:100%;min-height:56px}
 .book .cta .btn.ghost{justify-self:start;width:auto;min-height:44px;padding:10px 0;background:none;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;text-decoration:underline;text-underline-offset:6px}
 .widget{margin-top:30px;border-radius:var(--r-card);overflow:hidden;min-height:120px;position:relative}
 .widget:empty{display:none}
 .book .note{margin-top:18px;line-height:1.9}
-footer{margin-top:32px;padding:26px var(--gut) 34px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+footer{margin-top:22px;padding:22px var(--gut) 34px;border-top:1px solid rgba(255,255,255,.22);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
 
 /* desktop is deliberate: the phone column sits hairlined on his grey */
 @media (min-width:900px){
@@ -288,7 +301,7 @@ footer{margin-top:32px;padding:26px var(--gut) 34px;border-top:1px solid var(--l
 }
 @media (prefers-reduced-motion:reduce){
   *,*:before,*:after{transition-duration:.01ms!important;transition-delay:0s!important;animation-duration:.01ms!important}
-  #pre{display:none} .mast .wm{visibility:visible} #read span{opacity:1} .sh,.shutter .edge,.cap .edge{display:none} .cap{clip-path:none}
+  #pre{display:none} .mast .wm{visibility:visible} #read span{opacity:1} .sh,.shutter .edge,.cap .edge{display:none} .cap{clip-path:none} .sw{transform:none!important}
 }
 </style>
 </head>
@@ -328,7 +341,7 @@ footer{margin-top:32px;padding:26px var(--gut) 34px;border-top:1px solid var(--l
       <h1 class="name d" id="name"><span class="rv">Diego</span><span class="rv">Sandoval</span></h1>
       <p class="quote rv">“Being a barber isn’t just cutting hair.”</p>
       <div class="cta"><a class="btn" href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener"><span data-en="Book a chair" data-es="Reservar silla">Book a chair</span></a></div>
-      <p class="meta lab" data-en="4.9 on Booksy · 54 reviews · from $20 · Mon–Fri 4–9 · Sat 10–6" data-es="4.9 en Booksy · 54 reseñas · desde $20 · Lun–Vie 4–9 · Sáb 10–6">4.9 on Booksy · 54 reviews · from $20 · Mon–Fri 4–9 · Sat 10–6</p>
+      <p class="meta lab" data-en="4.9 on Booksy · 54 reviews · from $20" data-es="4.9 en Booksy · 54 reseñas · desde $20">4.9 on Booksy · 54 reviews · from $20</p>
     </div>
   </figure>
 </section>
@@ -345,10 +358,11 @@ footer{margin-top:32px;padding:26px var(--gut) 34px;border-top:1px solid var(--l
   <p class="facts lab"><span data-en="Northwest Houston · 77064" data-es="Noroeste de Houston · 77064">Northwest Houston · 77064</span><i>·</i><span data-en="EN / ES" data-es="ES / EN">EN / ES</span><i>·</i><span data-en="Appointments only" data-es="Solo con cita">Appointments only</span></p>
 </section>
 
-<div class="band">
+<div class="band acc">
 
 <!-- 2 · the barber -->
 <section class="bio" id="bio">
+  <p class="sw rv bl" aria-hidden="true" data-en="Diego" data-es="Diego">Diego</p>
   <h2 class="d rv bl" data-en="“I get paid to make people look good”" data-es="“Me pagan por hacer que la gente se vea bien”">“I get paid to make people look good”</h2>
   <!-- PLACEHOLDER COPY — replace with Diego's own words -->
   <p class="body rv" data-en="Diego started cutting hair for friends, then their friends, and never stopped. Today he’s a licensed barber in Northwest Houston, booked through Booksy, and he still takes his time on every chair — because a good fade isn’t the job. <b>Making someone walk out standing taller is.</b>" data-es="Diego empezó cortándole el pelo a sus amigos, luego a los amigos de ellos, y nunca paró. Hoy es barbero con licencia en el noroeste de Houston, con citas por Booksy, y sigue tomándose su tiempo en cada silla — porque un buen fade no es el trabajo. <b>Que alguien salga caminando más erguido, eso sí.</b>">Diego started cutting hair for friends, then their friends, and never stopped. Today he’s a licensed barber in Northwest Houston, booked through Booksy, and he still takes his time on every chair — because a good fade isn’t the job. <b>Making someone walk out standing taller is.</b></p>
@@ -373,6 +387,7 @@ footer{margin-top:32px;padding:26px var(--gut) 34px;border-top:1px solid var(--l
 
 <!-- 3 · the work -->
 <section class="work" id="work">
+  <p class="sw rv bl" aria-hidden="true" data-en="Work" data-es="Trabajo">Work</p>
   <h2 class="d rv bl" data-en="Fades, tapers, freehand" data-es="Fades, tapers, a mano">Fades, tapers, freehand</h2>
   <div class="prints" id="prints">
     <button class="pr full" type="button" data-src="assets/g-03-event-full.jpg" data-full="1"><span class="fr"><img src="assets/g-03-event-full.jpg" width="1080" height="1350" alt="Diego cutting on the floor at a Houston barber event, crowd behind him" loading="lazy" decoding="async"></span><span class="tag"><span data-en="On the floor · Houston" data-es="En el evento · Houston">On the floor · Houston</span></span></button>
@@ -388,8 +403,8 @@ footer{margin-top:32px;padding:26px var(--gut) 34px;border-top:1px solid var(--l
 
 <!-- 4 · the chair — on his white -->
 <section class="chair lt" id="chair">
-  <div class="score"><span class="n" id="scoren">4.9</span><a class="src g-pill" href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener"><span data-en="54 reviews" data-es="54 reseñas">54 reviews</span><span>·</span><span>Booksy</span></a></div>
-  <h2 class="d rv bl" id="chairh" data-en="What people say" data-es="Lo que dicen">What people say</h2>
+  <h2 class="sw rv bl" id="chairh" data-en="Reviews<i class='cnt'>54</i>" data-es="Reseñas<i class='cnt'>54</i>">Reviews<i class='cnt'>54</i></h2>
+  <div class="score"><span class="n" id="scoren">4.9</span><a class="src g-pill" href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener"><span data-en="Read them on Booksy" data-es="Léelas en Booksy">Read them on Booksy</span></a></div>
   <blockquote class="pull rv bl" data-en="“The LeBron of cutting hair.”" data-es="“El LeBron del corte de pelo.”">“The LeBron of cutting hair.”</blockquote>
   <p class="who lab pullwho">Jaspur · Booksy</p>
   <div class="quotes" id="quotes">
@@ -417,7 +432,7 @@ footer{margin-top:32px;padding:26px var(--gut) 34px;border-top:1px solid var(--l
 <!-- 5 · the rate card -->
 <section class="rate" id="rate">
   <div class="ring a" id="ringa"></div><div class="ring b" id="ringb"></div>
-  <h2 class="d rv bl" data-en="Price list" data-es="Lista de precios">Price list</h2>
+  <h2 class="sw rv bl" data-en="Prices" data-es="Precios">Prices</h2>
   <p class="hint lab"><span data-en="Tap a row · chair time shown" data-es="Toca una fila · tiempo en la silla">Tap a row · chair time shown</span></p>
   <div class="rows g-card">
   <div class="rw"><i class="sep" aria-hidden="true"></i><button type="button" aria-expanded="false" aria-controls="more1"><span class="svc"><span data-en="Line up" data-es="Perfilado">Line up</span><small>30 min</small></span><span class="p"><span class="dd"><b>$20</b></span></span><span class="pl"></span></button><div class="more" id="more1"><div><p data-en="Edges and the neckline, cleaned up sharp." data-es="Bordes y nuca, bien perfilados.">Edges and the neckline, cleaned up sharp.</p><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="Book this on Booksy" data-es="Reservar en Booksy">Book this on Booksy</a></div></div></div>
@@ -429,13 +444,16 @@ footer{margin-top:32px;padding:26px var(--gut) 34px;border-top:1px solid var(--l
   </div>
   <div class="place">
     <div><span class="k lab" data-en="Where" data-es="Dónde">Where</span><p data-en="Northwest Houston, 77064. Appointments only — the address comes with your booking." data-es="Noroeste de Houston, 77064. Solo con cita — la dirección llega con tu reserva.">Northwest Houston, 77064. Appointments only — the address comes with your booking.</p></div>
-    <div><span class="k lab" data-en="When" data-es="Cuándo">When</span><p><span data-en="Mon–Fri 4–9 pm" data-es="Lun–Vie 4–9 pm">Mon–Fri 4–9 pm</span><br><span data-en="Sat 10–6 · Sun closed" data-es="Sáb 10–6 · Dom cerrado">Sat 10–6 · Sun closed</span></p></div>
+    <div><span class="k lab" data-en="When" data-es="Cuándo">When</span><p class="hrs"><span data-en="Mon–Fri" data-es="Lun–Vie">Mon–Fri</span><i></i><span>4–9 pm</span><span data-en="Sat" data-es="Sáb">Sat</span><i></i><span>10–6 pm</span><span data-en="Sun" data-es="Dom">Sun</span><i></i><span data-en="closed" data-es="cerrado">closed</span></p></div>
   </div>
 </section>
+</div>
 
+<div class="band acc">
 <!-- 6 · book -->
 <section class="book" id="book">
-  <p class="tagline d rv bl" id="tagline">“If it ain’t choppedbydiego then it ain’t right.”</p>
+  <p class="sw rv bl" aria-hidden="true" data-en="Visit" data-es="Visita">Visit</p>
+  <p class="tagline rv bl" id="tagline">“If it ain’t choppedbydiego then it ain’t right.”</p>
   <div class="cta">
     <a class="btn" href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener"><span data-en="Book on Booksy" data-es="Reservar en Booksy">Book on Booksy</span></a>
     <a class="btn ghost" href="https://www.instagram.com/choppedbydiego/" target="_blank" rel="noopener">Instagram</a>
@@ -444,6 +462,7 @@ footer{margin-top:32px;padding:26px var(--gut) 34px;border-top:1px solid var(--l
   <p class="note lab"><span data-en="Northwest Houston · appointments only" data-es="Northwest Houston · solo con cita">Northwest Houston · appointments only</span><br><span data-en="Se habla español" data-es="English spoken">Se habla español</span></p>
 </section>
 
+<div class="big" id="big" aria-hidden="true"><span>Chopped</span><span>by Diego</span></div>
 <footer class="lab"><span>© 2026 Chopped by Diego</span><span data-en="Booking via Booksy" data-es="Reservas por Booksy">Booking via Booksy</span></footer>
 </div>
 
@@ -573,6 +592,17 @@ footer{margin-top:32px;padding:26px var(--gut) 34px;border-top:1px solid var(--l
       document.querySelectorAll('.hero .rv').forEach((el, i) => show(el, .05 + i * .12))
       gsap.from('.hero .k, .hero .cta, .cover .tag', { y: 14, opacity: 0, duration: .9, ease: 'expo.out', stagger: .1, delay: .3, clearProps: 'transform,opacity' })
     }
+    /* ---- v10 · the ground changes colour: #root tweens to each band's block as the band crosses 78% of the pane, both directions ---- */
+    {
+      const cs = getComputedStyle(root); const colour = b => b.classList.contains('acc') ? cs.getPropertyValue('--acc').trim() : cs.getPropertyValue('--g0').trim()
+      const tint = c => gsap.to(content, { backgroundColor: c, duration: reduce ? 0 : .6, ease: 'power2.out', overwrite: true })
+      document.querySelectorAll('.band').forEach(b => { const c = colour(b); ScrollTrigger.create({ trigger: b, start: 'top 78%', end: 'bottom 78%', onEnter: () => tint(c), onEnterBack: () => tint(c) }) })
+    }
+    /* the giant wordmark at the foot fits the column (no viewport units: measured) */
+    {
+      const big = document.getElementById('big'); const fitBig = () => { big.style.fontSize = '100px'; const W = big.clientWidth - 2 * parseFloat(getComputedStyle(big).paddingLeft); const w = Math.max(...Array.from(big.children).map(s => s.getBoundingClientRect().width)); if (w > 0) big.style.fontSize = (100 * W / w) + 'px' }
+      fitBig(); window.addEventListener('resize', fitBig); if (document.fonts) document.fonts.ready.then(fitBig)
+    }
     /* ---- parallax: one table, one clock; each beat runs top bottom → bottom top, the hero from top top ---- */
     const drift = (target, from, to, trigger, start = 'top bottom', end = 'bottom top') => gsap.fromTo(target, { y: from }, { y: to, ease: 'none', scrollTrigger: { trigger, start, end, scrub: .35 } })
     if (!reduce) {
@@ -580,6 +610,8 @@ footer{margin-top:32px;padding:26px var(--gut) 34px;border-top:1px solid var(--l
       drift('#fan .p1 img', -12, 12, '#fan'); drift('#fan .p2 img', 12, -12, '#fan'); drift('#shutter img', -12, 12, '#shutter')
       drift('#island img', -12, 12, '#island')
       document.querySelectorAll('.pr .fr img').forEach(im => drift(im, -12, 12, im.closest('.pr')))
+      /* the section words slide against the scroll, 16px across their section */
+      document.querySelectorAll('.sw').forEach(sw => gsap.fromTo(sw, { x: 16 }, { x: -16, ease: 'none', scrollTrigger: { trigger: sw.closest('section'), start: 'top bottom', end: 'bottom top', scrub: .35 } }))
     }
 
     /* ---- the caps: each white beat enters on a 32px slant that straightens; a 1px edge joins the two upper vertices and fades in the last 15% ---- */
