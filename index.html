@@ -163,6 +163,8 @@ section{padding:var(--beat) var(--gut) 0}
 .sh.t{clip-path:polygon(0 0,100% 0,100% calc(50% + 28px),0 calc(50% - 28px))}
 .sh.b{clip-path:polygon(0 calc(50% - 28px),100% calc(50% + 28px),100% 100%,0 100%)}
 .shutter .edge{position:absolute;left:0;top:calc(50% - 28px);width:100%;height:1.5px;background:var(--ink);opacity:.9;z-index:2;transform-origin:0 50%;transform:rotate(8.2deg) scaleX(0);pointer-events:none}
+.sh .ln{position:absolute;left:0;width:100%;height:1.5px;background:var(--ink);opacity:.9;transform-origin:0 50%;transform:rotate(8.2deg)}
+.sh.t .ln{top:calc(50% - 30px)} .sh.b .ln{top:calc(50% - 26px)}
 /* the white beats enter on a diagonal: a 64px cap at the end of the dark band, its top edge a 32px slant that straightens (Astra v9 §2) */
 .cap{position:relative;height:72px;margin:0;background:var(--lt);clip-path:polygon(0 0,100% 56px,100% 100%,0 100%);overflow:visible}
 .cap.up{clip-path:polygon(0 56px,100% 0,100% 100%,0 100%)}
@@ -189,7 +191,7 @@ section{padding:var(--beat) var(--gut) 0}
 .pr.full{padding:0;margin-top:0}
 .pr.full .fr{height:var(--vh-px);aspect-ratio:auto;border-radius:0}
 .pr.full .fr{will-change:transform}
-.pr.full .fr img{object-position:50% 45%}
+.pr.full .fr img{object-position:50% 45%;filter:saturate(.8) contrast(1.03) brightness(1.02)}
 .pr:not(.full) .tag{position:static;display:block;margin-top:12px;padding:0;border-radius:0;background:none;white-space:normal;font-size:10px;line-height:15px;letter-spacing:.07em;color:var(--ink-2)}
 .pr.full .tag{left:16px;bottom:16px}
 /* the lightbox */
@@ -246,7 +248,7 @@ section{padding:var(--beat) var(--gut) 0}
 .rw.open{background:none;box-shadow:none}
 .rw button{display:grid;grid-template-columns:minmax(0,1fr) 72px 36px;align-items:center;width:100%;padding:15px 0 15px 0;text-align:left;-webkit-tap-highlight-color:transparent}
 .rw .svc{font-family:var(--disp);font-weight:300;font-size:14px;line-height:20px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);padding-right:8px}
-.rw .svc small{display:block;font-family:var(--disp);font-weight:500;font-size:11px;line-height:16px;letter-spacing:.06em;color:var(--ink-2);margin-top:4px;text-transform:none}
+.rw .svc small{display:block;font-family:var(--disp);font-weight:500;font-size:12px;line-height:16px;letter-spacing:.06em;color:var(--ink-2);margin-top:4px;text-transform:none}
 .rw .p{font-family:var(--disp);font-weight:500;font-size:28px;line-height:32px;letter-spacing:-.02em;color:var(--ink);font-variant-numeric:tabular-nums lining-nums;border-left:1px solid var(--line);padding-left:14px;height:44px;display:flex;align-items:center}
 .rw .p .dd{display:inline-block;overflow:hidden;height:32px;line-height:32px}
 .rw .p .dd b{display:block;font-weight:500}
@@ -326,7 +328,7 @@ footer{margin-top:32px;padding:26px var(--gut) 34px;border-top:1px solid var(--l
       <h1 class="name d" id="name"><span class="rv">Diego</span><span class="rv">Sandoval</span></h1>
       <p class="quote rv">“Being a barber isn’t just cutting hair.”</p>
       <div class="cta"><a class="btn" href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener"><span data-en="Book a chair" data-es="Reservar silla">Book a chair</span></a></div>
-      <p class="meta lab" data-en="4.9 on Booksy · 54 reviews · from $20 · Mon–Fri 4–9" data-es="4.9 en Booksy · 54 reseñas · desde $20 · Lun–Vie 4–9">4.9 on Booksy · 54 reviews · from $20 · Mon–Fri 4–9</p>
+      <p class="meta lab" data-en="4.9 on Booksy · 54 reviews · from $20 · Mon–Fri 4–9 · Sat 10–6" data-es="4.9 en Booksy · 54 reseñas · desde $20 · Lun–Vie 4–9 · Sáb 10–6">4.9 on Booksy · 54 reviews · from $20 · Mon–Fri 4–9 · Sat 10–6</p>
     </div>
   </figure>
 </section>
@@ -352,7 +354,7 @@ footer{margin-top:32px;padding:26px var(--gut) 34px;border-top:1px solid var(--l
   <p class="body rv" data-en="Diego started cutting hair for friends, then their friends, and never stopped. Today he’s a licensed barber in Northwest Houston, booked through Booksy, and he still takes his time on every chair — because a good fade isn’t the job. <b>Making someone walk out standing taller is.</b>" data-es="Diego empezó cortándole el pelo a sus amigos, luego a los amigos de ellos, y nunca paró. Hoy es barbero con licencia en el noroeste de Houston, con citas por Booksy, y sigue tomándose su tiempo en cada silla — porque un buen fade no es el trabajo. <b>Que alguien salga caminando más erguido, eso sí.</b>">Diego started cutting hair for friends, then their friends, and never stopped. Today he’s a licensed barber in Northwest Houston, booked through Booksy, and he still takes his time on every chair — because a good fade isn’t the job. <b>Making someone walk out standing taller is.</b></p>
   <figure class="shutter" id="shutter">
     <img src="assets/island-07.jpg" width="1080" height="1440" alt="Diego working over the shoulder in the room" loading="lazy" decoding="async">
-    <div class="sh t"></div><div class="sh b"></div><i class="edge" aria-hidden="true"></i>
+    <div class="sh t"><i class="ln"></i></div><div class="sh b"><i class="ln"></i></div><i class="edge" aria-hidden="true"></i>
     <figcaption class="tag"><span data-en="In the room" data-es="En la sala">In the room</span></figcaption>
   </figure>
   <div class="fan" id="fan">
@@ -504,7 +506,8 @@ footer{margin-top:32px;padding:26px var(--gut) 34px;border-top:1px solid var(--l
       if (e.direction === -1 && travel > 12) mastwrap.classList.remove('hide')
       if (e.scroll < 40) mastwrap.classList.remove('hide')
     })
-    ScrollTrigger.create({ trigger: '.hero', start: 'top top', end: 'bottom 60%', onToggle: st => mastwrap.classList.toggle('athero', st.isActive) })
+    ScrollTrigger.create({ trigger: '.hero', start: 'top bottom', end: 'bottom 60%', onToggle: st => mastwrap.classList.toggle('athero', st.isActive) })
+    mastwrap.classList.add('athero')
     const links = Array.from(sheet.querySelectorAll('a')), bk = mastwrap.querySelector('.bk'), langBtn = document.getElementById('lang')
     sheet.inert = true
     const setMenu = (open) => {
@@ -599,14 +602,14 @@ footer{margin-top:32px;padding:26px var(--gut) 34px;border-top:1px solid var(--l
     /* ---- the signature: the biography photograph is cut open — the edge draws (0–.15), the covers part along the 8.2° seam (.15–.85), the edge goes (.85–1) ---- */
     if (!reduce) {
       const sh = document.getElementById('shutter'), ed = sh.querySelector('.edge')
-      const fitEdge = () => { const W = sh.clientWidth || 390; ed.style.width = Math.hypot(W, 56) + 'px'; ed.style.transform = `rotate(${Math.atan2(56, W) * 180 / Math.PI}deg) scaleX(var(--sx,0))` }
+      const fitEdge = () => { const W = sh.clientWidth || 390; const a = Math.atan2(56, W) * 180 / Math.PI; ed.style.width = Math.hypot(W, 56) + 'px'; ed.style.transform = `rotate(${a}deg) scaleX(var(--sx,0))`; sh.querySelectorAll('.ln').forEach(l => { l.style.width = Math.hypot(W, 56) + 'px'; l.style.transform = `rotate(${a}deg)` }) }
       fitEdge(); window.addEventListener('resize', fitEdge)
       const H = () => sh.clientHeight / 2 + 28
       gsap.timeline({ scrollTrigger: { trigger: sh, start: 'top 90%', end: 'top 30%', scrub: .5, invalidateOnRefresh: true } })
         .fromTo(ed, { '--sx': 0 }, { '--sx': 1, ease: 'none', duration: .15 }, 0)
         .to(sh.querySelector('.sh.t'), { y: () => -H(), ease: 'none', duration: .7 }, .15)
         .to(sh.querySelector('.sh.b'), { y: () => H(), ease: 'none', duration: .7 }, .15)
-        .to(ed, { opacity: 0, ease: 'none', duration: .15 }, .85)
+        .to(ed, { opacity: 0, ease: 'none', duration: .15 }, .15)
     }
 
     /* ---- the event photograph answers the thumb: skewY from scroll velocity, clamped ±1.25°, critically damped, back to zero 100ms after the scroll stops ---- */
