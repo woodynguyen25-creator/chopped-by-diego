@@ -21,7 +21,7 @@
 :root{
   --ink:#F5F5F2; --ink-2:#B2B4B6; --g0:#090909; --g1:#242526; --surface:#303234; --line:rgba(255,255,255,.16);
   --lt:#F1F2F0; --lt-ink:#111213; --lt-2:#606367; --lt-line:rgba(0,0,0,.14);
-  --acc:#E2D1B3; --acc-2:#6A6253; --acc-line:rgba(0,0,0,.2);   /* v11: cream (Astra) — the third colour, two blocks (biography, Visit); black, white, cream; ink on it is #090909 */
+  --acc:#F1F2F0; --acc-2:#606367; --acc-line:rgba(0,0,0,.14);   /* v12: black and white only — the light blocks (Index, Visit) are the white, entering on the rising cut edge */
   --serif:'Newsreader',Georgia,'Times New Roman',serif;   /* the quote face design.json recorded in v2; the calligraphic voice */
   --vh:8px; --vh-px:800px;                   /* overwritten by JS from the first non-zero pane height; never a viewport unit */
   --sans:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif;
@@ -57,7 +57,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 /* v10: colour blocks — each band names its ground; the page's ground (#root) tweens to it as the band crosses 60% of the pane */
 .band{position:relative;background:transparent;--blk:var(--g0)}
 .band.acc{--blk:var(--acc);color:var(--g0)}
-.band.acc .lab{color:var(--acc-2)} .band.acc .body,.band.acc .sw,.band.acc .d,.band.acc .tagline,.band.acc .big,.band.acc .place p,.band.acc .hrs{color:var(--g0)}
+.band.acc .lab{color:var(--acc-2)} .band.acc .body,.band.acc .sw,.band.acc .d,.band.acc .tagline,.band.acc .big,.band.acc .place p,.band.acc .hrs,.band.acc .quote{color:var(--g0)}
+.band.acc .shutter{background:var(--acc);margin-bottom:0} .band.acc .shutter .tag{background:rgba(9,9,9,.66);color:var(--ink)}
+.bio{padding-bottom:0}
 .band.acc .sh .ln,.band.acc .shutter .edge{background:var(--lt-ink)}
 .band.acc .btn{background:var(--lt-ink);color:var(--ink);box-shadow:0 10px 26px rgba(0,0,0,.14)} .band.acc .btn:hover{background:#000}
 .band.acc .btn.ghost{background:none;color:var(--lt-ink)}
@@ -65,7 +67,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .band.acc .g-card{background:rgba(255,255,255,.48);border-color:rgba(0,0,0,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 6px 20px rgba(0,0,0,.07)}
 .band.acc :focus-visible{outline-color:var(--lt-ink)}
 /* the serif voice: giant section words, the accent word, the two spoken lines */
-.sw{display:flex;align-items:flex-start;gap:14px;margin:0 0 14px;font-family:var(--serif);font-style:italic;font-weight:300;font-variation-settings:"opsz" 72;font-size:92px;line-height:.9;letter-spacing:-.03em;color:var(--ink);white-space:nowrap;will-change:transform}
+.sw{display:flex;align-items:flex-start;gap:14px;margin:0 0 14px;font-family:var(--serif);font-style:italic;font-weight:300;font-variation-settings:"opsz" 72;font-size:80px;line-height:.92;letter-spacing:-.03em;color:var(--ink);white-space:nowrap;will-change:transform}
 .lt .sw{color:var(--lt-ink)}
 .sw .cnt{flex:0 0 auto;width:38px;height:38px;margin-top:12px;border-radius:50%;display:grid;place-items:center;background:var(--lt-ink);color:var(--ink);font-family:var(--disp);font-style:normal;font-weight:600;font-size:13px;letter-spacing:0}
 .big{margin:56px 0 0;padding:0 var(--gut) 56px;font-family:var(--disp);font-weight:900;font-variation-settings:"wdth" 112;text-transform:uppercase;line-height:.84;letter-spacing:-.04em;color:var(--ink);font-size:96px;overflow:hidden;clip-path:polygon(0 0,100% 0,100% calc(100% - 56px),0 100%)}
@@ -126,7 +128,7 @@ section{padding:var(--beat) var(--gut) 0}
 /* the sheet: opaque, under the bar, rows fade in staggered once the container has grown (21st 16369's morph, on our clock) */
 .sheet{pointer-events:auto;position:absolute;left:12px;right:12px;top:12px;padding-top:56px;border-radius:var(--r-bar);background:#111213;border:1px solid rgba(255,255,255,.12);box-shadow:0 20px 50px rgba(0,0,0,.45);clip-path:inset(0 0 100% 0 round var(--r-bar));visibility:hidden;transition:clip-path .55s var(--apple),visibility 0s .55s;z-index:1}
 .open .sheet{clip-path:inset(0 0 0 0 round var(--r-bar));visibility:visible;transition-delay:0s}
-.sheet a{display:flex;align-items:center;justify-content:space-between;height:56px;padding:0 20px;font-family:var(--disp);font-weight:700;font-size:16px;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);text-decoration:none;opacity:0;transform:translateY(8px);transition:opacity .3s var(--ease),transform .5s var(--ease)}
+.sheet a{display:flex;align-items:center;justify-content:space-between;height:52px;padding:0 20px;font-family:var(--disp);font-weight:700;font-size:16px;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);text-decoration:none;opacity:0;transform:translateY(8px);transition:opacity .3s var(--ease),transform .5s var(--ease)}
 .sheet a+a{border-top:1px solid rgba(255,255,255,.08)}
 .sheet a span{position:relative;padding-bottom:4px}
 .sheet a span:after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--ink);transform:scaleX(0);transform-origin:0 50%;transition:transform .4s var(--apple)}
@@ -134,7 +136,7 @@ section{padding:var(--beat) var(--gut) 0}
 .sheet a i{font-style:normal;font-weight:400;font-size:12px;letter-spacing:.08em;color:var(--ink-2)}
 .sheet .row-pad{height:12px}
 .open .sheet a{opacity:1;transform:none}
-.open .sheet a:nth-child(1){transition-delay:.18s} .open .sheet a:nth-child(2){transition-delay:.24s} .open .sheet a:nth-child(3){transition-delay:.30s} .open .sheet a:nth-child(4){transition-delay:.36s} .open .sheet a:nth-child(5){transition-delay:.42s}
+.open .sheet a:nth-child(1){transition-delay:.18s} .open .sheet a:nth-child(2){transition-delay:.23s} .open .sheet a:nth-child(3){transition-delay:.28s} .open .sheet a:nth-child(4){transition-delay:.33s} .open .sheet a:nth-child(5){transition-delay:.38s} .open .sheet a:nth-child(6){transition-delay:.43s}
 .scrim{position:fixed;inset:0;z-index:39;background:rgba(9,9,9,.4);opacity:0;pointer-events:none;transition:opacity .4s var(--apple)}
 .menu-open .scrim{opacity:1;pointer-events:auto}
 
@@ -148,7 +150,7 @@ section{padding:var(--beat) var(--gut) 0}
 .lockup .k{display:flex;gap:10px;align-items:center;margin-bottom:12px;font-size:10px;letter-spacing:.1em}
 .lockup .k i{width:22px;height:1px;background:var(--ink)}
 .name{font-size:48px;line-height:.94;font-variation-settings:"wdth" 112;letter-spacing:-.035em;font-weight:900;text-shadow:0 2px 24px rgba(0,0,0,.45)}
-@media (max-width:359px){.name{font-size:40px} .proof .stat .n{font-size:36px;line-height:38px} .proof .stat:first-child .n{font-size:40px} .proof .stat{padding-right:8px} .proof .stat+.stat{padding-left:10px}}
+@media (max-width:359px){.name{font-size:40px} .stat .n{font-size:36px;line-height:38px} .stat:first-child .n{font-size:40px} .stat{padding-right:8px} .stat+.stat{padding-left:10px}}
 .name span{display:block}
 .quote{margin-top:18px;font-family:var(--serif);font-style:italic;font-weight:300;font-variation-settings:"opsz" 36;font-size:23px;line-height:29px;letter-spacing:-.01em;max-width:24ch;text-wrap:balance;color:var(--ink);text-shadow:0 1px 18px rgba(0,0,0,.5)}
 .cover .cta{margin-top:22px}
@@ -163,21 +165,34 @@ section{padding:var(--beat) var(--gut) 0}
 
 
 /* ============ 1b · proof — a light beat: the numbers at display scale on his white ============ */
-.proof{padding-top:36px;padding-bottom:40px}
-.proof .row3{display:grid;grid-template-columns:1.15fr 1fr .9fr;margin-top:4px}
-.proof .stat{display:grid;grid-template-rows:auto auto;row-gap:10px;padding:0 12px 0 0;align-content:start}
-.proof .stat+.stat{padding-left:14px;box-shadow:inset 1px 0 0 var(--lt-line)}
-.proof .stat .n{font-family:var(--disp);font-weight:800;font-variation-settings:"wdth" 112;font-size:42px;line-height:46px;letter-spacing:-.03em;font-variant-numeric:tabular-nums lining-nums;color:var(--lt-ink)}
-.proof .stat:first-child .n{font-size:48px}
-.proof .stat .l{min-height:2.7em;font-size:11px;line-height:15px}
+.proof{padding-top:36px;padding-bottom:8px}
+.row3{display:grid;grid-template-columns:1.15fr 1fr .9fr;margin-top:4px}
+.stat{display:grid;grid-template-rows:auto auto;row-gap:10px;padding:0 12px 0 0;align-content:start}
+.stat+.stat{padding-left:14px;box-shadow:inset 1px 0 0 var(--lt-line)}
+.stat .n{font-family:var(--disp);font-weight:800;font-variation-settings:"wdth" 112;font-size:42px;line-height:46px;letter-spacing:-.03em;font-variant-numeric:tabular-nums lining-nums;color:var(--lt-ink)}
+.stat:first-child .n{font-size:48px}
+.stat .l{min-height:2.7em;font-size:11px;line-height:15px}
 .proof .facts{margin-top:24px;padding-top:14px;border-top:1px solid var(--lt-line);font-size:10px;line-height:18px;display:flex;flex-wrap:wrap;column-gap:4px;row-gap:4px}
 .proof .facts span:last-child{flex-basis:100%} .proof .facts i:last-of-type{display:none}
 .proof .facts span{white-space:nowrap}
 .proof .facts i{margin:0 6px;font-style:normal}
 
+/* ============ 1c · the index — the sheet on Diego: nine hairline-leader rows that unfold, then the contents ============ */
+.index{padding-top:72px;padding-bottom:56px}
+.index .row3{margin-top:26px}
+.index .stat .n{font-size:40px;line-height:44px} .index .stat:first-child .n{font-size:40px}
+.card{margin-top:30px}
+.card .fp{display:block}
+.kv{display:grid;grid-template-columns:auto 1fr auto;column-gap:10px;align-items:baseline;min-height:56px;padding:16px 0;border-bottom:1px solid var(--acc-line)}
+.card .fp:first-child .kv:first-child{border-top:1px solid var(--acc-line)}
+.kv .k{font-family:var(--disp);font-weight:500;font-size:12px;line-height:16px;letter-spacing:.08em;text-transform:uppercase;color:var(--acc-2);white-space:nowrap}
+.kv i{height:1px;background:var(--acc-line);align-self:center;min-width:12px}
+.kv .v{font-weight:400;font-size:16px;line-height:22px;color:var(--g0);text-align:right;max-width:22ch;font-variation-settings:"opsz" 24,"wdth" 96}
+.kv .v a{text-decoration:none}
 /* ============ 2 · the barber — deepest depth on the page ============ */
 /* ============ the cut — the signature: the biography photograph opens along one diagonal (8.2°), a drawn edge first ============ */
-.shutter{position:relative;margin:32px calc(var(--gut) * -1) 0;aspect-ratio:4/5;overflow:hidden;background:var(--blk,var(--g0))}
+.inl{display:inline-flex;align-items:center;gap:8px;min-height:48px;margin-top:24px;font-family:var(--disp);font-weight:600;font-size:16px;letter-spacing:.02em;color:var(--g0);text-decoration:none;border-bottom:1.5px solid var(--g0);padding-bottom:2px;line-height:1}
+.shutter{position:relative;margin:36px calc(var(--gut) * -1) 0;aspect-ratio:4/5;overflow:hidden;background:var(--blk,var(--g0))}
 .shutter img{position:absolute;left:0;top:-12px;width:100%;height:calc(100% + 24px);object-fit:cover;object-position:center 30%}
 .sh{position:absolute;inset:0;background:var(--blk,var(--g0));z-index:1;will-change:transform}
 .sh.t{clip-path:polygon(0 0,100% 0,100% calc(50% + 28px),0 calc(50% - 28px))}
@@ -191,7 +206,7 @@ section{padding:var(--beat) var(--gut) 0}
 .cap .edge{position:absolute;left:0;top:0;height:1.5px;background:#F5F5F2;opacity:.9;transform-origin:0 50%;pointer-events:none}
 .cap.up .edge{top:56px}
 .shutter .tag{left:var(--gut)}
-.fan{position:relative;margin:48px 0 0;padding-bottom:28px}
+.fan{position:relative;margin:0 0 56px}
 .fan figure{position:relative;overflow:hidden;background:var(--g0);border-radius:var(--r-print)}
 .fan figure img{position:absolute;left:0;top:-36px;width:100%;height:calc(100% + 72px);object-fit:cover}
 .fan .p1{width:100%;aspect-ratio:4/5}
@@ -208,6 +223,16 @@ section{padding:var(--beat) var(--gut) 0}
 .pr{position:relative;display:block;width:100%;padding:0 20px;margin-top:36px;text-align:left}
 .pr .fr{display:block;position:relative;height:auto;aspect-ratio:4/5;overflow:hidden;background:var(--g0);border-radius:16px;transform-origin:50% 100%}
 .pr .fr img{position:absolute;left:0;top:-16px;width:100%;height:calc(100% + 32px);object-fit:cover}
+/* THE FOLD (v12): three horizontal panels unfold top-down like a letter — rotateX −90 → 0 about the top edge, perspective 1200, a ground shade on each panel fading as it opens; transforms + one opacity */
+.fold{position:relative;perspective:1200px;perspective-origin:50% 0}
+.fold .fp{position:relative;overflow:hidden;transform-origin:50% 0;backface-visibility:hidden;will-change:transform}
+.fold .fp:after{content:'';position:absolute;inset:0;background:var(--g0);opacity:var(--sh,0);pointer-events:none}
+.fold.lt-fold .fp:after{background:var(--g0)}
+.pr.folded .fr{display:grid;grid-template-rows:1fr 1fr 1fr;overflow:visible;background:none}
+.pr.folded .fr .fp{background:var(--g0)}
+.pr.folded .fr .fp img{position:absolute;left:0;top:0;width:100%;height:300%;object-fit:cover}
+.pr.folded .fr .fp:nth-child(2) img{top:-100%} .pr.folded .fr .fp:nth-child(3) img{top:-200%}
+.pr.folded .fr .fp:first-child{border-radius:16px 16px 0 0} .pr.folded .fr .fp:last-child{border-radius:0 0 16px 16px}
 /* the wipe: one ground-coloured cover with a slanted foot (8.2°, 56px) slides up and off; the photograph beneath stays put */
 .pr .wipe{position:absolute;left:0;top:-2px;width:100%;height:calc(100% + 60px);background:var(--g0);z-index:1;clip-path:polygon(0 0,100% 0,100% calc(100% - 56px),0 100%);will-change:transform;pointer-events:none}
 .pr.wiped .fr img{top:0;height:100%}
@@ -215,6 +240,7 @@ section{padding:var(--beat) var(--gut) 0}
 .pr.full .fr{height:var(--vh-px);aspect-ratio:auto;border-radius:0}
 .pr.full .fr{will-change:transform}
 .pr.full .fr img{object-position:50% 45%;filter:saturate(.8) contrast(1.03) brightness(1.02)}
+.pr.full .fr{will-change:auto}
 .pr:not(.full) .tag{position:static;display:block;margin-top:12px;padding:0;border-radius:0;background:none;white-space:normal;font-size:10px;line-height:15px;letter-spacing:.07em;color:var(--ink-2)}
 .pr.full .tag{left:16px;bottom:16px}
 /* the lightbox */
@@ -263,7 +289,9 @@ section{padding:var(--beat) var(--gut) 0}
 .rate .ring{position:absolute;width:320px;height:320px;border-radius:50%;border:1px solid rgba(255,255,255,.05);pointer-events:none}
 .rate .ring.a{right:-120px;top:40px} .rate .ring.b{left:-160px;bottom:-40px}
 .rate .hint{margin-top:4px}
-.rows{position:relative;margin-top:30px;overflow:hidden}
+.rows{position:relative;margin-top:30px;overflow:hidden;perspective:1200px;perspective-origin:50% 0}
+.pc{position:absolute;left:-1px;right:-1px;height:34.5%;background:var(--g0);transform-origin:50% 0;backface-visibility:hidden;will-change:transform;z-index:2;pointer-events:none}
+.pc:nth-child(1){top:-1px} .pc:nth-child(2){top:calc(33.33% - 1px)} .pc:nth-child(3){top:calc(66.66% - 1px);height:35%}
 .rows.g-card{background:none;border:0;border-radius:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
 .rw:first-child{border-top:1px solid rgba(255,255,255,.1)} .rw:last-child{border-bottom:1px solid rgba(255,255,255,.1)}
 .rw{position:relative;transition:background .45s var(--apple)}
@@ -315,7 +343,7 @@ footer:before{content:'';position:absolute;left:0;right:0;top:0;height:1.5px;bac
 }
 @media (prefers-reduced-motion:reduce){
   *,*:before,*:after{transition-duration:.01ms!important;transition-delay:0s!important;animation-duration:.01ms!important}
-  #pre{display:none} .mast .wm{visibility:visible} #read span{opacity:1} .sh,.shutter .edge,.cap .edge{display:none} .cap{clip-path:none} .sw{transform:none!important} .pr .wipe{display:none} .big{clip-path:none}
+  #pre{display:none} .mast .wm{visibility:visible} #read span{opacity:1} .sh,.shutter .edge,.cap .edge{display:none} .cap{clip-path:none} .sw{transform:none!important} .pr .wipe{display:none} .big{clip-path:none} .fold .fp{transform:none!important;--sh:0!important}
 }
 </style>
 </head>
@@ -335,8 +363,9 @@ footer:before{content:'';position:absolute;left:0;right:0;top:0;height:1.5px;bac
     </div>
   </header>
   <nav class="sheet" id="sheet" aria-label="Sections">
-    <a href="#work"><span data-en="Work" data-es="Trabajo">Work</span><i>01</i></a>
-    <a href="#bio"><span>Diego</span><i>02</i></a>
+    <a href="#index"><span data-en="Index" data-es="Índice">Index</span><i>00</i></a>
+    <a href="#bio"><span>Diego</span><i>01</i></a>
+    <a href="#work"><span data-en="Work" data-es="Trabajo">Work</span><i>02</i></a>
     <a href="#chair"><span data-en="Reviews" data-es="Reseñas">Reviews</span><i>03</i></a>
     <a href="#rate"><span data-en="Prices" data-es="Precios">Prices</span><i>04</i></a>
     <a href="#book"><span data-en="Visit" data-es="Visita">Visit</span><i>05</i></a>
@@ -359,42 +388,54 @@ footer:before{content:'';position:absolute;left:0;right:0;top:0;height:1.5px;bac
     </div>
   </figure>
 </section>
-<div class="cap" id="cap1" aria-hidden="true"><i class="edge"></i></div>
 </div>
 
-<!-- 1b · proof — the numbers a reel viewer wants before the story, on his white -->
-<section class="proof lt" id="proof">
+<div class="band acc"><i class="gbg" aria-hidden="true"></i>
+<!-- 1c · the index -->
+<section class="index" id="index">
+  <h2 class="sw rv bl" data-en="Index" data-es="Índice">Index</h2>
   <div class="row3">
     <div class="stat"><span class="n">4.9</span><span class="l lab" data-en="Booksy<br>rating" data-es="Calificación<br>Booksy">Booksy<br>rating</span></div>
     <div class="stat"><span class="n">54</span><span class="l lab" data-en="Booksy<br>reviews" data-es="Reseñas<br>Booksy">Booksy<br>reviews</span></div>
     <div class="stat"><span class="n">17</span><span class="l lab" data-en="Licensed<br>at 17" data-es="Licencia<br>a los 17">Licensed<br>at 17</span></div>
   </div>
-  <p class="facts lab"><span data-en="Northwest Houston · 77064" data-es="Noroeste de Houston · 77064">Northwest Houston · 77064</span><i>·</i><span data-en="EN / ES" data-es="ES / EN">EN / ES</span><i>·</i><span data-en="Appointments only" data-es="Solo con cita">Appointments only</span></p>
+  <div class="card fold lt-fold" id="card">
+    <div class="fp">
+      <div class="kv"><span class="k" data-en="Book" data-es="Reservar">Book</span><i></i><span class="v"><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="On Booksy · appointment only ↗" data-es="En Booksy · solo con cita ↗">On Booksy · appointment only ↗</a></span></div>
+      <div class="kv"><span class="k" data-en="Where" data-es="Dónde">Where</span><i></i><span class="v" data-en="Northwest Houston · 77064" data-es="Noroeste de Houston · 77064">Northwest Houston · 77064</span></div>
+    </div>
+    <div class="fp">
+      <div class="kv"><span class="k" data-en="Cuts" data-es="Cortes">Cuts</span><i></i><span class="v" data-en="Fades · tapers · freehand" data-es="Fades · tapers · a mano">Fades · tapers · freehand</span></div>
+      <div class="kv"><span class="k" data-en="Hours" data-es="Horario">Hours</span><i></i><span class="v" data-en="Mon–Fri 4–9 pm<br>Sat 10–6 pm · Sun closed" data-es="Lun–Vie 4–9 pm<br>Sáb 10–6 pm · Dom cerrado">Mon–Fri 4–9 pm<br>Sat 10–6 pm · Sun closed</span></div>
+    </div>
+    <div class="fp">
+      <div class="kv"><span class="k" data-en="Languages" data-es="Idiomas">Languages</span><i></i><span class="v" data-en="English · Español" data-es="Español · English">English · Español</span></div>
+    </div>
+  </div>
 </section>
 
-<div class="band acc"><i class="gbg" aria-hidden="true"></i>
-
-<!-- 2 · the barber -->
+<!-- 2 · the barber — his words on the white sheet; the cut opens the photograph out of it -->
 <section class="bio" id="bio">
   <p class="sw rv bl" aria-hidden="true" data-en="Diego" data-es="Diego">Diego</p>
   <h2 class="d rv bl" data-en="“I get paid to make people look good”" data-es="“Me pagan por hacer que la gente se vea bien”">“I get paid to make people look good”</h2>
   <!-- PLACEHOLDER COPY — replace with Diego's own words -->
   <p class="body rv" data-en="Diego started cutting hair for friends, then their friends, and never stopped. Today he’s a licensed barber in Northwest Houston, booked through Booksy, and he still takes his time on every chair — because a good fade isn’t the job. <b>Making someone walk out standing taller is.</b>" data-es="Diego empezó cortándole el pelo a sus amigos, luego a los amigos de ellos, y nunca paró. Hoy es barbero con licencia en el noroeste de Houston, con citas por Booksy, y sigue tomándose su tiempo en cada silla — porque un buen fade no es el trabajo. <b>Que alguien salga caminando más erguido, eso sí.</b>">Diego started cutting hair for friends, then their friends, and never stopped. Today he’s a licensed barber in Northwest Houston, booked through Booksy, and he still takes his time on every chair — because a good fade isn’t the job. <b>Making someone walk out standing taller is.</b></p>
+  <a class="inl" href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener"><span data-en="Book with Diego" data-es="Reserva con Diego">Book with Diego</span> ↗</a>
   <figure class="shutter" id="shutter">
     <img src="assets/island-07.jpg" width="1080" height="1440" alt="Diego working over the shoulder in the room" loading="lazy" decoding="async">
     <div class="sh t"><i class="ln"></i></div><div class="sh b"><i class="ln"></i></div><i class="edge" aria-hidden="true"></i>
     <figcaption class="tag"><span data-en="In the room" data-es="En la sala">In the room</span></figcaption>
   </figure>
+</section>
+</div>
+
+<div class="band">
+<!-- 2b · the pair, then the tools -->
+<section class="tools" id="tools">
   <div class="fan" id="fan">
     <figure class="p1"><img src="assets/b-09-edge.jpg" width="720" height="900" alt="Diego edging a line-up" loading="lazy" decoding="async"><figcaption class="tag"><span data-en="Edge work" data-es="Perfilado">Edge work</span></figcaption></figure>
     <figure class="p2" id="inset" role="button" tabindex="0" aria-label="Swap the two photographs"><img src="assets/b-02-hands.jpg" width="720" height="900" alt="Gloved hands finishing a cut, client in the chair" loading="lazy" decoding="async"><figcaption class="tag"><span data-en="In the shop" data-es="En el shop">In the shop</span></figcaption></figure>
   </div>
-</section>
-</div>
-
-<div class="band rev">
-<!-- 2b · the tools -->
-<section class="tools" id="tools">
   <h2 class="d rv bl" id="toolsh" data-en="The tools don’t make the fade" data-es="Las herramientas no hacen el fade">The tools don’t make the fade</h2>
   <figure class="island" id="island"><img src="assets/tools-05.jpg" width="1080" height="1440" alt="Diego holding his gold Black Ice clipper toward the camera" loading="lazy" decoding="async"><figcaption class="tag"><span data-en="The clippers" data-es="Las máquinas">The clippers</span></figcaption></figure>
 </section>
@@ -406,7 +447,7 @@ footer:before{content:'';position:absolute;left:0;right:0;top:0;height:1.5px;bac
   <div class="prints" id="prints">
     <button class="pr full" type="button" data-src="assets/g-03-event-full.jpg" data-full="1"><span class="fr"><img src="assets/g-03-event-full.jpg" width="1080" height="1350" alt="Diego cutting on the floor at a Houston barber event, crowd behind him" loading="lazy" decoding="async"></span><span class="tag"><span data-en="On the floor · Houston" data-es="En el evento · Houston">On the floor · Houston</span></span></button>
     <button class="pr wiped" type="button" data-src="assets/g-10-ornamental-nape-design.jpg"><span class="fr"><i class="wipe" aria-hidden="true"></i><img src="assets/g-10-ornamental-nape-design.jpg" width="1080" height="1350" alt="Ornamental freehand design carved into the nape" loading="lazy" decoding="async"></span><span class="tag"><span data-en="Ornamental nape, freehand · 60 min" data-es="Nuca ornamental, a mano · 60 min">Ornamental nape, freehand · 60 min</span></span></button>
-    <button class="pr" type="button" data-src="assets/g-06-freehand-design-white.jpg"><span class="fr"><img src="assets/g-06-freehand-design-white.jpg" width="1080" height="1350" alt="White line-work design drawn to the head" loading="lazy" decoding="async"></span><span class="tag"><span data-en="Line work, drawn to the head · 60 min" data-es="Líneas dibujadas a la cabeza · 60 min">Line work, drawn to the head · 60 min</span></span></button>
+    <button class="pr folded" type="button" data-src="assets/g-06-freehand-design-white.jpg"><span class="fr fold"><span class="fp"><img src="assets/g-06-freehand-design-white.jpg" width="1080" height="1350" alt="White line-work design drawn to the head" loading="lazy" decoding="async"></span><span class="fp" aria-hidden="true"><img src="assets/g-06-freehand-design-white.jpg" alt="" loading="lazy" decoding="async"></span><span class="fp" aria-hidden="true"><img src="assets/g-06-freehand-design-white.jpg" alt="" loading="lazy" decoding="async"></span></span><span class="tag"><span data-en="Line work, drawn to the head · 60 min" data-es="Líneas dibujadas a la cabeza · 60 min">Line work, drawn to the head · 60 min</span></span></button>
     <button class="pr wiped" type="button" data-src="assets/g-04-skinfade-beige-wall.jpg"><span class="fr"><i class="wipe" aria-hidden="true"></i><img src="assets/g-04-skinfade-beige-wall.jpg" width="1080" height="1350" alt="Skin fade with a hard line-up" loading="lazy" decoding="async"></span><span class="tag"><span data-en="Skin fade, hard line · 45 min" data-es="Skin fade, línea marcada · 45 min">Skin fade, hard line · 45 min</span></span></button>
     <button class="pr" type="button" data-src="assets/g-08-curly-hightop-staircase.jpg"><span class="fr"><img src="assets/g-08-curly-hightop-staircase.jpg" width="1080" height="1350" alt="Curly high top with a clean taper" loading="lazy" decoding="async"></span><span class="tag"><span data-en="Curly top, clean taper · 45 min" data-es="Rizado arriba, taper limpio · 45 min">Curly top, clean taper · 45 min</span></span></button>
   </div>
@@ -449,6 +490,7 @@ footer:before{content:'';position:absolute;left:0;right:0;top:0;height:1.5px;bac
   <h2 class="sw rv bl" data-en="Prices" data-es="Precios">Prices</h2>
   <p class="hint lab"><span data-en="Tap a row · chair time shown" data-es="Toca una fila · tiempo en la silla">Tap a row · chair time shown</span></p>
   <div class="rows g-card">
+  <i class="pc" aria-hidden="true"></i><i class="pc" aria-hidden="true"></i><i class="pc" aria-hidden="true"></i>
   <div class="rw"><i class="sep" aria-hidden="true"></i><button type="button" aria-expanded="false" aria-controls="more1"><span class="svc"><span data-en="Line up" data-es="Perfilado">Line up</span><small>30 min</small></span><span class="p"><span class="dd"><b>$20</b></span></span><span class="pl"></span></button><div class="more" id="more1"><div><p data-en="Edges and the neckline, cleaned up sharp." data-es="Bordes y nuca, bien perfilados.">Edges and the neckline, cleaned up sharp.</p><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="Book this on Booksy" data-es="Reservar en Booksy">Book this on Booksy</a></div></div></div>
   <div class="rw"><i class="sep" aria-hidden="true"></i><button type="button" aria-expanded="false" aria-controls="more2"><span class="svc"><span data-en="Haircut" data-es="Corte">Haircut</span><small>45 min</small></span><span class="p"><span class="dd"><b>$30</b></span></span><span class="pl"></span></button><div class="more" id="more2"><div><p data-en="Fade or taper, cut to how you wear it." data-es="Fade o taper, cortado como lo usas.">Fade or taper, cut to how you wear it.</p><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="Book this on Booksy" data-es="Reservar en Booksy">Book this on Booksy</a></div></div></div>
   <div class="rw"><i class="sep" aria-hidden="true"></i><button type="button" aria-expanded="false" aria-controls="more3"><span class="svc"><span data-en="Haircut + design" data-es="Corte + diseño">Haircut + design</span><small>60 min · <span data-en="freehand" data-es="a mano alzada">freehand</span></small></span><span class="p"><span class="dd"><b>$30</b></span></span><span class="pl"></span></button><div class="more" id="more3"><div><p data-en="Freehand line work, drawn to the head." data-es="Líneas a mano alzada, dibujadas a la cabeza.">Freehand line work, drawn to the head.</p><a href="https://choppedbydiego33.booksy.com" target="_blank" rel="noopener" data-en="Book this on Booksy" data-es="Reservar en Booksy">Book this on Booksy</a></div></div></div>
@@ -611,7 +653,7 @@ footer:before{content:'';position:absolute;left:0;right:0;top:0;height:1.5px;bac
     document.querySelectorAll('.band.acc').forEach(b => {
       const g = b.querySelector('.gbg')
       if (reduce) { g.style.clipPath = 'none'; return }
-      gsap.fromTo(g, { '--cy': () => Math.round(scroller.clientHeight * .22) + 'px' }, { '--cy': '0px', ease: 'none', immediateRender: true, scrollTrigger: { trigger: b, start: 'top 92%', end: 'top 50%', scrub: true, invalidateOnRefresh: true } })
+      gsap.fromTo(g, { '--cy': () => Math.round(scroller.clientHeight * .22) + 'px' }, { '--cy': '0px', ease: 'none', immediateRender: true, scrollTrigger: { trigger: b, start: 'top 95%', end: 'top 65%', scrub: .15, invalidateOnRefresh: true } })
     })
     /* the giant wordmark at the foot fits the column (no viewport units: measured) */
     {
@@ -619,7 +661,7 @@ footer:before{content:'';position:absolute;left:0;right:0;top:0;height:1.5px;bac
       fitBig(); window.addEventListener('resize', fitBig); if (document.fonts) document.fonts.ready.then(fitBig)
       /* Astra F: both lines rise 56px→0 together through the aperture, top 98% → top 78% (the foot of the page cannot reach 64%), scrub .25; the hairline draws in the final 25% */
       if (!reduce) { const ft = document.querySelector('footer'); gsap.set(ft, { '--fl': 0 })
-        gsap.timeline({ scrollTrigger: { trigger: big, start: 'top 98%', end: 'top 76%', scrub: .25, invalidateOnRefresh: true } })
+        gsap.timeline({ scrollTrigger: { trigger: big, start: 'top 98%', end: 'top 76%', scrub: .15, invalidateOnRefresh: true } })
           .fromTo(document.getElementById('bigin'), { y: () => document.getElementById('bigin').offsetHeight + 8 }, { y: 0, ease: 'none', duration: 1 }, 0)
           .fromTo(ft, { '--fl': 0 }, { '--fl': 1, ease: 'none', duration: .25 }, .75) }
     }
@@ -629,11 +671,16 @@ footer:before{content:'';position:absolute;left:0;right:0;top:0;height:1.5px;bac
       gsap.set(heroimg, { scale: 1.04 }); drift('#plate', -16, 16, '.hero', 'top top')
       drift('#fan .p1 img', -12, 12, '#fan'); drift('#fan .p2 img', 12, -12, '#fan'); drift('#shutter img', -12, 12, '#shutter')
       drift('#island img', -12, 12, '#island')
-      document.querySelectorAll('.pr:not(.wiped) .fr img').forEach(im => drift(im, -12, 12, im.closest('.pr')))
+      document.querySelectorAll('.pr:not(.wiped):not(.folded) .fr img').forEach(im => drift(im, -12, 12, im.closest('.pr')))
       /* the wipes (Astra B): top 92% → top 55%, scrub .25, linear; the cover leaves upward by its own height */
-      document.querySelectorAll('.pr.wiped .wipe').forEach(w => gsap.to(w, { y: () => -(w.offsetHeight + 4), ease: 'none', scrollTrigger: { trigger: w.closest('.pr'), start: 'top 92%', end: 'top 55%', scrub: .25, invalidateOnRefresh: true } }))
+      document.querySelectorAll('.pr.wiped .wipe').forEach(w => gsap.to(w, { y: () => -(w.offsetHeight + 4), ease: 'none', scrollTrigger: { trigger: w.closest('.pr'), start: 'top 90%', end: 'top 55%', scrub: .15, invalidateOnRefresh: true } }))
+      /* THE FOLD (Astra v12): panel k opens −60 → 0 over .6 of the timeline, windows 0–.6 / .2–.8 / .4–1; shade .10 → 0 with it (council: .22 read as skeleton loaders); top 92% → top 52%, scrub .15 */
+      document.querySelectorAll('.fold').forEach(f => { const ps = f.querySelectorAll(':scope > .fp'); if (!ps.length) return
+        gsap.set(ps, { rotationX: -60, '--sh': .10 })
+        const tl = gsap.timeline({ scrollTrigger: { trigger: f, start: 'top 92%', end: 'top 52%', scrub: .15 } })
+        ps.forEach((pnl, i) => tl.to(pnl, { rotationX: 0, '--sh': 0, ease: 'none', duration: .6 }, i * .2)) })
       /* the section words slide against the scroll, 16px across their section */
-      document.querySelectorAll('.sw').forEach(sw => gsap.fromTo(sw, { x: 16 }, { x: -16, ease: 'none', scrollTrigger: { trigger: sw.closest('section'), start: 'top bottom', end: 'bottom top', scrub: .6 } }))
+      document.querySelectorAll('.sw').forEach(sw => gsap.fromTo(sw, { x: 16 }, { x: -16, ease: 'none', scrollTrigger: { trigger: sw.closest('section'), start: 'top bottom', end: 'bottom top', scrub: .15 } }))
     }
 
     /* ---- the caps: each white beat enters on a 32px slant that straightens; a 1px edge joins the two upper vertices and fades in the last 15% ---- */
@@ -659,19 +706,13 @@ footer:before{content:'';position:absolute;left:0;right:0;top:0;height:1.5px;bac
       const fitEdge = () => { const W = sh.clientWidth || 390; const a = Math.atan2(56, W) * 180 / Math.PI; ed.style.width = Math.hypot(W, 56) + 'px'; ed.style.transform = `rotate(${a}deg) scaleX(var(--sx,0))`; sh.querySelectorAll('.ln').forEach(l => { l.style.width = Math.hypot(W, 56) + 'px'; l.style.transform = `rotate(${a}deg)` }) }
       fitEdge(); window.addEventListener('resize', fitEdge)
       const H = () => sh.clientHeight / 2 + 28
-      gsap.timeline({ scrollTrigger: { trigger: sh, start: 'top 90%', end: 'top 30%', scrub: .5, invalidateOnRefresh: true } })
+      gsap.timeline({ scrollTrigger: { trigger: sh, start: 'top 90%', end: 'top 55%', scrub: .15, invalidateOnRefresh: true } })
         .fromTo(ed, { '--sx': 0 }, { '--sx': 1, ease: 'none', duration: .15 }, 0)
         .to(sh.querySelector('.sh.t'), { y: () => -H(), ease: 'none', duration: .7 }, .15)
         .to(sh.querySelector('.sh.b'), { y: () => H(), ease: 'none', duration: .7 }, .15)
         .to(ed, { opacity: 0, ease: 'none', duration: .15 }, .15)
     }
 
-    /* ---- the event photograph answers the thumb: skewY from scroll velocity, clamped ±1.25°, critically damped, back to zero 100ms after the scroll stops ---- */
-    if (!reduce) {
-      const fr = document.querySelector('.pr.full .fr'); gsap.set(fr.querySelector('img'), { scale: 1.06 })
-      const toSkew = gsap.quickTo(fr, 'skewY', { duration: .3, ease: 'power2.out' }); let still = 0
-      lenis.on('scroll', e => { const v = (e.velocity || 0) * 60; toSkew(gsap.utils.clamp(-1.25, 1.25, v / 1800)); clearTimeout(still); still = setTimeout(() => toSkew(0), 100) })
-    }
 
     /* ---- the barber: tap the inset to trade places ---- */
     {
@@ -737,8 +778,11 @@ footer:before{content:'';position:absolute;left:0;right:0;top:0;height:1.5px;bac
 
     /* ---- the rate card ---- */
     const rows = gsap.utils.toArray('.rw')
-    if (!reduce) rows.forEach(r => { const sep = r.querySelector('.sep'); if (!sep) return; gsap.set(sep, { scaleX: 0 })
-      ScrollTrigger.create({ trigger: r, start: 'top 90%', once: true, onEnter: () => gsap.to(sep, { scaleX: 1, duration: .35, ease: 'power3.out' }) }) })
+    /* Astra P6: three opaque covers fold away −60 → −90 (windows 0–.6 / .2–.8 / .4–1), list top 95% → top 70%, scrub .15; gone at completion */
+    { const pcs = gsap.utils.toArray('.rows .pc')
+      if (reduce) pcs.forEach(c => c.remove()); else { gsap.set(pcs, { rotationX: -60 })
+        const tl = gsap.timeline({ scrollTrigger: { trigger: '.rows', start: 'top 95%', end: 'top 70%', scrub: .15, onLeave: () => pcs.forEach(c => c.style.visibility = 'hidden'), onEnterBack: () => pcs.forEach(c => c.style.visibility = '') } })
+        pcs.forEach((c, i) => tl.to(c, { rotationX: -90, ease: 'none', duration: .6 }, i * .2)) } }
     let rq = 0; const refreshSoon = () => { cancelAnimationFrame(rq); rq = requestAnimationFrame(() => ScrollTrigger.refresh()) }
     rows.forEach(r => { r.querySelector('.more').inert = true; r.querySelector('.more').addEventListener('transitionend', e => { if (e.propertyName === 'grid-template-rows') refreshSoon() }) })
     rows.forEach(r => r.querySelector('button').addEventListener('click', () => {

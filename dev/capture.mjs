@@ -25,8 +25,8 @@ page.on('pageerror', e => errors.push(String(e)))
 page.on('console', m => { if (m.type() === 'error') errors.push(m.text()) })
 await page.goto(url, { waitUntil: 'networkidle' })
 await page.waitForTimeout(4200)
-export const STATES = [['fold', null, 0], ['proof', '#proof', -60], ['bio', '#bio', -40], ['shutter', '#shutter', -120], ['fan', '#fan', -140], ['tools', '#tools', -40], ['island', '#island', -160],
-  ['work', '#work', -40], ['event', '.pr.full', 0], ['print2', '.pr:nth-child(3)', -60], ['cap2', '#cap2', -500], ['chair', '#chair', -40], ['feed', '#feed', -40], ['rate', '#rate', -40], ['rate2', '#rate', 180], ['book', '#book', -60], ['big', '#big', -520], ['tint', '#bio', -620], ['menu', null, 0]]
+export const STATES = [['fold', null, 0], ['bio', '#bio', -40], ['shutter', '#shutter', -120], ['fan', '#fan', -140], ['tools', '#tools', -40], ['island', '#island', -160],
+  ['work', '#work', -40], ['event', '.pr.full', 0], ['print2', '.pr:nth-child(3)', -60], ['cap2', '#cap2', -500], ['chair', '#chair', -40], ['feed', '#feed', -40], ['rate', '#rate', -40], ['rate2', '#rate', 180], ['book', '#book', -60], ['big', '#big', -520], ['tint', '#bio', -620], ['menu', null, 0], ['index', '#index', -40], ['card-mid', '#card', -620], ['pfold-mid', '.pr.folded', -560], ['pfold', '.pr.folded', -120], ['end', null, 1e9], ['rate-mid', '.rows', -700], ['bio-cut', '#shutter', -300]]
 const scrollTo = async (y) => {
   await page.evaluate(async (y) => { const s = document.getElementById('scroll'); const from = s.scrollTop; const steps = 30
     for (let i = 1; i <= steps; i++) { s.scrollTop = from + (y - from) * i / steps; await new Promise(r => setTimeout(r, 24)) }
@@ -38,7 +38,7 @@ console.log('scroll max', max)
 for (const [k, sel, off] of STATES) {
   const y = sel ? await page.evaluate(([sel, off]) => { const s = document.getElementById('scroll'); const el = document.querySelector(sel); return el ? el.getBoundingClientRect().top + s.scrollTop + off : 0 }, [sel, off]) : 0
   await scrollTo(Math.max(0, Math.min(y, max)))
-  if (k === 'menu') { await page.evaluate(() => document.getElementById('menubtn').click()); await page.waitForTimeout(900) }
+  if (k === 'menu') { await page.evaluate(() => document.getElementById('menubtn').click()); await page.waitForTimeout(900); await page.screenshot({ path: `${out}-menu.png` }); await page.evaluate(() => document.getElementById('menubtn').click()); await page.waitForTimeout(700); continue }
   if (k === 'rate2') { await page.evaluate(() => document.querySelectorAll('.rw button')[1].click()); await page.waitForTimeout(800) }
   await page.screenshot({ path: `${out}-${k}.png` })
 }
