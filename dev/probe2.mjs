@@ -8,7 +8,7 @@ const errs = []
 // 1 reduced motion
 { const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' }); const page = await ctx.newPage(); page.on('pageerror', e => errs.push('reduce: ' + e))
   await page.goto(url, { waitUntil: 'networkidle' }); await page.waitForTimeout(800)
-  const r = await page.evaluate(() => ({ pre: !!document.getElementById('pre'), wm: getComputedStyle(document.getElementById('wm')).visibility, tools: [...document.querySelectorAll('.cross .tool')].map(t => t.getAttribute('transform')), rect: document.querySelector('.cross .cr').getAttribute('width') }))
+  const r = await page.evaluate(() => ({ pre: !!document.getElementById('pre'), wm: getComputedStyle(document.getElementById('wm')).visibility, cap: getComputedStyle(document.getElementById('cap1')).clipPath }))
   console.log('reduce:', JSON.stringify(r)); await ctx.close() }
 // 2 lightbox: open, drag down 140px, expect closed; inert states
 { const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true }); const page = await ctx.newPage(); page.on('pageerror', e => errs.push('lb: ' + e))

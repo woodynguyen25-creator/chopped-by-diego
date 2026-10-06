@@ -351,6 +351,26 @@
       "date": "2026-09-15",
       "id": "Q47",
       "decision": "Head carries canonical, Open Graph, Twitter card and HairSalon JSON-LD with hours, price range and area served — never a street address (standing rule)"
+    },
+    {
+      "date": "2026-10-06",
+      "id": "Q48",
+      "decision": "v9: the two travelling-scissor crossings are removed; the signature is THE CUT — the biography photograph opens along an 8.2° seam behind two ground covers, a 1px edge drawn first (Astra v9 motion spec; Woody: the scissors were basic)"
+    },
+    {
+      "date": "2026-10-06",
+      "id": "Q49",
+      "decision": "The white beats enter on a diagonal cap (32px slant that straightens, 1px #B2B4B6 edge); all other boundaries stay straight; headings resolve from a 4px blur; the event print skews ±1.25° with velocity"
+    },
+    {
+      "date": "2026-10-06",
+      "id": "Q50",
+      "decision": "The bar never hides: Book stays reachable on the way down (corpus §16 one persistent booking control); a proof line (4.9 · 54 · from $20 · hours) sits under the first booking button, which now links straight to Booksy (Porem pattern)"
+    },
+    {
+      "date": "2026-10-06",
+      "id": "Q51",
+      "decision": "Removed as motion for its own sake: proof counting, heading/ring/tagline drifts, gallery clip-settle, Instagram stagger, the inset slide; the hero lockup is stationary"
     }
   ],
   "evidence": [
@@ -377,6 +397,10 @@
     {
       "fact": "v8 spec",
       "source": "../ASTRA-V8-SPEC-2026-09-15.md"
+    },
+    {
+      "fact": "v9 motion spec",
+      "source": "../ASTRA-V9-MOTION-SPEC-2026-10-06.md"
     }
   ],
   "generatedAt": "2026-09-11T23:15:00.000Z"
