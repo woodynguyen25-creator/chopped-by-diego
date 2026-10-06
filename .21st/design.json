@@ -386,6 +386,16 @@
       "date": "2026-10-06",
       "id": "Q54",
       "decision": "v10 the serif voice: Newsreader italic 300 (the quote face recorded in v2) for five giant section words (Diego, Work, Reviews+54 badge, Prices, Visit = the sheet rows), one accent word inside four caps headings, the hero quote (23px) and the closing line (42px); CHOPPED / BY DIEGO wordmark fitted to the column at the foot (CRISP; 21st 872/35508); hours with hairline leaders (Gielly). Overrides v7 'no italics' and DESIGN.md 9/10 'no script fonts' on Woody's 10/06 'calligraphy and wording' brief — Fraunces was tried first and dropped on the detector's overused-font flag. Woody overrides."
+    },
+    {
+      "date": "2026-10-06",
+      "id": "Q55",
+      "decision": "v11 palette (Woody): black #090909, white #F1F2F0, CREAM #E2D1B3 (Astra's hex; ink #090909 on it) — the green is gone after one afternoon. 'Let's do black, white, and that cream color.' The cream takes the two blocks the green had (biography, Visit); the white caps stay #F1F2F0; the bar goes light over cream as over white."
+    },
+    {
+      "date": "2026-10-06",
+      "id": "Q56",
+      "decision": "v11 motion (Astra spec, ASTRA-V11-MOTION-SPEC-2026-10-06.md): the ground change is scrubbed and in the cut language — each cream block arrives dark and its cream rises through the 8.2° edge from 22% of the pane below its top to its top as the top travels 92% → 50% of the pane (the section word is revealed by the edge; no alpha crossfade); two supporting Work prints are wiped open by one dark cover leaving upward on the same edge (top 92% → top 55%, scrub .25; photograph static); the footer wordmark rises from under a slanted foot aperture (top 98% → top 76%, scrub .25) and the footer hairline draws in the last 25%; section-word drift scrub .6. CUT by Astra: skew on every image, Instagram strip travel, price-row rises, hours leaders drawing, edge glow, a second split cut, a marquee, hero lockup parallax, the 54 disc spring. Price names 15px / durations 13px #BDBDB7."
     }
   ],
   "evidence": [

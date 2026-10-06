@@ -21,7 +21,7 @@
 :root{
   --ink:#F5F5F2; --ink-2:#B2B4B6; --g0:#090909; --g1:#242526; --surface:#303234; --line:rgba(255,255,255,.16);
   --lt:#F1F2F0; --lt-ink:#111213; --lt-2:#606367; --lt-line:rgba(0,0,0,.14);
-  --acc:#4F6E41; --acc-2:#A9C58F; --acc-lt:#4A6A3C;   /* v10: his cape — the money green; punctuation and two blocks, never a button fill */
+  --acc:#E2D1B3; --acc-2:#6A6253; --acc-line:rgba(0,0,0,.2);   /* v11: cream (Astra) — the third colour, two blocks (biography, Visit); black, white, cream; ink on it is #090909 */
   --serif:'Newsreader',Georgia,'Times New Roman',serif;   /* the quote face design.json recorded in v2; the calligraphic voice */
   --vh:8px; --vh-px:800px;                   /* overwritten by JS from the first non-zero pane height; never a viewport unit */
   --sans:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif;
@@ -43,6 +43,9 @@ html,body{height:var(--vh-px);overflow:hidden;background:var(--g0)}
 body{color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 #scroll{position:relative;height:var(--vh-px);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
 #root{position:relative;max-width:520px;margin:0 auto;background:var(--g0)}
+/* v11: each cream block carries its own ground layer; its lower boundary is the cut edge (8.2°, 56px), swept down the block by the thumb as the block arrives — solid colour, never an alpha mix */
+.band.acc{isolation:isolate}
+.gbg{position:absolute;inset:0;z-index:-1;background:var(--acc);--cy:0px;clip-path:polygon(0 var(--cy),100% calc(var(--cy) + 56px),100% 100%,0 100%);pointer-events:none}
 .grain{position:fixed;inset:0;pointer-events:none;z-index:5;opacity:.035;background-image:radial-gradient(rgba(255,255,255,.9) .6px,transparent .7px);background-size:3px 3px}
 img{display:block;max-width:100%}
 a{color:inherit}
@@ -53,14 +56,21 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 /* the ground: his gradient, continuous across a band of beats; direction reverses across tools–gallery */
 /* v10: colour blocks — each band names its ground; the page's ground (#root) tweens to it as the band crosses 60% of the pane */
 .band{position:relative;background:transparent;--blk:var(--g0)}
-.band.acc{--blk:var(--acc)}
-.band.acc .lab{color:rgba(241,242,240,.78)} .band.acc .body{color:var(--ink)} .band.acc .tag{background:rgba(9,9,9,.5)}
+.band.acc{--blk:var(--acc);color:var(--g0)}
+.band.acc .lab{color:var(--acc-2)} .band.acc .body,.band.acc .sw,.band.acc .d,.band.acc .tagline,.band.acc .big,.band.acc .place p,.band.acc .hrs{color:var(--g0)}
+.band.acc .sh .ln,.band.acc .shutter .edge{background:var(--lt-ink)}
+.band.acc .btn{background:var(--lt-ink);color:var(--ink);box-shadow:0 10px 26px rgba(0,0,0,.14)} .band.acc .btn:hover{background:#000}
+.band.acc .btn.ghost{background:none;color:var(--lt-ink)}
+.band.acc .place{border-top-color:var(--acc-line)} .band.acc .hrs i{background:var(--acc-line)} .band.acc footer:before{background:var(--acc-line)}
+.band.acc .g-card{background:rgba(255,255,255,.48);border-color:rgba(0,0,0,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 6px 20px rgba(0,0,0,.07)}
+.band.acc :focus-visible{outline-color:var(--lt-ink)}
 /* the serif voice: giant section words, the accent word, the two spoken lines */
 .sw{display:flex;align-items:flex-start;gap:14px;margin:0 0 14px;font-family:var(--serif);font-style:italic;font-weight:300;font-variation-settings:"opsz" 72;font-size:92px;line-height:.9;letter-spacing:-.03em;color:var(--ink);white-space:nowrap;will-change:transform}
 .lt .sw{color:var(--lt-ink)}
-.sw .cnt{flex:0 0 auto;width:38px;height:38px;margin-top:12px;border-radius:50%;display:grid;place-items:center;background:var(--acc);color:var(--ink);font-family:var(--disp);font-style:normal;font-weight:600;font-size:13px;letter-spacing:0}
-.big{margin:56px 0 0;padding:0 var(--gut);font-family:var(--disp);font-weight:900;font-variation-settings:"wdth" 112;text-transform:uppercase;line-height:.84;letter-spacing:-.04em;color:var(--ink);font-size:96px;overflow:hidden}
-.big span{display:table;white-space:nowrap}
+.sw .cnt{flex:0 0 auto;width:38px;height:38px;margin-top:12px;border-radius:50%;display:grid;place-items:center;background:var(--lt-ink);color:var(--ink);font-family:var(--disp);font-style:normal;font-weight:600;font-size:13px;letter-spacing:0}
+.big{margin:56px 0 0;padding:0 var(--gut) 56px;font-family:var(--disp);font-weight:900;font-variation-settings:"wdth" 112;text-transform:uppercase;line-height:.84;letter-spacing:-.04em;color:var(--ink);font-size:96px;overflow:hidden;clip-path:polygon(0 0,100% 0,100% calc(100% - 56px),0 100%)}
+.big span{display:table;white-space:nowrap;will-change:transform}
+.big .in{display:block}
 .lt{position:relative;z-index:1;background:var(--lt);color:var(--lt-ink)}
 /* type — Archivo's width axis does the price list's work: heavy extended caps up top, light tracked caps for the small stuff */
 .lab{font-family:var(--disp);font-weight:500;font-size:12px;line-height:16px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
@@ -140,7 +150,7 @@ section{padding:var(--beat) var(--gut) 0}
 .name{font-size:48px;line-height:.94;font-variation-settings:"wdth" 112;letter-spacing:-.035em;font-weight:900;text-shadow:0 2px 24px rgba(0,0,0,.45)}
 @media (max-width:359px){.name{font-size:40px} .proof .stat .n{font-size:36px;line-height:38px} .proof .stat:first-child .n{font-size:40px} .proof .stat{padding-right:8px} .proof .stat+.stat{padding-left:10px}}
 .name span{display:block}
-.quote{margin-top:18px;font-family:var(--serif);font-style:italic;font-weight:300;font-variation-settings:"opsz" 36;font-size:23px;line-height:29px;letter-spacing:-.01em;max-width:24ch;text-wrap:balance;color:var(--ink)}
+.quote{margin-top:18px;font-family:var(--serif);font-style:italic;font-weight:300;font-variation-settings:"opsz" 36;font-size:23px;line-height:29px;letter-spacing:-.01em;max-width:24ch;text-wrap:balance;color:var(--ink);text-shadow:0 1px 18px rgba(0,0,0,.5)}
 .cover .cta{margin-top:22px}
 .cover .meta{margin-top:14px;font-size:13px;line-height:20px;letter-spacing:.06em;color:var(--ink);opacity:.9;max-width:30ch}
 .cover .tag{left:var(--gut);bottom:14px}
@@ -198,6 +208,9 @@ section{padding:var(--beat) var(--gut) 0}
 .pr{position:relative;display:block;width:100%;padding:0 20px;margin-top:36px;text-align:left}
 .pr .fr{display:block;position:relative;height:auto;aspect-ratio:4/5;overflow:hidden;background:var(--g0);border-radius:16px;transform-origin:50% 100%}
 .pr .fr img{position:absolute;left:0;top:-16px;width:100%;height:calc(100% + 32px);object-fit:cover}
+/* the wipe: one ground-coloured cover with a slanted foot (8.2°, 56px) slides up and off; the photograph beneath stays put */
+.pr .wipe{position:absolute;left:0;top:-2px;width:100%;height:calc(100% + 60px);background:var(--g0);z-index:1;clip-path:polygon(0 0,100% 0,100% calc(100% - 56px),0 100%);will-change:transform;pointer-events:none}
+.pr.wiped .fr img{top:0;height:100%}
 .pr.full{padding:0;margin-top:0}
 .pr.full .fr{height:var(--vh-px);aspect-ratio:auto;border-radius:0}
 .pr.full .fr{will-change:transform}
@@ -257,8 +270,8 @@ section{padding:var(--beat) var(--gut) 0}
 .rw+.rw .sep{position:absolute;left:0;right:0;top:0;height:1px;background:rgba(255,255,255,.1);transform-origin:0 50%}
 .rw.open{background:none;box-shadow:none}
 .rw button{display:grid;grid-template-columns:minmax(0,1fr) 72px 36px;align-items:center;width:100%;padding:15px 0 15px 0;text-align:left;-webkit-tap-highlight-color:transparent}
-.rw .svc{font-family:var(--disp);font-weight:300;font-size:14px;line-height:20px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);padding-right:8px}
-.rw .svc small{display:block;font-family:var(--disp);font-weight:500;font-size:12px;line-height:16px;letter-spacing:.06em;color:var(--ink-2);margin-top:4px;text-transform:none}
+.rw .svc{font-family:var(--disp);font-weight:300;font-size:15px;line-height:20px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);padding-right:8px}
+.rw .svc small{display:block;font-family:var(--disp);font-weight:500;font-size:13px;line-height:17px;letter-spacing:.05em;color:#BDBDB7;margin-top:4px;text-transform:none}
 .rw .p{font-family:var(--disp);font-weight:500;font-size:28px;line-height:32px;letter-spacing:-.02em;color:var(--ink);font-variant-numeric:tabular-nums lining-nums;border-left:1px solid var(--line);padding-left:14px;height:44px;display:flex;align-items:center}
 .rw .p .dd{display:inline-block;overflow:hidden;height:32px;line-height:32px}
 .rw .p .dd b{display:block;font-weight:500}
@@ -290,7 +303,8 @@ section{padding:var(--beat) var(--gut) 0}
 .widget{margin-top:30px;border-radius:var(--r-card);overflow:hidden;min-height:120px;position:relative}
 .widget:empty{display:none}
 .book .note{margin-top:18px;line-height:1.9}
-footer{margin-top:22px;padding:22px var(--gut) 34px;border-top:1px solid rgba(255,255,255,.22);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+footer{position:relative;margin-top:0;padding:22px var(--gut) 34px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+footer:before{content:'';position:absolute;left:0;right:0;top:0;height:1.5px;background:rgba(255,255,255,.22);transform-origin:0 50%;transform:scaleX(var(--fl,1))}
 
 /* desktop is deliberate: the phone column sits hairlined on his grey */
 @media (min-width:900px){
@@ -301,7 +315,7 @@ footer{margin-top:22px;padding:22px var(--gut) 34px;border-top:1px solid rgba(25
 }
 @media (prefers-reduced-motion:reduce){
   *,*:before,*:after{transition-duration:.01ms!important;transition-delay:0s!important;animation-duration:.01ms!important}
-  #pre{display:none} .mast .wm{visibility:visible} #read span{opacity:1} .sh,.shutter .edge,.cap .edge{display:none} .cap{clip-path:none} .sw{transform:none!important}
+  #pre{display:none} .mast .wm{visibility:visible} #read span{opacity:1} .sh,.shutter .edge,.cap .edge{display:none} .cap{clip-path:none} .sw{transform:none!important} .pr .wipe{display:none} .big{clip-path:none}
 }
 </style>
 </head>
@@ -358,7 +372,7 @@ footer{margin-top:22px;padding:22px var(--gut) 34px;border-top:1px solid rgba(25
   <p class="facts lab"><span data-en="Northwest Houston · 77064" data-es="Noroeste de Houston · 77064">Northwest Houston · 77064</span><i>·</i><span data-en="EN / ES" data-es="ES / EN">EN / ES</span><i>·</i><span data-en="Appointments only" data-es="Solo con cita">Appointments only</span></p>
 </section>
 
-<div class="band acc">
+<div class="band acc"><i class="gbg" aria-hidden="true"></i>
 
 <!-- 2 · the barber -->
 <section class="bio" id="bio">
@@ -391,9 +405,9 @@ footer{margin-top:22px;padding:22px var(--gut) 34px;border-top:1px solid rgba(25
   <h2 class="d rv bl" data-en="Fades, tapers, freehand" data-es="Fades, tapers, a mano">Fades, tapers, freehand</h2>
   <div class="prints" id="prints">
     <button class="pr full" type="button" data-src="assets/g-03-event-full.jpg" data-full="1"><span class="fr"><img src="assets/g-03-event-full.jpg" width="1080" height="1350" alt="Diego cutting on the floor at a Houston barber event, crowd behind him" loading="lazy" decoding="async"></span><span class="tag"><span data-en="On the floor · Houston" data-es="En el evento · Houston">On the floor · Houston</span></span></button>
-    <button class="pr" type="button" data-src="assets/g-10-ornamental-nape-design.jpg"><span class="fr"><img src="assets/g-10-ornamental-nape-design.jpg" width="1080" height="1350" alt="Ornamental freehand design carved into the nape" loading="lazy" decoding="async"></span><span class="tag"><span data-en="Ornamental nape, freehand · 60 min" data-es="Nuca ornamental, a mano · 60 min">Ornamental nape, freehand · 60 min</span></span></button>
+    <button class="pr wiped" type="button" data-src="assets/g-10-ornamental-nape-design.jpg"><span class="fr"><i class="wipe" aria-hidden="true"></i><img src="assets/g-10-ornamental-nape-design.jpg" width="1080" height="1350" alt="Ornamental freehand design carved into the nape" loading="lazy" decoding="async"></span><span class="tag"><span data-en="Ornamental nape, freehand · 60 min" data-es="Nuca ornamental, a mano · 60 min">Ornamental nape, freehand · 60 min</span></span></button>
     <button class="pr" type="button" data-src="assets/g-06-freehand-design-white.jpg"><span class="fr"><img src="assets/g-06-freehand-design-white.jpg" width="1080" height="1350" alt="White line-work design drawn to the head" loading="lazy" decoding="async"></span><span class="tag"><span data-en="Line work, drawn to the head · 60 min" data-es="Líneas dibujadas a la cabeza · 60 min">Line work, drawn to the head · 60 min</span></span></button>
-    <button class="pr" type="button" data-src="assets/g-04-skinfade-beige-wall.jpg"><span class="fr"><img src="assets/g-04-skinfade-beige-wall.jpg" width="1080" height="1350" alt="Skin fade with a hard line-up" loading="lazy" decoding="async"></span><span class="tag"><span data-en="Skin fade, hard line · 45 min" data-es="Skin fade, línea marcada · 45 min">Skin fade, hard line · 45 min</span></span></button>
+    <button class="pr wiped" type="button" data-src="assets/g-04-skinfade-beige-wall.jpg"><span class="fr"><i class="wipe" aria-hidden="true"></i><img src="assets/g-04-skinfade-beige-wall.jpg" width="1080" height="1350" alt="Skin fade with a hard line-up" loading="lazy" decoding="async"></span><span class="tag"><span data-en="Skin fade, hard line · 45 min" data-es="Skin fade, línea marcada · 45 min">Skin fade, hard line · 45 min</span></span></button>
     <button class="pr" type="button" data-src="assets/g-08-curly-hightop-staircase.jpg"><span class="fr"><img src="assets/g-08-curly-hightop-staircase.jpg" width="1080" height="1350" alt="Curly high top with a clean taper" loading="lazy" decoding="async"></span><span class="tag"><span data-en="Curly top, clean taper · 45 min" data-es="Rizado arriba, taper limpio · 45 min">Curly top, clean taper · 45 min</span></span></button>
   </div>
 </section>
@@ -445,7 +459,7 @@ footer{margin-top:22px;padding:22px var(--gut) 34px;border-top:1px solid rgba(25
 </section>
 </div>
 
-<div class="band acc">
+<div class="band acc"><i class="gbg" aria-hidden="true"></i>
 <!-- 6 · book -->
 <section class="book" id="book">
   <p class="sw rv bl" aria-hidden="true" data-en="Visit" data-es="Visita">Visit</p>
@@ -462,7 +476,7 @@ footer{margin-top:22px;padding:22px var(--gut) 34px;border-top:1px solid rgba(25
   <p class="note lab"><span data-en="Se habla español" data-es="English spoken">Se habla español</span></p>
 </section>
 
-<div class="big" id="big" aria-hidden="true"><span>Chopped</span><span>by Diego</span></div>
+<div class="big" id="big" aria-hidden="true"><div class="in" id="bigin"><span>Chopped</span><span>by Diego</span></div></div>
 <footer class="lab"><span>© 2026 Chopped by Diego</span><span data-en="Booking via Booksy" data-es="Reservas por Booksy">Booking via Booksy</span></footer>
 </div>
 
@@ -542,7 +556,8 @@ footer{margin-top:22px;padding:22px var(--gut) 34px;border-top:1px solid rgba(25
       if (e.key === 'Tab') { const f = [langBtn, menubtn, bk, ...links]; const i = f.indexOf(document.activeElement); const n = e.shiftKey ? (i <= 0 ? f.length - 1 : i - 1) : (i >= f.length - 1 ? 0 : i + 1); e.preventDefault(); f[n].focus() }
     })
     links.forEach(a => a.addEventListener('click', e => { e.preventDefault(); const el = document.querySelector(a.getAttribute('href')); setMenu(false); if (el) lenis.scrollTo(el, { offset: -72, duration: reduce ? 0 : 1.2, immediate: reduce }) }))
-    document.querySelectorAll('.lt').forEach(el => ScrollTrigger.create({ trigger: el, start: 'top 40px', end: 'bottom 40px', onToggle: s => mastwrap.classList.toggle('lt', s.isActive) }))
+    const lightOn = new Set()
+    document.querySelectorAll('.lt, .band.acc').forEach(el => ScrollTrigger.create({ trigger: el, start: 'top 40px', end: 'bottom 40px', onToggle: s => { if (s.isActive) lightOn.add(el); else lightOn.delete(el); mastwrap.classList.toggle('lt', lightOn.size > 0) } }))
     /* the current section: whichever is crossing 30% of the pane */
     links.forEach(a => { const el = document.querySelector(a.getAttribute('href')); if (!el) return
       ScrollTrigger.create({ trigger: el, start: 'top 30%', end: 'bottom 30%', onToggle: s => { if (s.isActive) links.forEach(o => o.setAttribute('aria-current', String(o === a))) } }) })
@@ -592,16 +607,21 @@ footer{margin-top:22px;padding:22px var(--gut) 34px;border-top:1px solid rgba(25
       document.querySelectorAll('.hero .rv').forEach((el, i) => show(el, .05 + i * .12))
       gsap.from('.hero .k, .hero .cta, .cover .tag', { y: 14, opacity: 0, duration: .9, ease: 'expo.out', stagger: .1, delay: .3, clearProps: 'transform,opacity' })
     }
-    /* ---- v10 · the ground changes colour: #root tweens to each band's block as the band crosses 78% of the pane, both directions ---- */
-    {
-      const cs = getComputedStyle(root); const colour = b => b.classList.contains('acc') ? cs.getPropertyValue('--acc').trim() : cs.getPropertyValue('--g0').trim()
-      const tint = c => gsap.to(content, { backgroundColor: c, duration: reduce ? 0 : .6, ease: 'power2.out', overwrite: true })
-      document.querySelectorAll('.band').forEach(b => { const c = colour(b); ScrollTrigger.create({ trigger: b, start: 'top 78%', end: 'bottom 78%', onEnter: () => tint(c), onEnterBack: () => tint(c) }) })
-    }
+    /* ---- v11 · the ground changes colour under the thumb (Astra A, in the cut language): the block arrives dark; its cream layer's top boundary is the 8.2° edge, which rises from 22% of the pane below the block's top to the top itself as the top travels 92% → 50% of the pane; the section word is revealed by the edge; reversible; reduce = whole ---- */
+    document.querySelectorAll('.band.acc').forEach(b => {
+      const g = b.querySelector('.gbg')
+      if (reduce) { g.style.clipPath = 'none'; return }
+      gsap.fromTo(g, { '--cy': () => Math.round(scroller.clientHeight * .22) + 'px' }, { '--cy': '0px', ease: 'none', immediateRender: true, scrollTrigger: { trigger: b, start: 'top 92%', end: 'top 50%', scrub: true, invalidateOnRefresh: true } })
+    })
     /* the giant wordmark at the foot fits the column (no viewport units: measured) */
     {
-      const big = document.getElementById('big'); const fitBig = () => { big.style.fontSize = '100px'; const W = big.clientWidth - 2 * parseFloat(getComputedStyle(big).paddingLeft); const w = Math.max(...Array.from(big.children).map(s => s.getBoundingClientRect().width)); if (w > 0) big.style.fontSize = (100 * W / w) + 'px' }
+      const big = document.getElementById('big'); const fitBig = () => { big.style.fontSize = '100px'; const W = big.clientWidth - 2 * parseFloat(getComputedStyle(big).paddingLeft); const w = Math.max(...Array.from(document.getElementById('bigin').children).map(s => s.getBoundingClientRect().width)); if (w > 0) big.style.fontSize = (100 * W / w) + 'px' }
       fitBig(); window.addEventListener('resize', fitBig); if (document.fonts) document.fonts.ready.then(fitBig)
+      /* Astra F: both lines rise 56px→0 together through the aperture, top 98% → top 78% (the foot of the page cannot reach 64%), scrub .25; the hairline draws in the final 25% */
+      if (!reduce) { const ft = document.querySelector('footer'); gsap.set(ft, { '--fl': 0 })
+        gsap.timeline({ scrollTrigger: { trigger: big, start: 'top 98%', end: 'top 76%', scrub: .25, invalidateOnRefresh: true } })
+          .fromTo(document.getElementById('bigin'), { y: () => document.getElementById('bigin').offsetHeight + 8 }, { y: 0, ease: 'none', duration: 1 }, 0)
+          .fromTo(ft, { '--fl': 0 }, { '--fl': 1, ease: 'none', duration: .25 }, .75) }
     }
     /* ---- parallax: one table, one clock; each beat runs top bottom → bottom top, the hero from top top ---- */
     const drift = (target, from, to, trigger, start = 'top bottom', end = 'bottom top') => gsap.fromTo(target, { y: from }, { y: to, ease: 'none', scrollTrigger: { trigger, start, end, scrub: .35 } })
@@ -609,9 +629,11 @@ footer{margin-top:22px;padding:22px var(--gut) 34px;border-top:1px solid rgba(25
       gsap.set(heroimg, { scale: 1.04 }); drift('#plate', -16, 16, '.hero', 'top top')
       drift('#fan .p1 img', -12, 12, '#fan'); drift('#fan .p2 img', 12, -12, '#fan'); drift('#shutter img', -12, 12, '#shutter')
       drift('#island img', -12, 12, '#island')
-      document.querySelectorAll('.pr .fr img').forEach(im => drift(im, -12, 12, im.closest('.pr')))
+      document.querySelectorAll('.pr:not(.wiped) .fr img').forEach(im => drift(im, -12, 12, im.closest('.pr')))
+      /* the wipes (Astra B): top 92% → top 55%, scrub .25, linear; the cover leaves upward by its own height */
+      document.querySelectorAll('.pr.wiped .wipe').forEach(w => gsap.to(w, { y: () => -(w.offsetHeight + 4), ease: 'none', scrollTrigger: { trigger: w.closest('.pr'), start: 'top 92%', end: 'top 55%', scrub: .25, invalidateOnRefresh: true } }))
       /* the section words slide against the scroll, 16px across their section */
-      document.querySelectorAll('.sw').forEach(sw => gsap.fromTo(sw, { x: 16 }, { x: -16, ease: 'none', scrollTrigger: { trigger: sw.closest('section'), start: 'top bottom', end: 'bottom top', scrub: .35 } }))
+      document.querySelectorAll('.sw').forEach(sw => gsap.fromTo(sw, { x: 16 }, { x: -16, ease: 'none', scrollTrigger: { trigger: sw.closest('section'), start: 'top bottom', end: 'bottom top', scrub: .6 } }))
     }
 
     /* ---- the caps: each white beat enters on a 32px slant that straightens; a 1px edge joins the two upper vertices and fades in the last 15% ---- */
