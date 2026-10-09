@@ -244,7 +244,7 @@ section{padding:var(--beat) var(--gut) 0}
 .pr:not(.full) .tag{position:static;display:block;margin-top:12px;padding:0;border-radius:0;background:none;white-space:normal;font-size:10px;line-height:15px;letter-spacing:.07em;color:var(--ink-2)}
 .pr.full .tag{left:16px;bottom:16px}
 /* the lightbox */
-.lb{position:fixed;top:0;left:0;width:100%;height:var(--vh-px);z-index:70;background:rgba(9,9,9,.86);backdrop-filter:blur(26px) saturate(1.1);-webkit-backdrop-filter:blur(26px) saturate(1.1);display:grid;place-items:center;padding:12px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .45s var(--apple),visibility 0s .45s}
+.lb{position:fixed;top:0;left:0;width:100%;height:var(--vh-px);z-index:70;background:rgba(9,9,9,.95);display:grid;place-items:center;padding:12px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .45s var(--apple),visibility 0s .45s}
 .lb.on{opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s}
 .lb figure{touch-action:none;will-change:transform}
 .lb .x{position:absolute;top:max(16px,env(safe-area-inset-top));right:16px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center}
@@ -254,6 +254,11 @@ section{padding:var(--beat) var(--gut) 0}
 .lb .fr.full{height:calc(var(--vh) * 82)}
 .lb img{width:100%;height:100%;object-fit:cover}
 .fly{position:fixed;z-index:72;object-fit:cover;border-radius:var(--r-print);pointer-events:none;will-change:transform,width,height;filter:var(--grade)}
+/* v13: a ghost = a clipped copy of a frame, image at its exact on-screen crop, so a move never re-crops */
+.swapg{position:fixed;z-index:72;overflow:hidden;pointer-events:none;transform-origin:0 0;will-change:transform}
+.swapg img{position:absolute;max-width:none;object-fit:cover;filter:var(--grade)}
+.pr,.fan .p2,.lb,.lb *{-webkit-tap-highlight-color:transparent}
+.pr{touch-action:manipulation}
 
 /* ============ 4 · the chair — a light beat: the reviews read like print ============ */
 .chair{padding-top:44px;padding-bottom:40px}
@@ -568,6 +573,8 @@ footer:before{content:'';position:absolute;left:0;right:0;top:0;height:1.5px;bac
     /* lenis.stop() leaves native touch scrolling alive; lock the scroller itself while a layer is open */
     const lock = (on) => { if (on) { lenis.stop(); scroller.style.overflow = 'hidden' } else { lenis.start(); scroller.style.overflow = '' } }
     lenis.on('scroll', ScrollTrigger.update)
+    let lastFling = 0; lenis.on('scroll', e => { if (Math.abs(e.velocity || 0) > .6) lastFling = performance.now() })
+    window.tapIsFling = () => performance.now() - lastFling < 160
     gsap.ticker.add((t) => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0)
 
     /* ---- nav: hides after 24px of downward travel, returns after 12px upward; never while the menu is open ---- */
@@ -714,22 +721,37 @@ footer:before{content:'';position:absolute;left:0;right:0;top:0;height:1.5px;bac
     }
 
 
-    /* ---- the barber: tap the inset to trade places ---- */
+    /* ---- the barber: tap the inset to trade places (v13: exact-crop ghosts, decode before reveal, a 160ms crossfade on landing) ---- */
+    const decoded = im => (im.decode ? im.decode() : Promise.resolve()).catch(() => {})
+    const ghost = (fig) => {
+      const r = fig.getBoundingClientRect(), im = fig.querySelector('img'), ri = im.getBoundingClientRect()
+      const w = document.createElement('div'); w.className = 'swapg'
+      Object.assign(w.style, { left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px', borderRadius: getComputedStyle(fig).borderRadius })
+      const c = new Image(); c.alt = ''; c.src = im.currentSrc || im.src
+      Object.assign(c.style, { left: (ri.left - r.left) + 'px', top: (ri.top - r.top) + 'px', width: ri.width + 'px', height: ri.height + 'px' })
+      w.appendChild(c); return { w, c, r }
+    }
     {
       const p1 = document.querySelector('#fan .p1'), p2 = document.querySelector('#fan .p2'); let busy = false
       p2.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); p2.click() } })
-      p2.addEventListener('click', () => {
-        if (busy) return; busy = true
-        const a = p1.querySelector('img'), b = p2.querySelector('img'), r1 = p1.getBoundingClientRect(), r2 = p2.getBoundingClientRect()
-        const c1 = a.cloneNode(), c2 = b.cloneNode(); c1.className = c2.className = 'fly'; c1.style.transform = c2.style.transform = 'none'; c1.style.position = c2.style.position = 'fixed'
-        gsap.set(c1, { left: r1.left, top: r1.top, width: r1.width, height: r1.height, transformOrigin: '0 0' }); gsap.set(c2, { left: r2.left, top: r2.top, width: r2.width, height: r2.height, transformOrigin: '0 0' })
-        document.body.append(c1, c2); a.style.visibility = b.style.visibility = 'hidden'
-        const done = () => { [a.src, b.src] = [b.src, a.src]; [a.alt, b.alt] = [b.alt, a.alt]
+      p2.addEventListener('click', async () => {
+        if (busy || window.tapIsFling()) return; busy = true
+        const a = p1.querySelector('img'), b = p2.querySelector('img')
+        const swap = async () => { [a.src, b.src] = [b.src, a.src]; [a.alt, b.alt] = [b.alt, a.alt]
           const t1 = p1.querySelector('.tag'), t2 = p2.querySelector('.tag'); const h = t1.innerHTML; t1.innerHTML = t2.innerHTML; t2.innerHTML = h
-          a.style.visibility = b.style.visibility = ''; c1.remove(); c2.remove(); busy = false }
-        if (reduce) { done(); return }
-        gsap.to(c1, { x: r2.left - r1.left, y: r2.top - r1.top, scale: r2.width / r1.width, duration: .48, ease: 'expo.out' })
-        gsap.to(c2, { x: r1.left - r2.left, y: r1.top - r2.top, scale: r1.width / r2.width, duration: .48, ease: 'expo.out', onComplete: done })
+          await Promise.all([decoded(a), decoded(b)]) }
+        if (reduce) { await swap(); busy = false; return }
+        const g1 = ghost(p1), g2 = ghost(p2)
+        await Promise.all([decoded(g1.c), decoded(g2.c)])
+        document.body.append(g1.w, g2.w); a.style.visibility = b.style.visibility = 'hidden'
+        const k12 = g2.r.width / g1.r.width, k21 = g1.r.width / g2.r.width
+        const r1 = parseFloat(g1.w.style.borderRadius) || 20, r2 = parseFloat(g2.w.style.borderRadius) || 14
+        const tl = gsap.timeline({ defaults: { duration: .5, ease: 'expo.out' } })
+          .to(g1.w, { x: g2.r.left - g1.r.left, y: g2.r.top - g1.r.top, scale: k12, borderRadius: r2 / k12, zIndex: 72 }, 0)
+          .to(g2.w, { x: g1.r.left - g2.r.left, y: g1.r.top - g2.r.top, scale: k21, borderRadius: r1 / k21, zIndex: 73 }, 0)
+        await tl.then()
+        await swap(); a.style.visibility = b.style.visibility = ''
+        gsap.to([g1.w, g2.w], { opacity: 0, duration: .16, ease: 'power1.out', onComplete: () => { g1.w.remove(); g2.w.remove(); busy = false } })
       })
     }
 
@@ -741,33 +763,43 @@ footer:before{content:'';position:absolute;left:0;right:0;top:0;height:1.5px;bac
     const lbx = lb.querySelector('.x'), lbfig = lb.querySelector('figure')
     lb.inert = true
     const rect = el => { const r = el.getBoundingClientRect(); return { left: r.left, top: r.top, width: r.width, height: r.height } }
-    prints.forEach(p => p.addEventListener('click', () => {
-      if (fly) return
-      const src = p.querySelector('.fr'); home = rect(src); opener = p
+    let lbBusy = false, srcFr = null
+    const mkFly = async (src, at) => { const f = new Image(); f.className = 'fly'; f.alt = ''; f.src = src; await decoded(f); gsap.set(f, at); document.body.appendChild(f); return f }
+    prints.forEach(p => p.addEventListener('click', async () => {
+      if (lbBusy || lb.classList.contains('on') || window.tapIsFling()) return
+      lbBusy = true
+      srcFr = p.querySelector('.fr'); home = rect(srcFr); opener = p
       lbimg.src = p.dataset.src; lbimg.alt = p.querySelector('img').alt; lbcap.textContent = p.querySelector('.tag span').textContent; lbfr.classList.toggle('full', !!p.dataset.full)
       lock(true); lb.inert = false; gsap.set(lbfig, { y: 0 })
-      if (reduce) { lb.classList.add('on'); requestAnimationFrame(() => lbx.focus({ preventScroll: true })); return }
+      if (reduce) { await decoded(lbimg); lb.classList.add('on'); lbBusy = false; requestAnimationFrame(() => lbx.focus({ preventScroll: true })); return }
       lb.style.opacity = '0'; lb.style.visibility = 'visible'; const to = rect(lbfr)
-      fly = document.createElement('img'); fly.className = 'fly'; fly.src = p.dataset.src; fly.alt = ''; document.body.appendChild(fly)
-      gsap.set(fly, home)
-      gsap.to(lb, { opacity: 1, duration: .42, ease: 'power2.out' })
-      gsap.to(fly, { ...to, duration: .42, ease: 'expo.out', onComplete: () => { lb.classList.add('on'); lb.style.opacity = ''; lb.style.visibility = ''; fly.remove(); fly = null; setTimeout(() => { if (lb.classList.contains('on')) lbx.focus({ preventScroll: true }) }, 60) } })
+      const [f] = await Promise.all([mkFly(p.dataset.src, home), decoded(lbimg)]); fly = f
+      srcFr.style.visibility = 'hidden'
+      gsap.to(lb, { opacity: 1, duration: .38, ease: 'power2.out' })
+      gsap.to(fly, { ...to, duration: .44, ease: 'expo.out', onComplete: () => {
+        lb.classList.add('on'); lb.style.opacity = ''; lb.style.visibility = ''
+        requestAnimationFrame(() => { if (fly) { fly.remove(); fly = null } lbBusy = false })
+        setTimeout(() => { if (lb.classList.contains('on')) lbx.focus({ preventScroll: true }) }, 60) } })
     }))
-    const closeLb = () => {
-      if (!lb.classList.contains('on') || fly) return
-      lock(false); lb.inert = true; if (opener) opener.focus({ preventScroll: true })
-      if (reduce || !home) { lb.classList.remove('on'); return }
-      fly = document.createElement('img'); fly.className = 'fly'; fly.src = lbimg.src; fly.alt = ''; document.body.appendChild(fly)
-      gsap.set(fly, rect(lbfr)); lb.classList.remove('on'); gsap.set(lbfig, { y: 0 })
-      gsap.to(fly, { ...home, duration: .5, ease: 'expo.out', onComplete: () => { fly.remove(); fly = null } })
+    const closeLb = async () => {
+      if (!lb.classList.contains('on') || lbBusy) return
+      lbBusy = true; lb.inert = true
+      if (reduce || !home) { lb.classList.remove('on'); lock(false); if (opener) opener.focus({ preventScroll: true }); lbBusy = false; return }
+      const from = rect(lbfr); const dy = gsap.getProperty(lbfig, 'y') || 0; from.top += dy
+      fly = await mkFly(lbimg.src, from)
+      home = rect(srcFr)
+      lb.classList.remove('on'); gsap.set(lbfig, { y: 0 })
+      gsap.to(fly, { ...home, duration: .5, ease: 'expo.out', onComplete: () => {
+        srcFr.style.visibility = ''
+        requestAnimationFrame(() => { if (fly) { fly.remove(); fly = null } lock(false); if (opener) opener.focus({ preventScroll: true }); lbBusy = false }) } })
     }
-    /* drag the photo down (or up) to dismiss: past 100px or a quick flick closes, otherwise it springs back */
+    /* drag the photo to dismiss: past 90px, or a flick over 12px faster than 500px/s, closes; a still tap closes; anything else settles back */
     { let y0 = null, t0 = 0, dy = 0
-      lbfig.addEventListener('pointerdown', e => { if (!lb.classList.contains('on') || fly) return; y0 = e.clientY; t0 = performance.now(); dy = 0; lbfig.setPointerCapture(e.pointerId) })
-      lbfig.addEventListener('pointermove', e => { if (y0 === null) return; dy = e.clientY - y0; gsap.set(lbfig, { y: dy * .8 }) })
-      const up = e => { if (y0 === null) return; const v = Math.abs(dy) / Math.max(1, performance.now() - t0) * 1000; y0 = null
-        if (Math.abs(dy) > 100 || v > 300) { closeLb() } else if (Math.abs(dy) > 4) { gsap.to(lbfig, { y: 0, duration: .6, ease: 'elastic.out(1,.6)' }) } else { closeLb() } }
-      lbfig.addEventListener('pointerup', up); lbfig.addEventListener('pointercancel', () => { if (y0 === null) return; y0 = null; gsap.to(lbfig, { y: 0, duration: .3 }) }); lbimg.draggable = false }
+      lbfig.addEventListener('pointerdown', e => { if (!lb.classList.contains('on') || lbBusy) return; y0 = e.clientY; t0 = performance.now(); dy = 0; lbfig.setPointerCapture(e.pointerId) })
+      lbfig.addEventListener('pointermove', e => { if (y0 === null) return; dy = e.clientY - y0; gsap.set(lbfig, { y: dy * .8 }); lb.style.opacity = String(1 - Math.min(.35, Math.abs(dy) / 600)) })
+      const up = () => { if (y0 === null) return; const ady = Math.abs(dy), v = ady / Math.max(1, performance.now() - t0) * 1000; y0 = null; lb.style.opacity = ''
+        if (ady > 90 || (ady > 12 && v > 500) || ady <= 6) closeLb(); else gsap.to(lbfig, { y: 0, duration: .45, ease: 'power3.out' }) }
+      lbfig.addEventListener('pointerup', up); lbfig.addEventListener('pointercancel', () => { if (y0 === null) return; y0 = null; lb.style.opacity = ''; gsap.to(lbfig, { y: 0, duration: .3, ease: 'power3.out' }) }); lbimg.draggable = false }
     lb.addEventListener('click', e => { if (e.target === lb || e.target === lbx || lbx.contains(e.target)) closeLb() }); document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); if (e.key === 'Tab' && lb.classList.contains('on')) { e.preventDefault(); lbx.focus() } })
 
     /* ---- the chair: the quote in the eye band is sharp; the long review lights word by word ---- */
